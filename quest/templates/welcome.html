@@ -1,13 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bem Vindo!!</title>
+    <style>
+        div {
+            position: absolute;
+            right: 10px;
+            top: 5px
+        }
+    </style>
 </head>
+
 <body>
     {% csrf_token %}
-   Bem Vindo {{e}}! 
+    <div>
+        <button type="button" onclick="location.href='{% url 'logout' %}'">Sair!</button>
+    </div>
+    Bem Vindo {{e}}!
+    <br><br>
+    <button type="button" onclick="location.href='{% url 'create' %}'">Create report</button>
+    <button type="button">Check report</button>
 </body>
+
 </html>

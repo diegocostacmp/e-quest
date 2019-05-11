@@ -1,0 +1,33 @@
+{% if msg %}
+<script>
+    alert('{{msg}}');
+</script>
+{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+</head>
+
+<body>
+    <div>
+        <button type="button" onclick="location.href='{% url 'logout' %}'">Sair!</button>
+    </div>
+    <h2>relatorio de progresso</h2>
+    <form action="/post_create/" method="post">
+        {% csrf_token %} 
+        Work Assigned:
+        <input type="text" name="work"><br><br>
+        Progress:
+        <textarea name="progress" cols="40" rows="5" ></textarea>
+        <br><br>
+        <input type="submit" value="Submit">
+
+    </form>
+</body>
+
+</html>
