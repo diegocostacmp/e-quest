@@ -36,7 +36,7 @@ def postsign(request):
     session_id = user['idToken']  
     request.session['uid']=str(session_id)  
 
-    return render(request, 'registration/inicio.html', {'e':email})
+    return render(request, 'inicio.html', {''})
 
 # logout do sistema
 def logout(request):
@@ -53,13 +53,19 @@ def postsignup(request):
     email   = request.POST.get('email')
     passw   = request.POST.get('pass')
 
-    try:
-        user = auth_user.create_user_with_email_and_password(email, passw)
-    except:
-        message = 'Nao foi possivel cadastrar o usuario'
-        return render(request, 'signup.html', {''})
+    # try:
+    user = auth_user.create_user_with_email_and_password(email, passw)
+    auth_user.send_email_verification(user['idToken'])
+    auth_user.send_password_reset_email(email)
+
+    data = {"name": "Diego Costa", "cargo": "Analista Programador"}
+    db.child("users").push("diego costa")
+
+    # except:
+    #     return render(request, 'signup.html', {''})
     
-    return render(request, 'signIn.html')
+    return render(request, 'registration/signIn.html')
 
 def recuperar_senha(request):
     return render(request, '')
+
