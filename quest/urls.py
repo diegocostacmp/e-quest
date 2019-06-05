@@ -1,26 +1,12 @@
-
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
-from . import views
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-app_name='quest'
-
+# redireciomanento para os apps
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('apps.core.urls')),
+    path('', include('apps.core.urls', namespace='core')),
+    path('admin/', admin.site.urls)
 
-
-
-
-
-
-
-
-    # path('', views.signIn, name='inicio'),
-    # path('postsign/', views.postsign),
-    # path('logout/', views.logout, name='logout'),
-    # path('signup/', views.signup, name='signup'),
-    # path('postsignup/', views.postsignup, name='postsignup')
-
-]
+]   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
