@@ -389,7 +389,7 @@ this.Element && function(ElementPrototype) {
 }(Element.prototype);
 
 //
-// requestAnimationFrame polyfill by Erik Möller.
+// requestAnimationFrame polyfill by Erik MÃ¶ller.
 //  With fixes from Paul Irish and Tino Zijdel
 //
 //  http://paulirish.com/2011/requestanimationframe-for-smart-animating/
@@ -1717,7 +1717,7 @@ var KTUtil = function() {
         detectIE: function() {
             var ua = window.navigator.userAgent;
 
-            // Test values; Uncomment to check result …
+            // Test values; Uncomment to check result â€¦
 
             // IE 10
             // ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)';

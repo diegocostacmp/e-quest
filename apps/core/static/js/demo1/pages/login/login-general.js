@@ -98,7 +98,7 @@ var KTLoginGeneral = function() {
                 	// similate 2s delay
                 	setTimeout(function() {
 	                    btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false);
-	                    showErrorMsg(form, 'danger', 'E-mail ou senha incorreto. Tente novamente!');
+	                    showErrorMsg(form, 'danger', 'Incorrect username or password. Please try again.');
                     }, 2000);
                 }
             });
