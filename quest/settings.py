@@ -1,6 +1,7 @@
 
 
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -22,9 +23,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # apps
+    'apps.core',
+
+    # libs
     'django',
-    'pyrebase',
-    'apps.core'
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -120,3 +124,6 @@ LOGOUT_REDIRECT_URL = 'logout'
 # login redirect
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/'
+
+
+AUTH_USER_MODEL = 'core.Usuario'
