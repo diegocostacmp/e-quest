@@ -3,7 +3,7 @@ from .views import (
     signIn, 
     signup,
     postsign,
-    logout,
+    logout_get,
     inicio
 
     )
@@ -12,9 +12,10 @@ from .views import (
 app_name='core'
 
 urlpatterns = [
+    # Login and logout
     path('', signIn, name='signIn'),
     path('postsign/', postsign, name='postsign'),
     path('signup/', signup, name='signup'),
-    path('logout/', logout, name='logout'),
+    path('logout_get/', logout_get, name='logout_get'),
     path('inicio/', inicio, name='inicio')
 ]

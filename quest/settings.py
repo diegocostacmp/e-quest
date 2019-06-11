@@ -125,5 +125,6 @@ LOGOUT_REDIRECT_URL = 'logout'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/'
 
-
+# Model de autenticacao
 AUTH_USER_MODEL = 'core.Usuario'
+

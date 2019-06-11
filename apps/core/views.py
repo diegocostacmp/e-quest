@@ -4,7 +4,7 @@ from django.shortcuts import (
     HttpResponseRedirect
     )
 from django.contrib.auth.decorators import login_required
-from django.contrib import auth
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 from django.views.decorators.http import (
@@ -23,23 +23,26 @@ def signIn(request):
 @require_POST
 def postsign(request):
     
-    login = request.POST.get('email')
+    email = request.POST.get('email')
     senha = request.POST.get('senha')
 
     try:
-        user = auth.authenticate(username=login, password=senha)
-        if user is not None:
-            auth.login(request, user)
+        user = authenticate(username=email, password=senha)
+        login(request, user)
+        if request.user.is_authenticated:
+            
             return redirect('core:inicio')
-
+        else:
+            template_name = 'registration/signIn.html'
+            return render(request, template_name)        
     except:
         template_name = 'registration/signIn.html'
         return render(request, template_name)
 
     return render(request, 'inicio.html')
 
-def logout(request):
-    auth.logout(request)
+def logout_get(request):
+    logout(request)
     template_name = 'registration/signIn.html'
     return render(request, template_name)
     
