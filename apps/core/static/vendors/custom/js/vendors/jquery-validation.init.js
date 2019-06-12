@@ -73,4 +73,4 @@ jQuery.validator.addMethod("email", function(value, element) {
     } else {
         return false;
     }
-}, "Please enter a valid Email.");
+}, "Por favor digite um email válido.");
