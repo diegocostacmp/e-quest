@@ -109,7 +109,6 @@ var KTLoginGeneral = function() {
 
                 success: function(data) {
                 	if(data.status == 1){
-                        alert('sucesso');
                         document.location = data.url_retorno;
                     }
                 },
