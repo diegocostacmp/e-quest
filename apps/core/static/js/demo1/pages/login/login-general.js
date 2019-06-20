@@ -1,3 +1,4 @@
+
 "use strict";
 
 // Class Definition
@@ -92,10 +93,28 @@ var KTLoginGeneral = function() {
 
             btn.addClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', true);
 
-            form.ajaxSubmit({
-                url: '',
-                success: function(response, status, xhr, $form) {
-                	// similate 2s delay
+            // Token de sessao
+            var csrftoken = getCookie('csrftoken');
+
+            // Email e senha
+            var email   = $('#email').val();
+            var senha   = $('#senha').val();
+
+            $.ajax({
+                headers : {'X-CSRFToken': csrftoken},
+                type    : 'POST',
+                url     : '/postsign/',
+                data    : {'email':email, 'senha':senha},
+                datatype: 'json',
+
+                success: function(data) {
+                	if(data.status == 1){
+                        alert('sucesso');
+                        document.location = data.url_retorno;
+                    }
+                },
+                error: function(){
+                    // similate 2s delay
                 	setTimeout(function() {
 	                    btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false);
 	                    showErrorMsg(form, 'danger', 'Email ou senha incorreto. Tente novamente.');
@@ -124,9 +143,9 @@ var KTLoginGeneral = function() {
                     password: {
                         required: true
                     },
-                    rpassword: {
-                        required: true
-                    },
+                    // rpassword: {
+                    //     required: true
+                    // },
                     agree: {
                         required: true
                     }
@@ -139,8 +158,21 @@ var KTLoginGeneral = function() {
 
             btn.addClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', true);
 
-            form.ajaxSubmit({
-                url: '',
+            // Obtendo dados do formulario
+            var nome    = $('#nome-cadastro').val();
+            var email   = $('#email-cadastro').val();
+            var senha   = $('#senha-cadastro').val();
+            var tipo    = $('input[name=tipo]:checked', '#cadastro-usuario').val(); 
+
+            //token de sessao
+            var csrftoken = getCookie('csrftoken');
+
+            $.ajax({
+                headers : {'X-CSRFToken': csrftoken},
+                type    : 'POST',
+                url     : '/signup/',
+                data    : {'nome':nome, 'email':email, 'senha':senha, 'tipo':tipo},
+                datatype: 'json',
                 success: function(response, status, xhr, $form) {
                 	// similate 2s delay
                 	setTimeout(function() {
@@ -154,12 +186,37 @@ var KTLoginGeneral = function() {
 	                    signInForm.clearForm();
 	                    signInForm.validate().resetForm();
 
-	                    showErrorMsg(signInForm, 'success', 'Thank you. To complete your registration please check your email.');
+	                    showErrorMsg(signInForm, 'success', 'Parabéns! Seu cadastro foi realizado com sucesso. Acesse e divirta-se aprendendo.');
 	                }, 2000);
+                },
+                error: function(){
+                    // similate 2s delay
+                	setTimeout(function() {
+	                    btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false);
+	                    showErrorMsg(form, 'danger', 'Ops! Tivemos algum problema, tente novamente.');
+                    }, 2000);
+
                 }
             });
         });
     }
+    // using jQuery to generate csrf_token
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
 
     var handleForgotFormSubmit = function() {
         $('#kt_login_forgot_submit').click(function(e) {
