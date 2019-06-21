@@ -72,11 +72,17 @@ def inicio(request):
 
     # Perfil usuario
     perfil = str(request.user.tipo)
+
+    # Short name
+    short_first = aux[0]
+    short_last  = aux[-1]
+    short_name  = str(short_first) + str(short_last) 
    
     template_name   = 'inicio.html'
     context = {
         'alias_name'    : alias_final,
-        'tipo_perfil'   : perfil
+        'tipo_perfil'   : perfil,
+        'short_name'    : short_name
     }
     return render(request, template_name, context)
 

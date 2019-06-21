@@ -8,21 +8,14 @@ from django.contrib.auth.models import (
     BaseUserManager
     )
 
-# backend personalizado
-# from django.contrib.auth import get_user_model
-# from django.contrib.auth.backends import ModelBackend
-
 import uuid
 
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
-
-
-
-# backend de autenticacao personalizado
 from django.contrib.auth.models import BaseUserManager
 
 
+# backend de autenticacao personalizado com email
 class UserManager(BaseUserManager):
     """
     A custom user manager to deal with emails as unique identifiers for auth
@@ -96,11 +89,12 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     # Informacoes do usuario
     nome_completo               = models.CharField(max_length=50, null=False, verbose_name="Nome Completo")
+    username                    = models.CharField(max_length=512, blank=True, null=True, default=None)
     email                       = models.EmailField(null=False, verbose_name="E-mail", unique=True)
     uid                         = models.UUIDField(verbose_name='Identificador Unico', default=uuid.uuid4, editable=False)
     
     
-    cpf                         = models.CharField(max_length=14, null=False, verbose_name="CPF", unique=True)
+    cpf                         = models.CharField(max_length=14, null=False, verbose_name="CPF")
     data_nascimento             = models.DateField(null=True, verbose_name="Data de Nascimento")
     sexo                        = models.CharField(null=True, verbose_name="Sexo", choices=SEXO_CHOICES, max_length=10)
     estado_civil                = models.CharField(null=True, verbose_name="Estado Civil", choices=ESTADO_CIVIL_CHOICES, max_length=10)
@@ -119,27 +113,9 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return str(self.pk)
 
+    def get_tipo_user(self):
+        return self.tipo
 
-# class EmailBackend(ModelBackend):
-#     def authenticate(self, request, username=None, password=None, **kwargs):
-#         Usuario = get_user_model()
-#         if username is None:
-#             username = kwargs.get(Usuario.USERNAME_FIELD)
-            
-#         try:
-#             if '@' in username:
-#                 Usuario.USERNAME_FIELD = 'email'
-#             else:
-#                 Usuario.USERNAME_FIELD = 'username'
-
-#             user = Usuario._default_manager.get_by_natural_key(username)
-#         except Usuario.DoesNotExist:
-#             Usuario().set_password(password)
-#         else:
-#             if user.check_password(password) and self.user_can_authenticate(user):
-#                 return user    
-        
-   
 
 
 

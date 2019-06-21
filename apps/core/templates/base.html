@@ -1,29 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
-
-<!-- 
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 4 & Angular 7
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-Renew Support: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
-<html lang="en">
+<html lang="pt-br">
 
 	<!-- begin::Head -->
 	<head>
 
-		<!--begin::Base Path (base relative path for assets of this page) -->
-		<base href="../">
-
 		<!--end::Base Path -->
 		<meta charset="utf-8" />
-		<title>Metronic | Dashboard</title>
+		<title>eQuest</title>
 		<meta name="description" content="Updates and statistics">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -87,7 +71,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<link href="{% static 'vendors/general/@fortawesome/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css" />
 
 		<!--end::Layout Skins -->
-		<link rel="shortcut icon" href="{% static '/media/logos/favicon.ico" />
+		<link rel="shortcut icon" href="{% static '/media/logos/favicon.ico' %}" />
 	</head>
 
 	<!-- end::Head -->
@@ -1048,6 +1032,10 @@ License: You must have a valid license purchased only from themeforest(the above
     
         <!--begin::Page Scripts(used by this page) -->
 		<script src="{% static 'js/demo1/pages/dashboard.js' %}" type="text/javascript"></script>
+		
+		<!-- begin:: custom -->
+		<script src="{% static 'js/equest/base.js' %}" type="text/javascript"></script>
+		<!-- end::custom -->
 	</body>
     
         <!--end::Page Scripts -->
