@@ -18,3 +18,6 @@ class Disciplina(models.Model):
     # fks
     professor       = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.pk
+
