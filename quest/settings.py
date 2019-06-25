@@ -25,6 +25,9 @@ INSTALLED_APPS = [
 
     # apps
     'apps.core',
+    'apps.quiz',
+    'apps.game',
+    'apps.relatorio',
 
     # libs
     'django',
