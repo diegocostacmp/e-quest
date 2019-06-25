@@ -5,7 +5,8 @@ app_name='quiz'
 
 urlpatterns = [
     # CRUD disciplina
-    path('', listar_disciplina, name='disciplina_list'),
+    path('inicio/', inicio, name='inicio'),
+    # path('', listar_disciplina, name='disciplina_list'),
     # path('cadastrar_disciplina', cadastrar_disciplina, name='nova_disciplina'),
 
 ]

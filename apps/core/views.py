@@ -18,9 +18,7 @@ from django.views.decorators.http import (
     require_http_methods,
     require_GET, 
     require_POST,
-    )
-
-
+    ) 
 
 # tela de login inicial no sistema
 def signIn(request):
@@ -29,8 +27,6 @@ def signIn(request):
 # autenticacao com usuario e senha
 @require_POST
 def postsign(request):
-    print('veio aqui')
-    
     email = request.POST.get('email')
     senha = request.POST.get('senha')
 
@@ -40,7 +36,7 @@ def postsign(request):
         if request.user.is_authenticated:
             data = {
                 'status'        : 1,
-                'url_retorno'   : '/inicio/'
+                'url_retorno'   : '/quiz/inicio/'
             }
             return JsonResponse(data)
         else:
@@ -61,30 +57,7 @@ def logout_get(request):
     template_name = 'registration/signIn.html'
     return render(request, template_name)
     
-@login_required
-def inicio(request):
-    # Alias do usuario
-    nome_completo   = request.user.nome_completo
-    aux             = nome_completo.split(' ')
-    alias_first     = aux[0][:1]
-    alias_last      = aux[-1][:1]
-    alias_final = str(alias_first) + str(alias_last)
 
-    # Perfil usuario
-    perfil = str(request.user.tipo)
-
-    # Short name
-    short_first = aux[0]
-    short_last  = aux[-1]
-    short_name  = str(short_first) + str(short_last) 
-   
-    template_name   = 'inicio.html'
-    context = {
-        'alias_name'    : alias_final,
-        'tipo_perfil'   : perfil,
-        'short_name'    : short_name
-    }
-    return render(request, template_name, context)
 
 @require_POST
 def signup(request):

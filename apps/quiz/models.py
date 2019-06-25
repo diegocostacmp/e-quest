@@ -21,3 +21,6 @@ class Disciplina(models.Model):
     def __str__(self):
         return self.pk
 
+    def get_professor(self):
+        return self.professor.nome_completo
+
