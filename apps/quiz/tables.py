@@ -13,6 +13,6 @@ class DisciplinaTable(tables.Table):
     status = tables.Column(accessor='get_status')
     class Meta:
         model = Disciplina
-        sequence = ['titulo', 'descricao', 'professor', 'status', 'acoes']
-        exclude = ['id', 'uuid', 'data_criacao', 'data_alteracao']
+        sequence = ['titulo', 'professor', 'status', 'acoes']
+        exclude = ['id', 'uuid', 'data_criacao', 'data_alteracao', 'descricao']
       

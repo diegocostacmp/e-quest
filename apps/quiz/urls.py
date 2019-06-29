@@ -4,9 +4,9 @@ from .views import *
 app_name='quiz'
 
 urlpatterns = [
-    # CRUD disciplina
+    # lista de disciplinas
     path('inicio/', inicio, name='inicio'),
-    # path('', listar_disciplina, name='disciplina_list'),
-    # path('cadastrar_disciplina', cadastrar_disciplina, name='nova_disciplina'),
+    path('cadastrar_disciplina/', cadastrar_disciplina, name='nova_disciplina'),
+    path('excluir_disciplina/', excluir_disciplina, name='excluir_disciplina')
 
 ]

@@ -27,7 +27,7 @@ class Disciplina(models.Model):
     status          = models.CharField(choices=STATUS_CHOICES, max_length=15, default="A")
 
     # fks
-    professor       = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    professor       = models.ForeignKey(Usuario, editable=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.pk
