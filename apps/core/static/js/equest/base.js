@@ -1,7 +1,7 @@
 // As classes e acoes comuns a todos os Apps
 // devem ser inseridos neste arquivo.
 
-$('#excluir-disciplina').click(function(e) {
+$('.excluir-disciplina').click(function(e) {
     var url_destino, uuid_editando;
     url_destino = $(this).attr('cs-url');
     uuid_editando = $(this).attr('cs-id');
