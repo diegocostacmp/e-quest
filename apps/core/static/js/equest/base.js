@@ -33,7 +33,7 @@ $('.excluir-disciplina').click(function(e) {
                     if(data.status == "OK"){
                         Swal.fire(
                             'Deleted!',
-                            'Your file has been deleted.',
+                            'Cadastro excluído com sucesso.',
                             'success'
                         )
                         window.setTimeout(function(){ 

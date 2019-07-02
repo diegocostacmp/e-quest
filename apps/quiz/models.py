@@ -22,8 +22,8 @@ class Disciplina(models.Model):
     titulo          = models.CharField(verbose_name="Título", max_length=128, help_text="Digite o nome da disciplina", null=False, blank=False, default=None)
     descricao       = models.CharField(verbose_name="Descrição", max_length=512, help_text="Digite a descrição da disciplina", null=True, blank=True, default=None)
     uuid            = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
-    data_criacao    = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True)
-    data_alteracao  = models.DateTimeField(verbose_name="Data alteração", auto_now_add=True, blank=True)
+    data_criacao    = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
+    data_alteracao  = models.DateTimeField(verbose_name="Data alteração", auto_now_add=True, blank=True, null=True)
     status          = models.CharField(choices=STATUS_CHOICES, max_length=15, default="A")
 
     # fks

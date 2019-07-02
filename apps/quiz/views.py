@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 
 from django_tables2 import RequestConfig
+from django.utils import timezone
 
 from apps.core.models import Usuario
 
@@ -39,7 +40,7 @@ def inicio(request):
     # Lista as disciplinas do professor
     table = DisciplinaTable(Disciplina.objects.all())
     RequestConfig(request).configure(table)
-   
+
     context = {
         "alias_name"    : alias_final,
         "tipo_perfil"   : perfil,
@@ -94,3 +95,22 @@ def excluir_disciplina(request):
     except:
         return render(request, template_name, {})
     
+@login_required
+@require_http_methods(['POST'])
+def editar_disciplina(request):
+
+    # Obtenho as strings via POST
+    disciplina          = request.POST.get('titulo', '')
+    uuid_disciplina     = request.POST.get('uuid_disciplina', '')
+
+    # Retorna objeto com a disciplina
+    disciplina_editando = get_object_or_404(Disciplina, uuid=uuid_disciplina)
+    disciplina_editando.titulo = str(disciplina)
+    disciplina_editando.save()
+
+    data = {
+        'status': 'OK',
+        'url_retorno': '/inicio/'
+    }
+
+    return JsonResponse(data, safe=False)
