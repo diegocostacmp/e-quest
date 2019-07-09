@@ -78,55 +78,83 @@
                     <!-- end::Tfoot -->
                 </table>
             </div>
+
+
         {% endblock table %}
         <!-- end::table -->
-    
+        <div class="kt-separator  kt-separator--border-dashed"></div>
         <!-- begin::Paginacao  -->
-        {% block pagination %}
-            {% if table.page and table.paginator.num_pages > 1 %}
-            <nav aria-label="Table navigation">
-                <ul class="pagination">
-                {% if table.page.has_previous %}
-                    {% block pagination.previous %}
-                        <li class="previous">
-                            <a href="{% querystring table.prefixed_page_field=table.page.previous_page_number %}">
-                                <span aria-hidden="true">&laquo;</span>
-                                {% trans 'previous' %}
-                            </a>
-                        </li>
-                    {% endblock pagination.previous %}
-                {% endif %}
-                {% if table.page.has_previous or table.page.has_next %}
-                    {% block pagination.range %}
-                        {% for p in table.page|table_page_range:table.paginator %}
-                            <li {% if p == table.page.number %}class="active"{% endif %}>
-                                {% if p == '...' %}
-                                    <a href="#">{{ p }}</a>
-                                {% else %}
-                                    <a href="{% querystring table.prefixed_page_field=p %}">
-                                        {{ p }}
-                                    </a>
+        <div class="kt-portlet__body">
+            <div class="tab-content">
+                <div class="kt-section">
+                    <p class="kt-section__content"></p>
+                        {% block pagination %}
+                            {% if table.page and table.paginator.num_pages > 1 %}
+                            <div class="kt-pagination kt-pagination--brand">
+                                <ul class="kt-pagination__links">
+                                {% if table.page.has_previous %}
+                                <!-- voltar -->
+                                <li class="kt-pagination__link--first">
+                                    <a href="#"><i class="fa fa-angle-double-left kt-font-brand"></i></a>
+                                </li>
+                
+                                    {% block pagination.previous %}
+                                        <li class="kt-pagination__link--next">
+                                            <a href="{% querystring table.prefixed_page_field=table.page.previous_page_number %}">
+                                                <i class="fa fa-angle-left kt-font-brand"></i>
+                                            </a>
+                                        </li>
+                                    {% endblock pagination.previous %}
                                 {% endif %}
-                            </li>
-                        {% endfor %}
-                    {% endblock pagination.range %}
-                {% endif %}
-    
-                {% if table.page.has_next %}
-                    {% block pagination.next %}
-                    <li class="next">
-                        <a href="{% querystring table.prefixed_page_field=table.page.next_page_number %}">
-                            {% trans 'next' %}
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    {% endblock pagination.next %}
-                {% endif %}
-                </ul>
-            </nav>
-            {% endif %}
-        {% endblock pagination %}
-        <!-- end::Blockpagination -->
+                                {% if table.page.has_previous or table.page.has_next %}
+                                    {% block pagination.range %}
+                                        {% for p in table.page|table_page_range:table.paginator %}
+                                            <li {% if p == table.page.number %}class="kt-pagination__link--active"{% endif %}>
+                                                {% if p == '...' %}
+                                                    <a href="#">{{ p }}</a>
+                                                {% else %}
+                                                    <a href="{% querystring table.prefixed_page_field=p %}">
+                                                        {{ p }}
+                                                    </a>
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    {% endblock pagination.range %}
+                                {% endif %}
+                                <!-- Proximo -->
+                                {% if table.page.has_next %}
+                                    {% block pagination.next %}
+                                    <li class="kt-pagination__link--last">
+                                        <a href="{% querystring table.prefixed_page_field=table.page.next_page_number %}">
+                                                <i class="fa fa-angle-double-right kt-font-brand"></i>
+                                            
+                                        </a>
+                                    </li>
+                                    {% endblock pagination.next %}
+                                {% endif %}
+                                </ul>
+                                <div class="kt-pagination__toolbar">
+                                        <select class="form-control kt-font-brand" style="width: 60px;">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                        <span class="pagination__desc">
+                                            Displaying 10 of 230 records
+                                        </span>
+                                    </div>
+                            </div>
+                            
+                            {% endif %}
+                        {% endblock pagination %}
+                        <!-- end::Blockpagination -->
+        
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 <script>
@@ -152,7 +180,7 @@
 <!--begin::Global Theme Bundle(used by all pages) -->
 <script src="{% static 'js/demo1/scripts.bundle.js' %}" type="text/javascript"></script>
 <script src="{% static 'js/demo1/vendors.bundle.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/demo1/pages/crud/metronic-datatable/base/data-ajax.js' %}" type="text/javascript"></script>
+<!-- <script src="{% static 'js/demo1/pages/crud/metronic-datatable/base/data-ajax.js' %}" type="text/javascript"></script> -->
 <!--end::Global Theme Bundle -->
 
 {% endblock table-wrapper %}
