@@ -31,7 +31,7 @@ class Disciplina(models.Model):
     professor       = models.ForeignKey(Usuario, editable=True, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
 
     def get_professor(self):
         return self.professor.nome_completo
@@ -54,12 +54,11 @@ class Quizzes(models.Model):
     status          = models.CharField(choices=STATUS_CHOICES, max_length=15, default="A")
 
     # fks
-    professor       = models.ForeignKey(Usuario, editable=True, on_delete=models.CASCADE)
     disciplina      = models.ForeignKey(Disciplina, verbose_name="Disciplina", on_delete=models.PROTECT)
     usuario_criacao = models.ForeignKey(Usuario, editable=False, related_name="+", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
 
     def get_professor(self):
         return self.professor.nome_completo

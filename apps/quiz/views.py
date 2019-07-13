@@ -126,38 +126,40 @@ def listar_quizzes(request, disciplina_uuid):
     # Lista os quizzes cadastrados por disciplina
 
     # Query
-    queryset = Quizzes.objects.filter(professor=request.user, disciplina__uuid=disciplina_editando.uuid)
+    queryset = Quizzes.objects.filter(disciplina__uuid=disciplina_editando.uuid)
 
     table = QuizzesTable(queryset)
     RequestConfig(request).configure(table)
 
     context = {
-        "table" : table
+        "table" : table,
+        "disciplina_uuid": disciplina_editando.uuid
     }
 
     template_name   = "quizzes/quiz_list.html"
     return render(request, template_name, context)
 
-
+@login_required
+@require_http_methods(['POST'])
 def cadastrar_quiz(request):
     try:
-        disciplina_editando = request.POST.get('disciplina', '')
+        titulo = request.POST.get('nome', '')
+        disciplina= request.POST.get('disciplina', '')
+
+        # Get instance
+        disciplina_editando = get_object_or_404(Disciplina, uuid=disciplina)
 
         # Os dados sao gravados sem a necessidade de forms
-        # ja que esta usando sweetalert
         if request.method == "POST":
-            titulo      = str(nome_disciplina)
-            cadastro    = Disciplina(titulo=titulo, status="A", professor=request.user)
+            cadastro = Quizzes(titulo=titulo, status="A", disciplina=disciplina_editando, usuario_criacao=request.user)
             cadastro.save()
-
+        
             data = {
-                "status"        : "OK",
-                "url_retorno"   : "/quiz/inicio/" 
+                "status" : "OK",
+                "url_retorno" : "/quiz/listar_quizzes/"+str(disciplina_editando.uuid)+"/" 
             }
-        
-            return JsonResponse(data, safe=False)
-        
-    except:
+            return JsonResponse(data)
+    except: 
         data = {
             "status": ""
         }

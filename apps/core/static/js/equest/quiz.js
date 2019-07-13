@@ -127,6 +127,10 @@ function getCookie(name) {
 
 // Adicionar Quizzes
 $('#adicionar-quizzes').click(function(e) {
+
+    // Get uuid disciplina
+    var disciplina = $('#disciplina-uuid').val();
+
     Swal.fire({
         title: 'Digite o nome do quiz',
         input: 'text',
@@ -152,7 +156,9 @@ $('#adicionar-quizzes').click(function(e) {
                 headers : {'X-CSRFToken': csrftoken},
                 type    : 'POST',
                 url     : '/quiz/cadastrar_quiz/',
-                data    : {'nome':value},
+                data    : {
+                    'nome': value,
+                    'disciplina': disciplina} ,
                 datatype: 'json',
 
                 success: function(data) {
@@ -160,14 +166,13 @@ $('#adicionar-quizzes').click(function(e) {
                         Swal.fire({
                             position: 'center',
                             type: 'success',
-                            title: 'Disciplina cadastrada com sucesso',
+                            title: 'Quiz cadastrado com sucesso',
                             showConfirmButton: false,
                             timer: 2500
                         })
                         window.setTimeout(function(){ 
-                            location.reload();
+                            document.location = data.url_retorno;
                         } ,2500);
-                        // document.location = data.url_retorno;
                     }
                 },
                 error: function(data){

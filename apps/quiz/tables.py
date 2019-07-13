@@ -20,7 +20,11 @@ class DisciplinaTable(tables.Table):
         exclude = ['id', 'uuid', 'data_criacao', 'data_alteracao', 'descricao', 'usuario_criacao']
       
 class QuizzesTable(tables.Table):
+
+    # Status personalizado
+    status = tables.Column(accessor='get_status')
+    disciplina_titulo = tables.Column(accessor='get_disciplina')
     class Meta:
         model = Quizzes
-        sequence = ('titulo', 'disciplina', 'professor', 'status')
-        exclude = ('id', 'uuid', 'data_criacao', 'data_alteracao', 'descricao')
+        sequence = ('titulo', 'disciplina_titulo', 'status')
+        exclude = ('id', 'uuid', 'data_criacao', 'data_alteracao', 'descricao', 'usuario_criacao', 'disciplina')
