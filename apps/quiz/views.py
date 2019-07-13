@@ -14,11 +14,12 @@ from django.utils import timezone
 
 from apps.core.models import Usuario
 
-from .models import Disciplina
-from .tables import DisciplinaTable
+from .models import Disciplina, Quizzes
+from .tables import DisciplinaTable, QuizzesTable
 from .forms import (
     DisciplinaForm
-    )  
+    ) 
+
 
 @login_required
 def inicio(request):
@@ -38,7 +39,7 @@ def inicio(request):
     short_name  = str(short_first) + str(short_last) 
 
     # Lista as disciplinas do professor
-    table = DisciplinaTable(Disciplina.objects.all())
+    table = DisciplinaTable(Disciplina.objects.filter(usuario_criacao=request.user))
     RequestConfig(request).configure(table)
 
     context = {
@@ -114,3 +115,50 @@ def editar_disciplina(request):
     }
 
     return JsonResponse(data, safe=False)
+
+@login_required
+@require_http_methods(['POST', 'GET'])
+def listar_quizzes(request, disciplina_uuid):
+    print('chegou no metodo')
+
+    # Verifica se a instancia da disciplina existe
+    disciplina_editando = get_object_or_404(Disciplina, uuid=disciplina_uuid)
+    # Lista os quizzes cadastrados por disciplina
+
+    # Query
+    queryset = Quizzes.objects.filter(professor=request.user, disciplina__uuid=disciplina_editando.uuid)
+
+    table = QuizzesTable(queryset)
+    RequestConfig(request).configure(table)
+
+    context = {
+        "table" : table
+    }
+
+    template_name   = "quizzes/quiz_list.html"
+    return render(request, template_name, context)
+
+
+def cadastrar_quiz(request):
+    try:
+        disciplina_editando = request.POST.get('disciplina', '')
+
+        # Os dados sao gravados sem a necessidade de forms
+        # ja que esta usando sweetalert
+        if request.method == "POST":
+            titulo      = str(nome_disciplina)
+            cadastro    = Disciplina(titulo=titulo, status="A", professor=request.user)
+            cadastro.save()
+
+            data = {
+                "status"        : "OK",
+                "url_retorno"   : "/quiz/inicio/" 
+            }
+        
+            return JsonResponse(data, safe=False)
+        
+    except:
+        data = {
+            "status": ""
+        }
+        return JsonResponse(data, safe=False)

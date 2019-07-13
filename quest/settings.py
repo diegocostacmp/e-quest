@@ -122,7 +122,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 
 LOGIN_REDIRECT_URL = 'inicio'
-LOGOUT_REDIRECT_URL = 'logout'
+LOGOUT_REDIRECT_URL = '/'
 
 
 # login redirect

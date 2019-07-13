@@ -1,5 +1,8 @@
 import django_tables2 as tables
-from .models import Disciplina
+from .models import (
+    Disciplina, 
+    Quizzes
+    )
 
 
 class DisciplinaTable(tables.Table):
@@ -14,5 +17,10 @@ class DisciplinaTable(tables.Table):
     class Meta:
         model = Disciplina
         sequence = ['titulo', 'professor', 'status', 'acoes']
-        exclude = ['id', 'uuid', 'data_criacao', 'data_alteracao', 'descricao']
+        exclude = ['id', 'uuid', 'data_criacao', 'data_alteracao', 'descricao', 'usuario_criacao']
       
+class QuizzesTable(tables.Table):
+    class Meta:
+        model = Quizzes
+        sequence = ('titulo', 'disciplina', 'professor', 'status')
+        exclude = ('id', 'uuid', 'data_criacao', 'data_alteracao', 'descricao')

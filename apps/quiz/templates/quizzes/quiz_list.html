@@ -1,19 +1,43 @@
 
+
 {% extends 'base.html' %}
 {% load render_table from django_tables2 %}
+
+{% block header %}
+<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+    <div class="kt-subheader__main">
+        <h3 class="kt-subheader__title">Quizzes</h3>
+        <div class="kt-input-icon kt-input-icon--right kt-subheader__search kt-hidden">
+            <input type="text" class="form-control" placeholder="Search order..." id="generalSearch">
+            <span class="kt-input-icon__icon kt-input-icon__icon--right">
+                <span><i class="flaticon2-search-1"></i></span>
+            </span>
+        </div>
+    </div>
+    <div class="kt-subheader__toolbar">
+        <div class="kt-subheader__toolbar">
+            <a id="adicionar-quizzes" class="btn btn-label-danger btn-bold">
+                <i class="fa flaticon2-plus-1"> </i>
+                Adicionar quiz
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
 {% block content %}
     <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
         {% if request.user.tipo == '2' %}
             <div class="row">
                 <div class="col">
-                        <div class="alert alert-light alert-elevate fade show" role="alert">
-                            <div class="alert-icon"><i class="flaticon-interface-10"></i></div>
-                            <div class="alert-text">
-                                Manutenção de Disciplinas
-                                <br>
-                                Uma breve descricao sobre as Disciplinas <a class="kt-link kt-font-bold" href="https://www.malot.fr/bootstrap-datetimepicker/demo.php" target="_blank">Demo Page</a> or <a class="kt-link kt-font-bold" href="https://github.com/smalot/bootstrap-datetimepicker" target="_blank">Github Repo</a>.
-                            </div>
+                    <div class="alert alert-light alert-elevate fade show" role="alert">
+                        <div class="alert-icon"><i class="flaticon-interface-10"></i></div>
+                        <div class="alert-text">
+                            Manutenção de Quizzes
+                            <br>
+                            Uma breve descricao sobre os Quizzes <a class="kt-link kt-font-bold" href="https://www.malot.fr/bootstrap-datetimepicker/demo.php" target="_blank">Demo Page</a> or <a class="kt-link kt-font-bold" href="https://github.com/smalot/bootstrap-datetimepicker" target="_blank">Github Repo</a>.
                         </div>
+                    </div>
                 </div>
                 <div class="col-xl-12">
                     {% render_table table %}
@@ -261,6 +285,11 @@
         {% endif %}
     </div>
 {% endblock %}
+  
+
+    
+
+    
   
 
     
