@@ -14,6 +14,15 @@ from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import BaseUserManager
 
+from django.utils.safestring import mark_safe
+
+
+# Status choices
+STATUS_CHOICES = (
+    ("A", "Ativo"),
+    ("B", "Bloqueado"),
+    ("D", "Desativado")
+    )
 
 # backend de autenticacao personalizado com email
 class UserManager(BaseUserManager):
@@ -116,6 +125,33 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     def get_tipo_user(self):
         return self.tipo
 
+# Cadastro de disciplina
+class Disciplina(models.Model):
+    
+    titulo          = models.CharField(verbose_name="Título", max_length=128, help_text="Digite o nome da disciplina", null=False, blank=False, default=None)
+    descricao       = models.CharField(verbose_name="Descrição", max_length=512, help_text="Digite a descrição da disciplina", null=True, blank=True, default=None)
+    uuid            = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
+    data_criacao    = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
+    data_alteracao  = models.DateTimeField(verbose_name="Data alteração", auto_now_add=True, blank=True, null=True)
+    status          = models.CharField(choices=STATUS_CHOICES, max_length=15, default="A")
+    usuario_criacao = models.ForeignKey(Usuario, editable=False, related_name="+", on_delete=models.CASCADE)
+
+    # fks
+    professor       = models.ForeignKey(Usuario, editable=True, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return str(self.pk)
+
+    def get_professor(self):
+        return self.professor.nome_completo
+
+    def get_status(self):
+        if self.status == 'A':
+            return mark_safe('<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">Ativo</span>') 
+        elif self.status == 'B':
+            return mark_safe('<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill">Bloqueado</span>') 
+        else:
+            return mark_safe('<span class="kt-badge  kt-badge--warning kt-badge--inline kt-badge--pill">Desativo</span>') 
 
 
 

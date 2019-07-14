@@ -8,9 +8,9 @@
             <div class="kt-subheader__main">
                     <span class="kt-subheader__separator kt-hidden"></span>
                     <div class="kt-subheader__breadcrumbs">
-                        <a href="{% url 'quiz:inicio' %}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                        <a href="{% url 'core:inicio' %}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="{% url 'quiz:inicio' %}" class="kt-subheader__breadcrumbs-link">
+                        <a href="{% url 'core:inicio' %}" class="kt-subheader__breadcrumbs-link">
                             Disciplina
                         </a>
                     </div>
@@ -18,7 +18,8 @@
 
         <div class="kt-subheader__toolbar">
             <div class="kt-subheader__toolbar">
-                <a href="#" id="adicionar-disciplina" class="btn btn-label-danger btn-bold">
+                <input type="hidden" name="" value="{{disciplina_uuid}}" id="disciplina-uuid">
+                <a href="#" id="adicionar-quizzes" class="btn btn-label-danger btn-bold">
                     <i class="fa flaticon2-plus-1"> </i>
                     Adicionar quiz
                 </a>
