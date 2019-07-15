@@ -68,3 +68,24 @@ def cadastrar_quiz(request):
             "status": ""
         }
         return JsonResponse(data, safe=False)
+
+@login_required
+@require_http_methods(['POST'])
+def editar_quiz(request):
+
+    # Obtenho as strings via POST
+    quiz          = request.POST.get('titulo', '')
+    uuid_quiz     = request.POST.get('uuid_quiz', '')
+
+    # Retorna objeto com o quiz
+    quiz_editando = get_object_or_404(Quizzes, uuid=uuid_quiz)
+    print(quiz_editando.disciplina)
+    quiz_editando.titulo = str(quiz)
+    quiz_editando.save()
+
+    data = {
+        'status': 'OK'
+    }
+
+    return JsonResponse(data, safe=False)
+

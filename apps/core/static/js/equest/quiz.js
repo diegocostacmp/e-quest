@@ -73,3 +73,60 @@ $('#adicionar-quizzes').click(function(e) {
         },
     })
 });
+
+// Metodo de editar quiz
+$('.editar-quiz').click(function(e) {
+    var uuid_quiz, titulo_quiz;
+    uuid_quiz = $(this).attr("cs-id");
+    titulo_quiz = $(this).attr("cs-titulo");
+
+    Swal.fire({
+        title: 'Editando quiz',
+        input: 'text',
+        inputValue: titulo_quiz,
+        inputAttributes: {
+        autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '<i class="fa fa-check"></i> Salvar!',
+        cancelButtonText: '<i class="fa fa-times"></i> Cancelar',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Preencha o nome do quiz!'
+            }
+        },
+        preConfirm: (value) => {
+            //token de sessao
+            var csrftoken = getCookie('csrftoken');
+
+            $.ajax({
+                headers : {'X-CSRFToken': csrftoken},
+                type    : 'POST',
+                url     : "/quiz/editar_quiz/",
+                data    : {"titulo":value, "uuid_quiz": uuid_quiz},
+                datatype: 'json',
+
+                success: function(data) {
+                    if(data.status == "OK"){
+                        Swal.fire({
+                            position: 'center',
+                            type: 'success',
+                            title: 'Quiz editado com sucesso',
+                            showConfirmButton: false,
+                            timer: 2500
+                        })
+                        window.setTimeout(function(){ 
+                            location.reload();
+                        } ,2500);
+                    }
+                },
+                error: function(data){
+                    alert('deu erro');
+                }
+            });
+        },
+    })
+});

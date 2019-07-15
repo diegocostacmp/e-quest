@@ -62,7 +62,7 @@ $('.excluir-disciplina').click(function(e) {
                     Swal.fire({
                         type: 'error',
                         title: 'Desculpe...',
-                        text: 'Tivemos algum problema!'
+                        text: 'Existem dependências associadas!'
                     })
                 }
             });

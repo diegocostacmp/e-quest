@@ -9,7 +9,7 @@ class DisciplinaTable(tables.Table):
     professor= tables.Column(accessor='get_professor')
 
     # Template com as acoes disponiveis
-    acoes = tables.TemplateColumn(template_name='disciplina/disciplina_actions.html')
+    acoes = tables.TemplateColumn(template_name='disciplina/disciplina_actions.html', verbose_name="Ações")
 
     # Status personalizado
     status = tables.Column(accessor='get_status')
