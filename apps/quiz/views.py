@@ -89,3 +89,18 @@ def editar_quiz(request):
 
     return JsonResponse(data, safe=False)
 
+def excluir_quiz(request):
+    try:
+        uuid_editando   = request.POST.get('uuid_editando', '')
+        print('uuid', uuid_editando)
+        quiz      = get_object_or_404(Quizzes, uuid=uuid_editando)
+        print(quiz.titulo)
+        if request.method == "POST":
+            quiz.delete()
+            data = {
+                "status": "OK"
+            }
+
+            return JsonResponse(data, safe=False)
+    except:
+        return rende(request, )
