@@ -1,9 +1,9 @@
 <a href="#" title="Editar quiz" class="btn btn-outline-brand btn-icon editar-quiz" cs-id="{{record.uuid}}" cs-titulo="{{record.titulo}}" > 
     <i class="flaticon2-paper"></i>
 </a>
-<a title="Adicionar questões" class="btn btn-outline-dark btn-icon"  href="{% url 'quiz:listar_questao' record.uuid %}">
-        <i class="flaticon2-add-circular-button"></i> 
-    </a>
-<a href="#" title="Excluir quiz" class="btn btn-outline-danger btn-icon excluir-quiz" cs-url="/quiz/excluir_quiz/" cs-id="{{record.uuid}}"> 
+<a href="{% url 'quiz:question_list' record.uuid %}" title="Adicionar questões" class="btn btn-outline-success btn-icon" >
+    <i class="flaticon2-search"></i> 
+</a>
+<a href="#" title="Excluir quiz" class="btn btn-outline-danger btn-icon excluir-quiz" cs-url="/quiz/quiz_delete/" cs-id="{{record.uuid}}"> 
     <i class="flaticon2-trash"></i> 
 </a>

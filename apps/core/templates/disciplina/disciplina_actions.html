@@ -1,7 +1,7 @@
 <a href="#" title="Editar disciplina" class="btn btn-outline-brand btn-icon editar-disciplina" cs-id="{{record.uuid}}" cs-titulo="{{record.titulo}}"> 
     <i class="flaticon2-paper"></i> 
 </a>
-<a title="Adicionar quizzes" class="btn btn-outline-dark btn-icon"  href="{% url 'quiz:listar_quizzes' record.uuid %}">
+<a title="Adicionar quizzes" class="btn btn-outline-dark btn-icon"  href="{% url 'quiz:quiz_list' record.uuid %}">
     <i class="flaticon2-add-circular-button"></i> 
 </a>
 <a href="#" title="Excluir disciplina" class="btn btn-outline-danger btn-icon excluir-disciplina" cs-url="/excluir_disciplina/" cs-id="{{record.uuid}}"> 

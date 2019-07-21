@@ -1,17 +1,19 @@
 from django.urls import path
 from .views import (
-    listar_quizzes,
-    cadastrar_quiz,
-    editar_quiz,
-    excluir_quiz
+    quiz_list, quiz_create,
+    quiz_edit, quiz_delete,
+
+    question_list,
     )
 
 app_name='quiz'
 
 urlpatterns = [
     # listar quizzes
-    path('listar_quizzes/<uuid:disciplina_uuid>/', listar_quizzes, name='listar_quizzes'),
-    path('cadastrar_quiz/', cadastrar_quiz, name='cadastrar_quiz'),
-    path('editar_quiz/', editar_quiz, name='editar_quiz'),
-    path('excluir_quiz/', excluir_quiz, name='excluir_quiz')
+    path('quiz_list/<uuid:disciplina_uuid>/', quiz_list, name='quiz_list'),
+    path('quiz_create/', quiz_create, name='quiz_create'),
+    path('quiz_edit/', quiz_edit, name='quiz_edit'),
+    path('quiz_delete/', quiz_delete, name='quiz_delete'),
+
+    path('question_list/<uuid:quiz_uuid>/', question_list, name='question_list')
 ]

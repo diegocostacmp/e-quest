@@ -96,7 +96,7 @@ $('#adicionar-quizzes').click(function(e) {
             $.ajax({
                 headers : {'X-CSRFToken': csrftoken},
                 type    : 'POST',
-                url     : '/quiz/cadastrar_quiz/',
+                url     : '/quiz/quiz_create/',
                 data    : {
                     'nome': value,
                     'disciplina': disciplina} ,
@@ -155,7 +155,7 @@ $('.editar-quiz').click(function(e) {
             $.ajax({
                 headers : {'X-CSRFToken': csrftoken},
                 type    : 'POST',
-                url     : "/quiz/editar_quiz/",
+                url     : "/quiz/quiz_edit/",
                 data    : {"titulo":value, "uuid_quiz": uuid_quiz},
                 datatype: 'json',
 

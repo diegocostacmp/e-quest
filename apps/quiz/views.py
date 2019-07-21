@@ -14,12 +14,12 @@ from django.utils import timezone
 
 from apps.core.models import Usuario, Disciplina
 
-from .models import Quizzes
-from .tables import QuizzesTable
+from .models import Quizzes, Question
+from .tables import QuizzesTable, QuestionTable
 
 @login_required
 @require_http_methods(['POST', 'GET'])
-def listar_quizzes(request, disciplina_uuid):
+def quiz_list(request, disciplina_uuid):
     print('chegou no metodo')
 
     # Verifica se a instancia da disciplina existe
@@ -42,7 +42,7 @@ def listar_quizzes(request, disciplina_uuid):
 
 @login_required
 @require_http_methods(['POST'])
-def cadastrar_quiz(request):
+def quiz_create(request):
     try:
         titulo = request.POST.get('nome', '')
         disciplina= request.POST.get('disciplina', '')
@@ -60,7 +60,7 @@ def cadastrar_quiz(request):
         
             data = {
                 "status" : "OK",
-                "url_retorno" : "/quiz/listar_quizzes/"+str(disciplina_editando.uuid)+"/" 
+                "url_retorno" : "/quiz/quiz_list/"+str(disciplina_editando.uuid)+"/" 
             }
             return JsonResponse(data)
     except: 
@@ -71,7 +71,7 @@ def cadastrar_quiz(request):
 
 @login_required
 @require_http_methods(['POST'])
-def editar_quiz(request):
+def quiz_edit(request):
 
     # Obtenho as strings via POST
     quiz          = request.POST.get('titulo', '')
@@ -89,18 +89,35 @@ def editar_quiz(request):
 
     return JsonResponse(data, safe=False)
 
-def excluir_quiz(request):
-    try:
-        uuid_editando   = request.POST.get('uuid_editando', '')
-        print('uuid', uuid_editando)
-        quiz      = get_object_or_404(Quizzes, uuid=uuid_editando)
-        print(quiz.titulo)
-        if request.method == "POST":
-            quiz.delete()
-            data = {
-                "status": "OK"
-            }
+def quiz_delete(request):
+    
+    uuid_editando   = request.POST.get('uuid_editando', '')
+    quiz      = get_object_or_404(Quizzes, uuid=uuid_editando)
+    if request.method == "POST":
+        quiz.delete()
+        data = {
+            "status": "OK"
+        }
+    return JsonResponse(data)
+   
+@login_required
+@require_http_methods(['GET'])
+def question_list(request, quiz_uuid):
 
-            return JsonResponse(data, safe=False)
-    except:
-        return rende(request, )
+    # Verifica se a instancia do quiz existe
+    quiz_edit = get_object_or_404(Quizzes, uuid=quiz_uuid)
+    # Lista os quizzes cadastrados por disciplina
+
+    # Query
+    queryset = Question.objects.filter(quiz__uuid=quiz_edit.uuid)
+
+    table = QuestionTable(queryset)
+    RequestConfig(request).configure(table)
+
+    context = {
+        "table" : table,
+        "quiz_uuid": quiz_edit.uuid
+    }
+
+    template_name   = "question/question_list.html"
+    return render(request, template_name, context)

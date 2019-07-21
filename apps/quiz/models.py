@@ -45,3 +45,34 @@ class Quizzes(models.Model):
         else:
             return mark_safe('<span class="kt-badge  kt-badge--warning kt-badge--inline kt-badge--pill">Desativo</span>') 
 
+
+class Question(models.Model):
+    title           = models.CharField(verbose_name="Título", max_length=128, help_text="Digite o nome da disciplina", null=False, blank=False, default=None)
+    description     = models.CharField(verbose_name="Descrição", max_length=512, help_text="Digite a descrição da disciplina", null=True, blank=True, default=None)
+    uuid            = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
+    date_create     = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
+    date_edit       = models.DateTimeField(verbose_name="Data alteração", auto_now_add=True, blank=True, null=True)
+    status          = models.CharField(choices=STATUS_CHOICES, max_length=15, default="A")
+
+    # fks
+    quiz            = models.ForeignKey(Quizzes, verbose_name="Quiz", on_delete=models.PROTECT)
+    user_create     = models.ForeignKey(Usuario, editable=False, related_name="+", on_delete=models.CASCADE)
+
+    time_solution = models.CharField(max_length=16, verbose_name="Tempo de solução", help_text = ("Tempo para resolver a questão"), blank=False, null=False, default=None)
+
+
+class Answer(models.Model):
+
+    uuid            = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
+    date_create     = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
+    date_edit       = models.DateTimeField(verbose_name="Data alteração", auto_now_add=True, blank=True, null=True)
+    status          = models.CharField(choices=STATUS_CHOICES, max_length=15, default="A")
+
+    # Anwers
+    alternative_A = models.CharField(max_length=512, verbose_name="Alternativa A", blank=False, null=False, default=None)
+    alternative_B = models.CharField(max_length=512, verbose_name="Alternativa B", blank=False, null=False, default=None)
+    alternative_C = models.CharField(max_length=512, verbose_name="Alternativa C", blank=False, null=False, default=None)
+    alternative_D = models.CharField(max_length=512, verbose_name="Alternativa D", blank=False, null=False, default=None)
+
+    alternative_true = models.CharField(max_length=16, verbose_name="Alternativa correta", blank=False, null=False)  
+    question = models.ForeignKey(Question, editable=False, related_name="+", on_delete=models.CASCADE)
