@@ -1,19 +1,19 @@
 import django_tables2 as tables
 from .models import (
-    Disciplina
+    Discipline
     )
 
 
-class DisciplinaTable(tables.Table):
+class DisciplineTable(tables.Table):
     # Acessor para obter nome do professor
-    professor= tables.Column(accessor='get_professor')
+    teacher= tables.Column(accessor='get_teacher', verbose_name="Professor")
 
     # Template com as acoes disponiveis
-    acoes = tables.TemplateColumn(template_name='disciplina/disciplina_actions.html', verbose_name="Ações")
+    actions = tables.TemplateColumn(template_name='discipline/discipline_actions.html', verbose_name="Ações")
 
     # Status personalizado
     status = tables.Column(accessor='get_status')
     class Meta:
-        model = Disciplina
-        sequence = ['titulo', 'professor', 'status', 'acoes']
-        exclude = ['id', 'uuid', 'data_criacao', 'data_alteracao', 'descricao', 'usuario_criacao']
+        model = Discipline
+        sequence = ['title', 'teacher', 'status', 'actions']
+        exclude = ['id', 'uuid', 'date_create', 'date_edit', 'description', 'user_create']

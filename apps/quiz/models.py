@@ -7,7 +7,9 @@ from django.urls import reverse
 
 from django.utils.safestring import mark_safe
 
-from apps.core.models import Usuario, Disciplina
+from apps.core.models import (
+    User, Discipline
+    )
 
 # Status choices
 STATUS_CHOICES = (
@@ -17,25 +19,25 @@ STATUS_CHOICES = (
     )
 class Quizzes(models.Model):
 
-    titulo          = models.CharField(verbose_name="Título", max_length=128, help_text="Digite o nome da disciplina", null=False, blank=False, default=None)
-    descricao       = models.CharField(verbose_name="Descrição", max_length=512, help_text="Digite a descrição da disciplina", null=True, blank=True, default=None)
+    title          = models.CharField(verbose_name="Título", max_length=128, help_text="Digite o nome da Discipline", null=False, blank=False, default=None)
+    description       = models.CharField(verbose_name="Descrição", max_length=512, help_text="Digite a descrição da Discipline", null=True, blank=True, default=None)
     uuid            = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
-    data_criacao    = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
-    data_alteracao  = models.DateTimeField(verbose_name="Data alteração", auto_now_add=True, blank=True, null=True)
+    date_create    = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
+    date_edit  = models.DateTimeField(verbose_name="Data alteração", auto_now_add=True, blank=True, null=True)
     status          = models.CharField(choices=STATUS_CHOICES, max_length=15, default="A")
 
     # fks
-    disciplina      = models.ForeignKey(Disciplina, verbose_name="Disciplina", on_delete=models.PROTECT)
-    usuario_criacao = models.ForeignKey(Usuario, editable=False, related_name="+", on_delete=models.CASCADE)
+    discipline      = models.ForeignKey(Discipline, verbose_name="Discipline", on_delete=models.PROTECT)
+    user_create = models.ForeignKey(User, editable=False, related_name="+", on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.pk)
 
     def get_professor(self):
-        return self.professor.nome_completo
+        return self.teacher.full_name
 
-    def get_disciplina(self):
-        return self.disciplina.titulo
+    def get_Discipline(self):
+        return self.Discipline.title
 
     def get_status(self):
         if self.status == 'A':
@@ -47,8 +49,8 @@ class Quizzes(models.Model):
 
 
 class Question(models.Model):
-    title           = models.CharField(verbose_name="Título", max_length=128, help_text="Digite o nome da disciplina", null=False, blank=False, default=None)
-    description     = models.CharField(verbose_name="Descrição", max_length=512, help_text="Digite a descrição da disciplina", null=True, blank=True, default=None)
+    title           = models.CharField(verbose_name="Título", max_length=128, help_text="Digite o nome da Discipline", null=False, blank=False, default=None)
+    description     = models.CharField(verbose_name="Descrição", max_length=512, help_text="Digite a descrição da Discipline", null=True, blank=True, default=None)
     uuid            = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
     date_create     = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
     date_edit       = models.DateTimeField(verbose_name="Data alteração", auto_now_add=True, blank=True, null=True)
@@ -56,7 +58,7 @@ class Question(models.Model):
 
     # fks
     quiz            = models.ForeignKey(Quizzes, verbose_name="Quiz", on_delete=models.PROTECT)
-    user_create     = models.ForeignKey(Usuario, editable=False, related_name="+", on_delete=models.CASCADE)
+    user_create     = models.ForeignKey(User, editable=False, related_name="+", on_delete=models.CASCADE)
 
     time_solution = models.CharField(max_length=16, verbose_name="Tempo de solução", help_text = ("Tempo para resolver a questão"), blank=False, null=False, default=None)
 

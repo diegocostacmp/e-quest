@@ -161,7 +161,7 @@ var KTLoginGeneral = function() {
             var nome    = $('#nome-cadastro').val();
             var email   = $('#email-cadastro').val();
             var senha   = $('#senha-cadastro').val();
-            var tipo    = $('input[name=tipo]:checked', '#cadastro-usuario').val(); 
+            var tipo    = $('input[name=tipo]:checked', '#cadastro-User').val(); 
 
             //token de sessao
             var csrftoken = getCookie('csrftoken');

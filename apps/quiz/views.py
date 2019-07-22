@@ -12,29 +12,27 @@ from django.views.decorators.http import require_http_methods
 from django_tables2 import RequestConfig
 from django.utils import timezone
 
-from apps.core.models import Usuario, Disciplina
+from apps.core.models import User, Discipline
 
 from .models import Quizzes, Question
 from .tables import QuizzesTable, QuestionTable
 
 @login_required
 @require_http_methods(['POST', 'GET'])
-def quiz_list(request, disciplina_uuid):
-    print('chegou no metodo')
-
-    # Verifica se a instancia da disciplina existe
-    disciplina_editando = get_object_or_404(Disciplina, uuid=disciplina_uuid)
-    # Lista os quizzes cadastrados por disciplina
+def quiz_list(request, discipline_uuid):
+    # Verifica se a instancia da Discipline existe
+    discipline_edit = get_object_or_404(Discipline, uuid=discipline_uuid)
+    # Lista os quizzes cadastrados por Discipline
 
     # Query
-    queryset = Quizzes.objects.filter(disciplina__uuid=disciplina_editando.uuid)
+    queryset = Quizzes.objects.filter(discipline__uuid=discipline_edit.uuid)
 
     table = QuizzesTable(queryset)
     RequestConfig(request).configure(table)
 
     context = {
         "table" : table,
-        "disciplina_uuid": disciplina_editando.uuid
+        "discipline_uuid": discipline_edit.uuid
     }
 
     template_name   = "quizzes/quiz_list.html"
@@ -44,23 +42,20 @@ def quiz_list(request, disciplina_uuid):
 @require_http_methods(['POST'])
 def quiz_create(request):
     try:
-        titulo = request.POST.get('nome', '')
-        disciplina= request.POST.get('disciplina', '')
-
-        print(titulo)
-        print(disciplina)
+        title = request.POST.get('name', '')
+        discipline= request.POST.get('discipline', '')
 
         # Get instance
-        disciplina_editando = get_object_or_404(Disciplina, uuid=disciplina)
+        discipline_edit = get_object_or_404(Discipline, uuid=discipline)
 
         # Os dados sao gravados sem a necessidade de forms
         if request.method == "POST":
-            cadastro = Quizzes(titulo=titulo, status="A", disciplina=disciplina_editando, usuario_criacao=request.user)
-            cadastro.save()
+            register = Quizzes(title=title, status="A", discipline=discipline_edit, user_create=request.user)
+            register.save()
         
             data = {
                 "status" : "OK",
-                "url_retorno" : "/quiz/quiz_list/"+str(disciplina_editando.uuid)+"/" 
+                "url_return" : "/quiz/quiz_list/"+str(discipline_edit.uuid)+"/" 
             }
             return JsonResponse(data)
     except: 
@@ -79,7 +74,7 @@ def quiz_edit(request):
 
     # Retorna objeto com o quiz
     quiz_editando = get_object_or_404(Quizzes, uuid=uuid_quiz)
-    print(quiz_editando.disciplina)
+    print(quiz_editando.Discipline)
     quiz_editando.titulo = str(quiz)
     quiz_editando.save()
 
@@ -106,7 +101,9 @@ def question_list(request, quiz_uuid):
 
     # Verifica se a instancia do quiz existe
     quiz_edit = get_object_or_404(Quizzes, uuid=quiz_uuid)
-    # Lista os quizzes cadastrados por disciplina
+
+    # Get discipline
+    discipline = get_object_or_404(Discipline, pk=quiz_edit.discipline.pk)
 
     # Query
     queryset = Question.objects.filter(quiz__uuid=quiz_edit.uuid)
@@ -116,7 +113,7 @@ def question_list(request, quiz_uuid):
 
     context = {
         "table" : table,
-        "quiz_uuid": quiz_edit.uuid
+        "discipline_uuid": discipline.uuid
     }
 
     template_name   = "question/question_list.html"

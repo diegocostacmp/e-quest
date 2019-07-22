@@ -121,7 +121,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 
 
-LOGIN_REDIRECT_URL = 'inicio'
+LOGIN_REDIRECT_URL = 'begin'
 LOGOUT_REDIRECT_URL = '/'
 
 
@@ -130,7 +130,7 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/'
 
 # Model de autenticacao
-AUTH_USER_MODEL = 'core.Usuario'
+AUTH_USER_MODEL = 'core.User'
 
 # Sobreescrevendo template django-tables2 com metronic table
 DJANGO_TABLES2_TEMPLATE = BASE_DIR+'/apps/core/templates/metronic-table.html'

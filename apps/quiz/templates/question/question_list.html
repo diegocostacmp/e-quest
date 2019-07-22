@@ -8,16 +8,15 @@
         <div class="kt-subheader__main">
             <span class="kt-subheader__separator kt-hidden"></span>
             <div class="kt-subheader__breadcrumbs">
-                <a href="{% url 'core:inicio' %}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                <a href="{% url 'core:begin' %}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="{% url 'core:inicio' %}" class="kt-subheader__breadcrumbs-link">
-                    Disciplina
+                <a href="{% url 'core:begin' %}" class="kt-subheader__breadcrumbs-link">
+                    Discipline
                 </a>
                 <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="{% url 'quiz:quiz_list' quiz_uuid %}" class="kt-subheader__breadcrumbs-link">
+                <a href="{% url 'quiz:quiz_list' discipline_uuid %}" class="kt-subheader__breadcrumbs-link">
                     Quiz
                 </a>
-
             </div>
         </div>
         <div class="kt-subheader__toolbar">
@@ -44,7 +43,7 @@
         </div>
         <div class="row">
             <div class="col-xl-12">
-                <input type="hidden" name="" value="{{disciplina_uuid}}" id="disciplina-uuid"> 
+                <input type="hidden" name="" value="{{Discipline_uuid}}" id="Discipline-uuid"> 
                 {% render_table table %}
             </div>
         </div>

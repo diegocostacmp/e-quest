@@ -100,7 +100,7 @@
 
 					<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
 						<!-- begin:: Header -->
-						{% if request.user.tipo == '2' %}
+						{% if request.user.type_profile == '2' %}
 							{% block header %}
 								<!-- begin:: Content Head -->
 								{% include 'partials/menu-sub-header.html' %}
@@ -115,20 +115,20 @@
 						
 
 							<!-- end:: Content -->
-					{% else %}
-						<div class="row">
-							<div class="col-xl-1">
-							</div>
-							<div class="col-xl-10">
-								<div class="kt-section">
-									<div class="alert alert-danger" role="alert">
-										<div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
-										<div class="alert-text">Você não possui permissão para acessar essa tela!</div>
-									</div>
+						{% else %}
+							<div class="row">
+								<div class="col-xl-1">
 								</div>
-							</div>    
-						</div>
-					{% endif %}
+								<div class="col-xl-10">
+									<div class="kt-section">
+										<div class="alert alert-danger" role="alert">
+											<div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
+											<div class="alert-text">Você não possui permissão para acessar essa tela!</div>
+										</div>
+									</div>
+								</div>    
+							</div>
+						{% endif %}
 					</div>
 
 					<!-- begin:: Footer -->

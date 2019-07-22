@@ -1,6 +1,5 @@
 from django.shortcuts import (
-    render, 
-    redirect,
+    render, redirect,
     HttpResponseRedirect,
     get_object_or_404
     )
@@ -28,37 +27,36 @@ from django_tables2 import RequestConfig
 from django.utils import timezone
 
 from .models import (
-    Usuario, Disciplina
+    User, Discipline
     )
-from .tables import DisciplinaTable
+from .tables import DisciplineTable
 
 # tela de login inicial no sistema
 def signIn(request):
     return render(request, 'registration/signIn.html')
 
-# autenticacao com usuario e senha
+# autenticacao com User e senha
 @require_POST
 def postsign(request):
     email = request.POST.get('email')
-    senha = request.POST.get('senha')
+    password = request.POST.get('password')
 
     try:
-        user = authenticate(username=email, password=senha)
+        user = authenticate(username=email, password=password)
         login(request, user)
         if request.user.is_authenticated:
             data = {
                 'status'        : 1,
-                'url_retorno'   : '/inicio/'
+                'url_return'   : '/begin/'
             }
             return JsonResponse(data)
         else:
             data = {
                 'status'        : 0,
-                'url_retorno'   : ''
+                'url_return'   : ''
             }
             return JsonResponse(data)      
     except:
-        print('na excessao')
         template_name = 'registration/signIn.html'
         return render(request, template_name)
 
@@ -67,31 +65,29 @@ def logout_get(request):
     template_name = 'registration/signIn.html'
     return render(request, template_name)
     
-
-
 @require_POST
 def signup(request):
     if request.method == 'POST':
-        nome                = request.POST.get('nome', '')
-        email               = request.POST.get('email', '')
-        senha               = request.POST.get('senha', '')
-        tipo                = request.POST.get('tipo', '')
+        name = request.POST.get('name', '')
+        email = request.POST.get('email', '')
+        password = request.POST.get('password', '')
+        type_profile = request.POST.get('type_profile', '')
 
-        if len(nome) > 0 and len(email) > 0 and len(senha) > 0:
+        if len(name) > 0 and len(email) > 0 and len(password) > 0:
             # verifica se a conta ja existe
-            user = authenticate(request, email=email, password=senha)
+            user = authenticate(request, email=email, password=password)
             if user is None:
-                # cria conta de usuario
+                # cria conta de User
                 # user = get_user_model().objects.create_user(username=nome, email=email, password=senha)
-                user = Usuario.objects._create_user(email=email, password=senha)
+                user = User.objects._create_user(email=email, password=password)
 
                 # Atualiza objeto user e salva no banco
                 if user is not None:
                     user.is_staff = True
 
                     # Professor ou aluno
-                    user.tipo = tipo
-                    user.nome_completo = nome
+                    user.type_profile = type_profile
+                    user.full_name= name
                     user.save()
                     return HttpResponseRedirect('/')
             else:
@@ -110,55 +106,53 @@ def signup(request):
     return render(request, 'registration/signIn.html')
 
 @login_required
-def inicio(request):
-    # Alias do usuario
-    nome_completo   = request.user.nome_completo
-    aux             = nome_completo.split(' ')
+def begin(request):
+    # Alias do User
+    full_name   = request.user.full_name
+    aux             = full_name.split(' ')
     alias_first     = aux[0][:1]
     alias_last      = aux[-1][:1]
     alias_final = str(alias_first) + str(alias_last)
 
-    # Perfil usuario
-    perfil = str(request.user.tipo)
+    # Perfil User
+    profile = str(request.user.type_profile)
 
     # Short name
     short_first = aux[0]
     short_last  = aux[-1]
     short_name  = str(short_first) + str(short_last) 
 
-    # Lista as disciplinas do professor
-    table = DisciplinaTable(Disciplina.objects.filter(usuario_criacao=request.user))
+    # Lista as Disciplines do professor
+    table = DisciplineTable(Discipline.objects.filter(user_create=request.user))
     RequestConfig(request).configure(table)
 
     context = {
         "alias_name"    : alias_final,
-        "tipo_perfil"   : perfil,
+        "tipo_perfil"   : profile,
         "short_name"    : short_name,
         "table"         : table
     }
-    template_name   = "inicio.html"
+    template_name   = "begin.html"
     return render(request, template_name, context)
 
 @login_required
 @require_http_methods(['POST'])
-def cadastrar_disciplina(request):
+def discipline_create(request):
     try:
-        nome_disciplina = request.POST.get('nome', '')
-        print(nome_disciplina)
+        nome_Discipline = request.POST.get('name', '')
+        print(nome_Discipline)
 
         # Os dados sao gravados sem a necessidade de forms
         # ja que esta usando sweetalert
         if request.method == "POST":
-            titulo      = nome_disciplina
-            cadastro    = Disciplina(titulo=titulo, status="A", professor=request.user, usuario_criacao=request.user)
-            cadastro.save()
+            title      = nome_Discipline
+            register    = Discipline(title=title, status="A", teacher=request.user, user_create=request.user)
+            register.save()
 
             data = {
                 "status"        : "OK"
             }
-        
             return JsonResponse(data, safe=False)
-        
     except:
         data = {
             "status": ""
@@ -167,14 +161,13 @@ def cadastrar_disciplina(request):
 
 @login_required
 @require_http_methods(['POST'])
-def excluir_disciplina(request):
-    print('chegou excluir!')
+def discipline_delete(request):
     try:
-        template_name = 'inicio.html'
-        uuid_editando   = request.POST.get('uuid_editando', '')
-        disciplina      = get_object_or_404(Disciplina, uuid=uuid_editando)
+        template_name = 'begin.html'
+        uuid_edit   = request.POST.get('uuid_edit', '')
+        discipline      = get_object_or_404(Discipline, uuid=uuid_edit)
         if request.method == "POST":
-            disciplina.delete()
+            discipline.delete()
 
             data = {
                 "status": "OK"
@@ -186,20 +179,20 @@ def excluir_disciplina(request):
     
 @login_required
 @require_http_methods(['POST'])
-def editar_disciplina(request):
+def discipline_edit(request):
 
     # Obtenho as strings via POST
-    disciplina          = request.POST.get('titulo', '')
-    uuid_disciplina     = request.POST.get('uuid_disciplina', '')
+    discipline          = request.POST.get('title', '')
+    discipline_uuid     = request.POST.get('discipline_uuid', '')
 
-    # Retorna objeto com a disciplina
-    disciplina_editando = get_object_or_404(Disciplina, uuid=uuid_disciplina)
-    disciplina_editando.titulo = str(disciplina)
-    disciplina_editando.save()
+    # Retorna objeto com a Discipline
+    discipline_edit = get_object_or_404(Discipline, uuid=discipline_uuid)
+    discipline_edit.title = str(discipline)
+    discipline_edit.save()
 
     data = {
         'status': 'OK',
-        'url_retorno': '/inicio/'
+        'url_return': '/begin/'
     }
 
     return JsonResponse(data, safe=False)

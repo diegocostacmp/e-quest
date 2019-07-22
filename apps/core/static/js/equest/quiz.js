@@ -15,10 +15,10 @@ function getCookie(name) {
     return cookieValue;
 }
 
-$('.excluir-quiz').click(function(e) {
-    var url_destino, uuid_editando;
-    url_destino = $(this).attr('cs-url');
-    uuid_editando = $(this).attr('cs-id');
+$('.quiz-delete').click(function(e) {
+    var url_destiny, uuid_edit;
+    url_destiny = $(this).attr('cs-url');
+    uuid_edit = $(this).attr('eg-id');
 
     Swal.fire({
         title: 'Tem certeza que deseja excluir?',
@@ -36,8 +36,8 @@ $('.excluir-quiz').click(function(e) {
             $.ajax({
                 headers : {'X-CSRFToken': csrftoken},
                 type    : 'POST',
-                url     : String(url_destino),
-                data    : {'uuid_editando':uuid_editando},
+                url     : String(url_destiny),
+                data    : {'uuid_edit':uuid_edit},
                 datatype: 'json',
 
                 success: function(data) {
@@ -66,11 +66,10 @@ $('.excluir-quiz').click(function(e) {
 
 
 // Adicionar Quizzes
-$('#adicionar-quizzes').click(function(e) {
+$('#quiz-create').click(function(e) {
 
-    // Get uuid disciplina
-    var disciplina = $('#disciplina-uuid').val();
-    console.log(disciplina);
+    // Get uuid Discipline
+    var discipline = $('#discipline-uuid').val();
 
     Swal.fire({
         title: 'Digite o nome do quiz',
@@ -99,7 +98,7 @@ $('#adicionar-quizzes').click(function(e) {
                 url     : '/quiz/quiz_create/',
                 data    : {
                     'nome': value,
-                    'disciplina': disciplina} ,
+                    'discipline': discipline} ,
                 datatype: 'json',
 
                 success: function(data) {
@@ -112,7 +111,7 @@ $('#adicionar-quizzes').click(function(e) {
                             timer: 2500
                         })
                         window.setTimeout(function(){ 
-                            document.location = data.url_retorno;
+                            document.location = data.url_return;
                         } ,2500);
                     }
                 },
@@ -125,15 +124,15 @@ $('#adicionar-quizzes').click(function(e) {
 });
 
 // Metodo de editar quiz
-$('.editar-quiz').click(function(e) {
-    var uuid_quiz, titulo_quiz;
-    uuid_quiz = $(this).attr("cs-id");
-    titulo_quiz = $(this).attr("cs-titulo");
+$('.quiz-edit').click(function(e) {
+    var uuid_quiz, titles_quiz;
+    uuid_quiz = $(this).attr("eg-id");
+    title_quiz = $(this).attr("eg-title");
 
     Swal.fire({
         title: 'Editando quiz',
         input: 'text',
-        inputValue: titulo_quiz,
+        inputValue: title_quiz,
         inputAttributes: {
         autocapitalize: 'off'
         },
@@ -156,7 +155,7 @@ $('.editar-quiz').click(function(e) {
                 headers : {'X-CSRFToken': csrftoken},
                 type    : 'POST',
                 url     : "/quiz/quiz_edit/",
-                data    : {"titulo":value, "uuid_quiz": uuid_quiz},
+                data    : {"title":value, "uuid_quiz": uuid_quiz},
                 datatype: 'json',
 
                 success: function(data) {

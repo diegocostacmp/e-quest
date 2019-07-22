@@ -17,13 +17,10 @@
 
 // As classes e acoes comuns a todos os Apps
 // devem ser inseridos neste arquivo.
-
-$('.excluir-disciplina').click(function(e) {
-    var url_destino, uuid_editando;
-    url_destino = $(this).attr('cs-url');
-    uuid_editando = $(this).attr('cs-id');
-
-    console.log(url_destino);
+$('.discipline-delete').click(function(e) {
+    var url_destiny, uuid_edit;
+    url_destiny = $(this).attr('eg-url');
+    uuid_edit = $(this).attr('eg-id');
 
 
     Swal.fire({
@@ -42,8 +39,8 @@ $('.excluir-disciplina').click(function(e) {
             $.ajax({
                 headers : {'X-CSRFToken': csrftoken},
                 type    : 'POST',
-                url     : String(url_destino),
-                data    : {'uuid_editando':uuid_editando},
+                url     : String(url_destiny),
+                data    : {'uuid_edit':uuid_edit},
                 datatype: 'json',
 
                 success: function(data) {
@@ -70,10 +67,10 @@ $('.excluir-disciplina').click(function(e) {
     })
 })
 
-// Chamada do metodo cadastrar_disciplina
-$('#adicionar-disciplina').click(function(e) {
+// Chamada do metodo cadastrar_Discipline
+$('#discipline-create').click(function(e) {
     Swal.fire({
-        title: 'Digite o nome da disciplina',
+        title: 'Digite o nome da Discipline',
         input: 'text',
         inputAttributes: {
         autocapitalize: 'off'
@@ -86,7 +83,7 @@ $('#adicionar-disciplina').click(function(e) {
         cancelButtonText: '<i class="fa fa-times"></i> Cancelar',
         inputValidator: (value) => {
             if (!value) {
-                return 'Preencha o nome da disciplina!'
+                return 'Preencha o nome da Discipline!'
             }
         },
         preConfirm: (value) => {
@@ -96,8 +93,8 @@ $('#adicionar-disciplina').click(function(e) {
             $.ajax({
                 headers : {'X-CSRFToken': csrftoken},
                 type    : 'POST',
-                url     : '/cadastrar_disciplina/',
-                data    : {'nome':value},
+                url     : '/discipline_create/',
+                data    : {'name':value},
                 datatype: 'json',
 
                 success: function(data) {
@@ -122,16 +119,16 @@ $('#adicionar-disciplina').click(function(e) {
     })
 });
 
-// Metodo de cadastro de disciplina
-$('.editar-disciplina').click(function(e) {
-    var uuid_disciplina, titulo_disciplina;
-    uuid_disciplina = $(this).attr("cs-id");
-    titulo_disciplina = $(this).attr("cs-titulo");
+// Metodo de cadastro de Discipline
+$('.discipline-edit').click(function(e) {
+    var discipline_uuid, discipline_title;
+    discipline_uuid = $(this).attr("eg-id");
+    discipline_title = $(this).attr("eg-title");
 
     Swal.fire({
-        title: 'Editando disciplina',
+        title: 'Editando Disciplina',
         input: 'text',
-        inputValue: titulo_disciplina,
+        inputValue: discipline_title,
         inputAttributes: {
         autocapitalize: 'off'
         },
@@ -143,7 +140,7 @@ $('.editar-disciplina').click(function(e) {
         cancelButtonText: '<i class="fa fa-times"></i> Cancelar',
         inputValidator: (value) => {
             if (!value) {
-                return 'Preencha o nome da disciplina!'
+                return 'Preencha o nome da Disciplina!'
             }
         },
         preConfirm: (value) => {
@@ -153,8 +150,8 @@ $('.editar-disciplina').click(function(e) {
             $.ajax({
                 headers : {'X-CSRFToken': csrftoken},
                 type    : 'POST',
-                url     : "/editar_disciplina/",
-                data    : {"titulo":value, "uuid_disciplina": uuid_disciplina},
+                url     : "/discipline_edit/",
+                data    : {"title":value, "discipline_uuid": discipline_uuid},
                 datatype: 'json',
 
                 success: function(data) {

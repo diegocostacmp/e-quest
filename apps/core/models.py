@@ -53,7 +53,7 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
         return self._create_user(email, password, **extra_fields)
 
-class Usuario(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
 
     SEXO_CHOICES = (
         ("F", "Feminino"),
@@ -96,24 +96,24 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         ("Viúvo", "Viúvo")
     )
 
-    # Informacoes do usuario
-    nome_completo               = models.CharField(max_length=50, null=False, verbose_name="Nome Completo")
+    # Informacoes do User
+    full_name              = models.CharField(max_length=50, null=False, verbose_name="Nome Completo")
     username                    = models.CharField(max_length=512, blank=True, null=True, default=None)
     email                       = models.EmailField(null=False, verbose_name="E-mail", unique=True)
     uid                         = models.UUIDField(verbose_name='Identificador Unico', default=uuid.uuid4, editable=False)
     
     
     cpf                         = models.CharField(max_length=14, null=False, verbose_name="CPF")
-    data_nascimento             = models.DateField(null=True, verbose_name="Data de Nascimento")
-    sexo                        = models.CharField(null=True, verbose_name="Sexo", choices=SEXO_CHOICES, max_length=10)
-    estado_civil                = models.CharField(null=True, verbose_name="Estado Civil", choices=ESTADO_CIVIL_CHOICES, max_length=10)
-    telefone                    = models.CharField(null=True, verbose_name="Telefone", max_length=19)
-    logradouro                  = models.CharField(null=True, max_length=150, verbose_name="Logradouro")
-    numero_endereco             = models.PositiveIntegerField(null=True, verbose_name="Número")
-    complemento_endereco        = models.CharField(max_length=200, verbose_name="Complemento", null=False)
-    estado                      = models.CharField(null=True, choices=ESTADO_CHOICES, max_length=15)
-    cidade                      = models.CharField(null=True, max_length=40, verbose_name="Cidade")
-    tipo                        = models.CharField(null=True, max_length=10, verbose_name="Tipo")   
+    birth_date             = models.DateField(null=True, verbose_name="Data de Nascimento")
+    sex                        = models.CharField(null=True, verbose_name="Sexo", choices=SEXO_CHOICES, max_length=10)
+    marital_status               = models.CharField(null=True, verbose_name="Estado Civil", choices=ESTADO_CIVIL_CHOICES, max_length=10)
+    phone                   = models.CharField(null=True, verbose_name="Telefone", max_length=19)
+    street                  = models.CharField(null=True, max_length=150, verbose_name="Logradouro")
+    street_number            = models.PositiveIntegerField(null=True, verbose_name="Número")
+    complement      = models.CharField(max_length=200, verbose_name="Complemento", null=False)
+    state                     = models.CharField(null=True, choices=ESTADO_CHOICES, max_length=15)
+    city                    = models.CharField(null=True, max_length=40, verbose_name="Cidade")
+    type_profile                      = models.CharField(null=True, max_length=10, verbose_name="Tipo")   
     
 
     USERNAME_FIELD = 'email'
@@ -123,27 +123,27 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         return str(self.pk)
 
     def get_tipo_user(self):
-        return self.tipo
+        return self.type_profile
 
-# Cadastro de disciplina
-class Disciplina(models.Model):
+# Cadastro de Discipline
+class Discipline(models.Model):
     
-    titulo          = models.CharField(verbose_name="Título", max_length=128, help_text="Digite o nome da disciplina", null=False, blank=False, default=None)
-    descricao       = models.CharField(verbose_name="Descrição", max_length=512, help_text="Digite a descrição da disciplina", null=True, blank=True, default=None)
+    title         = models.CharField(verbose_name="Título", max_length=128, help_text="Digite o nome da Discipline", null=False, blank=False, default=None)
+    description       = models.CharField(verbose_name="Descrição", max_length=512, help_text="Digite a descrição da Discipline", null=True, blank=True, default=None)
     uuid            = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
-    data_criacao    = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
-    data_alteracao  = models.DateTimeField(verbose_name="Data alteração", auto_now_add=True, blank=True, null=True)
+    date_create   = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
+    date_edit  = models.DateTimeField(verbose_name="Data alteração", auto_now_add=True, blank=True, null=True)
     status          = models.CharField(choices=STATUS_CHOICES, max_length=15, default="A")
-    usuario_criacao = models.ForeignKey(Usuario, editable=False, related_name="+", on_delete=models.CASCADE)
+    user_create = models.ForeignKey(User, editable=False, related_name="+", on_delete=models.CASCADE)
 
     # fks
-    professor       = models.ForeignKey(Usuario, editable=True, on_delete=models.PROTECT)
+    teacher       = models.ForeignKey(User, editable=True, on_delete=models.PROTECT, verbose_name="Professor")
 
     def __str__(self):
         return str(self.pk)
 
     def get_professor(self):
-        return self.professor.nome_completo
+        return self.teacher.full_name
 
     def get_status(self):
         if self.status == 'A':
