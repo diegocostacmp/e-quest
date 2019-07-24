@@ -113,7 +113,8 @@ def question_list(request, quiz_uuid):
 
     context = {
         "table" : table,
-        "discipline_uuid": discipline.uuid
+        "discipline_uuid": discipline.uuid,
+        "quiz_uuid": quiz_edit.uuid
     }
 
     template_name   = "question/question_list.html"

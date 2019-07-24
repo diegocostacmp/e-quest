@@ -38,6 +38,7 @@ def signIn(request):
 # autenticacao com User e senha
 @require_POST
 def postsign(request):
+    
     email = request.POST.get('email')
     password = request.POST.get('password')
 

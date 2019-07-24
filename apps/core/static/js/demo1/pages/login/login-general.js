@@ -98,18 +98,18 @@ var KTLoginGeneral = function() {
 
             // Email e senha
             var email   = $('#email').val();
-            var senha   = $('#senha').val();
+            var password  = $('#password').val();
 
             $.ajax({
                 headers : {'X-CSRFToken': csrftoken},
                 type    : 'POST',
                 url     : '/postsign/',
-                data    : {'email':email, 'senha':senha},
+                data    : {'email':email, 'password':password},
                 datatype: 'json',
 
                 success: function(data) {
                 	if(data.status == 1){
-                        document.location = data.url_retorno;
+                        document.location = data.url_return;
                     }
                 },
                 error: function(){

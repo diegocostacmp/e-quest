@@ -179,3 +179,37 @@ $('.quiz-edit').click(function(e) {
         },
     })
 });
+
+// Adding question with your awnser
+ function createQuestion(){
+     
+    //  Ajax
+    $.ajax({
+        headers : {'X-CSRFToken': csrftoken},
+        type    : 'POST',
+        url     : "/quiz/question_book/",
+        data    : {"quiz_uuid":quiz_uuid},
+        datatype: 'json',
+
+        success: function(data){
+
+        },
+        error: function(){
+            
+        }
+
+
+    });
+     //console.log($('input[name=question-selected]:checked', '#form-alternatives').val());
+    $('#question_manager').modal('show');
+}; 
+
+var KTAutosize = { 
+    init: function () {
+        var i; 
+        i = $("#kt_autosize"), autosize(i), autosize.update(i) 
+    } 
+};
+jQuery(document).ready(function () { 
+    KTAutosize.init() 
+});
