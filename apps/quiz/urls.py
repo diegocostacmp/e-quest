@@ -16,5 +16,5 @@ urlpatterns = [
     path('quiz_delete/', quiz_delete, name='quiz_delete'),
 
     path('question_list/<uuid:quiz_uuid>/', question_list, name='question_list'),
-    path('question_book/<uuid:quiz_uuid>/', question_book, name='question_book')
+    path('question_book/', question_book, name='question_book')
 ]

@@ -11,6 +11,7 @@ from django.views.decorators.http import require_http_methods
 
 from django_tables2 import RequestConfig
 from django.utils import timezone
+from django.template.loader import render_to_string
 
 from apps.core.models import User, Discipline
 
@@ -119,3 +120,13 @@ def question_list(request, quiz_uuid):
 
     template_name   = "question/question_list.html"
     return render(request, template_name, context)
+
+
+@login_required
+@require_http_methods(['POST'])
+def question_book(request):
+    data = dict()
+    quiz_uuid = request.POST.get('quiz_uuid', '')
+    context = {}
+    context['data'] = render_to_string("question/question_form.html")
+    return JsonResponse(context)

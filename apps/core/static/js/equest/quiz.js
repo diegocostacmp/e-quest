@@ -182,6 +182,11 @@ $('.quiz-edit').click(function(e) {
 
 // Adding question with your awnser
  function createQuestion(){
+    var quiz_uuid = $('#question-create').val();
+    console.log(quiz_uuid); 
+
+    //token de sessao
+    var csrftoken = getCookie('csrftoken');
      
     //  Ajax
     $.ajax({
@@ -191,17 +196,20 @@ $('.quiz-edit').click(function(e) {
         data    : {"quiz_uuid":quiz_uuid},
         datatype: 'json',
 
-        success: function(data){
-
+        success: function(context){
+            // Exibe modal
+            $('#question_manager').modal('show');
+            
+            // html data
+            $('#modal_body_question').html(context.data);
         },
         error: function(){
-            
+            console.log('Houve algum problema ao abrir o modal');
         }
 
 
     });
      //console.log($('input[name=question-selected]:checked', '#form-alternatives').val());
-    $('#question_manager').modal('show');
 }; 
 
 var KTAutosize = { 
