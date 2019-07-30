@@ -181,14 +181,12 @@ $('.quiz-edit').click(function(e) {
 });
 
 // Adding question with your awnser
- function createQuestion(){
+ function questionBook(){
     var quiz_uuid = $('#question-create').val();
-    console.log(quiz_uuid); 
 
     //token de sessao
     var csrftoken = getCookie('csrftoken');
-     
-    //  Ajax
+    
     $.ajax({
         headers : {'X-CSRFToken': csrftoken},
         type    : 'POST',
@@ -206,11 +204,11 @@ $('.quiz-edit').click(function(e) {
         error: function(){
             console.log('Houve algum problema ao abrir o modal');
         }
-
-
     });
-     //console.log($('input[name=question-selected]:checked', '#form-alternatives').val());
-}; 
+}
+$('#question-save').click(function(){
+    alert('click to save.');
+});
 
 var KTAutosize = { 
     init: function () {
@@ -218,6 +216,58 @@ var KTAutosize = {
         i = $("#kt_autosize"), autosize(i), autosize.update(i) 
     } 
 };
-jQuery(document).ready(function () { 
-    KTAutosize.init() 
+
+// Class definition
+var KTFormControls = function () {
+    // Private functions
+    
+    var questionValidate = function () {
+        $( "#question_form").validate({
+            // define validation rules
+            rules: {
+                message: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 1024,
+                },
+                kt_autosize_A:{
+                    required: true
+                },
+                kt_autosize_B:{
+                    required: true
+                },
+                kt_autosize_C:{
+                    required: true
+                },
+                kt_autosize_D:{
+                    required: true
+                },
+                kt_autosize_seconds:{
+                    required: true
+                }
+            },
+            
+            //display error alert on form submit  
+            invalidHandler: function(event, validator) {     
+                var alert = $('#message');
+                alert.removeClass('kt--hide').show();
+                KTUtil.scrollTop();
+            },
+            submitHandler: function (form) {
+                //form[0].submit(); // submit the form
+            }
+        });       
+    }
+    return {
+        // public functions
+        init: function() {
+            questionValidate(); 
+        }
+    };
+}();
+
+$(document).ready(function () { 
+    KTAutosize.init(); 
+    KTFormControls.init();
+    
 });

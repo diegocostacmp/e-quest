@@ -1,9 +1,9 @@
-<form>
+
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label for="message-text" class="form-control-label">Descreva a pergunta que sera apresentada</label>
-                <textarea class="form-control" id="message-text" rows="14"></textarea>
+                <textarea class="form-control" id="message" rows="14" name="message"></textarea>
             </div>
         </div>
         <div class="col-md-6">
@@ -12,37 +12,37 @@
                 <div class="input-group">
                     <div class="input-group-append">
                         <span class="input-group-text">
-                            <input type="radio" id="question-selected" name="question-selected" value="A">
+                            <input type="radio" id="question_selected" name="question_selected" value="A">
                         </span>
                     </div>
-                    <textarea class="form-control" id="kt_autosize" rows="1" placeholder="Alternativa A"></textarea>
+                    <textarea class="form-control" id="kt_autosize_A" name="kt_autosize_A" rows="1" placeholder="Alternativa A"></textarea>
                 </div>
                 <br>
                 <div class="input-group">
                     <div class="input-group-append">
                         <span class="input-group-text">
-                            <input type="radio" id="question-selected" name="question-selected" value="B">
+                            <input type="radio" id="question_selected" name="question_selected" value="B">
                         </span>
                     </div>
-                    <textarea class="form-control" id="kt_autosize" rows="1" placeholder="Alternativa B"></textarea>
+                    <textarea class="form-control" id="kt_autosize_B" name="kt_autosize_B" rows="1" placeholder="Alternativa B"></textarea>
                 </div>
                 <br>
                 <div class="input-group">
                     <div class="input-group-append">
                         <span class="input-group-text">
-                            <input type="radio" id="question-selected" name="question-selected" value="C">
+                            <input type="radio" id="question_selected" name="question_selected" value="C">
                         </span>
                     </div>
-                    <textarea class="form-control" id="kt_autosize" rows="1" placeholder="Alternativa C"></textarea>
+                    <textarea class="form-control" id="kt_autosize_C" name="kt_autosize_C" rows="1" placeholder="Alternativa C"></textarea>
                 </div>
                 <br>
                 <div class="input-group">
                     <div class="input-group-append">
                         <span class="input-group-text">
-                            <input type="radio" id="question-selected" name="question-selected" value="D">
+                            <input type="radio" id="question_selected" name="question_selected" value="D">
                         </span>
                     </div>
-                    <textarea class="form-control" id="kt_autosize" rows="1" placeholder="Alternativa D"></textarea>
+                    <textarea class="form-control" id="kt_autosize_D" name="kt_autosize_D" rows="1" placeholder="Alternativa D"></textarea>
                 </div>
                 <br>
                 <label for="message-text" class="form-control-label"><strong>Tempo para questao </strong>(em segundos)</label>
@@ -52,10 +52,9 @@
                             <i class="flaticon-time"></i>
                         </span>
                     </div>
-                    <textarea class="form-control" id="kt_autosize" rows="1"></textarea>
+                    <textarea class="form-control" id="kt_autosize_seconds" name="kt_autosize_seconds" rows="1"></textarea>
                 </div>
                 <br>
             </div>
         </div>
     </div>
-</form>
