@@ -15,8 +15,12 @@ from django.template.loader import render_to_string
 
 from apps.core.models import User, Discipline
 
-from .models import Quizzes, Question
-from .tables import QuizzesTable, QuestionTable
+from .models import (Quizzes, Question,
+    Answer
+    )
+from .tables import (QuizzesTable,
+    QuestionTable
+    )
 
 @login_required
 @require_http_methods(['POST', 'GET'])
@@ -130,3 +134,45 @@ def question_book(request):
     context = {}
     context['data'] = render_to_string("question/question_form.html")
     return JsonResponse(context)
+
+
+@login_required
+@require_http_methods(['POST'])
+def question_create(request):
+    try:
+        # Question
+        quiz_uuid = request.POST.get('quiz_uuid', '')
+        message = request.POST.get('message', '')
+
+        # Answer
+        msg_A = request.POST.get('msg_A', '')
+        msg_B = request.POST.get('msg_B', '')
+        msg_C = request.POST.get('msg_C', '')
+        msg_D = request.POST.get('msg_D', '')
+        seconds = request.POST.get('seconds', '')
+        optSelected = request.POST.get('optSelected', '')
+
+        print(message, msg_A, msg_B, msg_C, msg_D, seconds, optSelected)
+
+        # Get quiz edit
+        quiz_edit = get_object_or_404(Quizzes, uuid=quiz_uuid)
+
+        # Create question
+        if request.method == "POST":
+            question_register = Quizzes(title=message, status="A", time_solution=seconds, quiz=quiz_edit.pk, user_create=request.user)
+            question_register.save()
+
+            answer_register = Answer(question=question_register.pk, alternative_A=msg_A, alternative_B=msg_B, alternative_C=msg_C, alternative_D=msg_D, user_create=request.user, alternative_true=optSelected)
+            answer_register.save()
+
+        data = {
+            "status": "OK"
+        }
+        return JsonResponse(data)
+    except:
+        data = {
+            "status":"",
+            "msg_return": "Desculpe, tivemos algum problema ao cadastrar a questão"
+        }
+        return JsonResponse(data)
+        

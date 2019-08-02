@@ -3,7 +3,8 @@ from .views import (
     quiz_list, quiz_create,
     quiz_edit, quiz_delete,
 
-    question_list, question_book
+    question_list, question_book,
+    question_create
     )
 
 app_name='quiz'
@@ -16,5 +17,6 @@ urlpatterns = [
     path('quiz_delete/', quiz_delete, name='quiz_delete'),
 
     path('question_list/<uuid:quiz_uuid>/', question_list, name='question_list'),
-    path('question_book/', question_book, name='question_book')
+    path('question_book/', question_book, name='question_book'),
+    path('question_create/', question_create, name='question_create')
 ]

@@ -206,9 +206,6 @@ $('.quiz-edit').click(function(e) {
         }
     });
 }
-$('#question-save').click(function(){
-    alert('click to save.');
-});
 
 var KTAutosize = { 
     init: function () {
@@ -220,7 +217,6 @@ var KTAutosize = {
 // Class definition
 var KTFormControls = function () {
     // Private functions
-    
     var questionValidate = function () {
         $( "#question_form").validate({
             // define validation rules
@@ -254,9 +250,70 @@ var KTFormControls = function () {
                 KTUtil.scrollTop();
             },
             submitHandler: function (form) {
-                //form[0].submit(); // submit the form
+                //token de sessao
+                var  quiz_uuid, csrftoken, msg_A, msg_B, msg_C, msg_D, seconds, message, optSelected, quiz_uuid;
+                quiz_uuid = $('#quiz-uuid').val();
+                message = $('#message').val();
+                msg_A = $('#kt_autosize_A').val();
+                msg_B = $('#kt_autosize_B').val();
+                msg_C = $('#kt_autosize_C').val();
+                msg_D = $('#kt_autosize_D').val();
+                seconds = $('#kt_autosize_seconds').val();
+                optSelected = $('input[name=question_selected]:checked', '#form-alternatives').val();
+                
+                alert(quiz_edit);
+                if(optSelected == undefined){
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Selecione a alternativa correta!'
+                    })
+                }else{
+                    csrftoken = getCookie('csrftoken');
+                    
+                    $.ajax({
+                        headers : {'X-CSRFToken': csrftoken},
+                        type    : 'POST',
+                        url     : '/quiz/question_create/',
+                        data    : {
+                            'quiz_uuid':quiz_uuid,
+                            'message': message,
+                            'msg_A': msg_A,
+                            'msg_B': msg_B,
+                            'msg_C': msg_C,
+                            'msg_D': msg_D,
+                            'seconds': seconds,
+                            'optSelected': optSelected
+                        },
+                        datatype: 'json',
+    
+                        success: function(data) {
+                            if(data.status == "OK"){
+                                Swal.fire({
+                                    position: 'center',
+                                    type: 'success',
+                                    title: 'Questao cadastrada com sucesso',
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                })
+                                window.setTimeout(function(){ 
+                                    document.location = data.url_return;
+                                } ,2500);
+                            }
+                        },
+                        error: function(data){
+                            if(data.status == ""){
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'Desculpe...',
+                                    text: data.msg_return
+                                })
+
+                            }
+                        }
+                    })
+                }
             }
-        });       
+        })      
     }
     return {
         // public functions
