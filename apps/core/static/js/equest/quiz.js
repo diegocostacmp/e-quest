@@ -164,12 +164,12 @@ $('.quiz-edit').click(function(e) {
                             position: 'center',
                             type: 'success',
                             title: 'Quiz editado com sucesso',
-                            showConfirmButton: false,
-                            timer: 2500
+                            showConfirmButton: true,
+                            timer: 2500,
+                            onClose: () => {
+                                location.reload();
+                            }
                         })
-                        window.setTimeout(function(){ 
-                            location.reload();
-                        } ,2500);
                     }
                 },
                 error: function(data){
@@ -261,7 +261,6 @@ var KTFormControls = function () {
                 seconds = $('#kt_autosize_seconds').val();
                 optSelected = $('input[name=question_selected]:checked', '#form-alternatives').val();
                 
-                alert(quiz_edit);
                 if(optSelected == undefined){
                     Swal.fire({
                         type: 'warning',
@@ -288,16 +287,21 @@ var KTFormControls = function () {
     
                         success: function(data) {
                             if(data.status == "OK"){
-                                Swal.fire({
-                                    position: 'center',
-                                    type: 'success',
-                                    title: 'Questao cadastrada com sucesso',
+                                $('#question_manager').modal('hide');
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
                                     showConfirmButton: false,
-                                    timer: 2500
+                                    timer: 3000
+                                });
+                                Toast.fire({
+                                    type: 'success',
+                                    title: 'Cadastrado com sucesso!',
+                                    onClose: () =>{
+                                        location.reload();
+                                    }
                                 })
-                                window.setTimeout(function(){ 
-                                    document.location = data.url_return;
-                                } ,2500);
+                                
                             }
                         },
                         error: function(data){
@@ -307,11 +311,13 @@ var KTFormControls = function () {
                                     title: 'Desculpe...',
                                     text: data.msg_return
                                 })
-
+    
                             }
                         }
                     })
+
                 }
+                
             }
         })      
     }
@@ -322,6 +328,61 @@ var KTFormControls = function () {
         }
     };
 }();
+
+$('.question-delete').click(function(e) {
+    var url_destiny, uuid_edit;
+    url_destiny = $(this).attr('eg-url');
+    uuid_edit = $(this).attr('eg-id');
+
+    Swal.fire({
+        title: 'Tem certeza que deseja excluir?',
+        text: "Esta ação não pode ser desfeita!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '<i class="fa fa-check"></i> Sim, quero!',
+        cancelButtonText: '<i class="fa fa-times"></i> Não, Cancelar',
+        preConfirm: (value) => {
+            //token de sessao
+            var csrftoken = getCookie('csrftoken');
+
+            $.ajax({
+                headers : {'X-CSRFToken': csrftoken},
+                type    : 'POST',
+                url     : String(url_destiny),
+                data    : {'uuid_edit':uuid_edit},
+                datatype: 'json',
+
+                success: function(data) {
+                    if(data.status == "OK"){
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                        Toast.fire({
+                            type: 'success',
+                            title: 'Excluído com sucesso!',
+                            onClose: () =>{
+                                location.reload();
+                            }
+                        })
+                        
+                    }
+                },
+                error: function(){
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Desculpe...',
+                        text: 'Existem dependências associadas!'
+                    })
+                }
+            });
+        },
+    })
+})
 
 $(document).ready(function () { 
     KTAutosize.init(); 

@@ -89,6 +89,7 @@ def quiz_edit(request):
 
     return JsonResponse(data, safe=False)
 
+@login_required
 def quiz_delete(request):
     
     uuid_editando   = request.POST.get('uuid_editando', '')
@@ -152,17 +153,15 @@ def question_create(request):
         seconds = request.POST.get('seconds', '')
         optSelected = request.POST.get('optSelected', '')
 
-        print(message, msg_A, msg_B, msg_C, msg_D, seconds, optSelected)
-
         # Get quiz edit
         quiz_edit = get_object_or_404(Quizzes, uuid=quiz_uuid)
 
         # Create question
         if request.method == "POST":
-            question_register = Quizzes(title=message, status="A", time_solution=seconds, quiz=quiz_edit.pk, user_create=request.user)
+            question_register = Question(title=message, status="A", time_solution=str(seconds), quiz=quiz_edit, user_create=request.user)
             question_register.save()
 
-            answer_register = Answer(question=question_register.pk, alternative_A=msg_A, alternative_B=msg_B, alternative_C=msg_C, alternative_D=msg_D, user_create=request.user, alternative_true=optSelected)
+            answer_register = Answer(question=question_register, alternative_A=msg_A, alternative_B=msg_B, alternative_C=msg_C, alternative_D=msg_D, user_create=request.user, alternative_true=optSelected)
             answer_register.save()
 
         data = {
@@ -176,3 +175,21 @@ def question_create(request):
         }
         return JsonResponse(data)
         
+@login_required
+@require_http_methods(['POST'])        
+def question_delete(request):
+    uuid_edit = request.POST.get('uuid_edit', '')
+    question = get_object_or_404(Question, uuid=uuid_edit)
+
+    exists_answer = get_object_or_404(Answer, question=question.pk)
+    if exists_answer is not None:
+        if request.method == "POST":
+            exists_answer.delete()
+            question.delete()
+    else:
+        print('Desculpe, tivemos algum problema')
+
+    data = {
+        "status": "OK"
+    }
+    return JsonResponse(data)

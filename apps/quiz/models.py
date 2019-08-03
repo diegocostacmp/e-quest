@@ -78,4 +78,4 @@ class Answer(models.Model):
     alternative_D = models.CharField(max_length=512, verbose_name="Alternativa D", blank=False, null=False, default=None)
 
     alternative_true = models.CharField(max_length=16, verbose_name="Alternativa correta", blank=False, null=False)  
-    question = models.ForeignKey(Question, editable=False, related_name="+", on_delete=models.CASCADE)
+    question = models.OneToOneField(Question, editable=False, related_name="question_related", on_delete=models.CASCADE)
