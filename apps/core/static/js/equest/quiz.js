@@ -236,7 +236,7 @@ function questionBookPreview(questionUuid){
             optD = $("#optD").html(context.optD);
             alternativeTrue = context.alternativeTrue;
 
-            $("#question-title-preview").empty();
+            $("#question-title-preview").html("Pergunta:");
 
             if(alternativeTrue ==  "A"){
                 $("#trueA").addClass("fa fa-check");
