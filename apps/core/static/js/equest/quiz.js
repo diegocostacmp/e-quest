@@ -208,17 +208,17 @@ $('.quiz-edit').click(function(e) {
 }
 
 // Preview question
-function questionBookPreview(){
-    // var quiz_uuid = $('#question-create').val();
-
-    //token de sessao
+function questionBookPreview(questionUuid){
+    //variables
+    var csrftoken, optA, optB, optC, optD, alternativeTrue;
+    //token de sessaos
     var csrftoken = getCookie('csrftoken');
     
     $.ajax({
         headers : {'X-CSRFToken': csrftoken},
         type    : 'POST',
         url     : "/quiz/question_book_preview/",
-        data    : {"quiz_uuid":1},
+        data    : {"questionUuid": questionUuid},
         datatype: 'json',
 
         success: function(context){
@@ -227,6 +227,31 @@ function questionBookPreview(){
             
             // html data
             $('#body_question_preview').html(context.string_html);
+            
+            // Input data variables
+            $("#questionTitle").html(context.title);
+            optA = $("#optA").html(context.optA);
+            optB = $("#optB").html(context.optB);
+            optC = $("#optC").html(context.optC);
+            optD = $("#optD").html(context.optD);
+            alternativeTrue = context.alternativeTrue;
+
+            $("#question-title-preview").empty();
+
+            if(alternativeTrue ==  "A"){
+                $("#trueA").addClass("fa fa-check");
+
+            }else if(alternativeTrue == "B"){
+                $("#trueB").addClass("fa fa-check");
+
+            }else if(alternativeTrue == "C"){
+                $("#trueC").addClass("fa fa-check");
+
+            }else{
+                $("#trueD").addClass("fa fa-check");
+
+            }
+
         },
         error: function(){
             console.log('Houve algum problema ao abrir o modal');

@@ -4,10 +4,13 @@ from django.shortcuts import (
     HttpResponseRedirect,
     get_object_or_404
     )
+
+from django.core import serializers
 from django.http import JsonResponse    
 from django.urls import reverse, reverse_lazy    
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
+
 
 from django_tables2 import RequestConfig
 from django.utils import timezone
@@ -197,7 +200,36 @@ def question_delete(request):
 @login_required
 @require_http_methods(['POST'])
 def question_book_preview(request):
-    data = dict()
-    context = {}
+
+    question_uuid = request.POST.get('questionUuid', '')
+
+    question_edit = get_object_or_404(Question, uuid=question_uuid)
+    # json_question = serializers.serialize("json", question_edit)
+
+    answer_edit = get_object_or_404(Answer, question=question_edit)
+    # json_answer = serializers.serialize("json", answer_edit)
+    # data = {}
+    # data = {
+    #     "json_question": question_edit.title,
+    #     # "json_answer": json_answer
+    # }
+
+
+    context = {
+        "title": question_edit.title,
+        "optA": answer_edit.alternative_A,
+        "optB": answer_edit.alternative_B,
+        "optC": answer_edit.alternative_C,
+        "optD": answer_edit.alternative_D,
+        "alternativeTrue": answer_edit.alternative_true,
+    }
+
     context['string_html'] = render_to_string("question/question_preview.html")
-    return JsonResponse(context)
+
+    return JsonResponse(context,  safe=False)
+
+
+    # def get modelAPI(request):
+    #     SomeModel_json = serializers.serialize("json", SomeModel.objects.all())
+    # data = {"SomeModel_json": SomeModel_json}
+    # return JsonResponse(data)
