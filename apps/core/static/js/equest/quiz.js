@@ -207,6 +207,33 @@ $('.quiz-edit').click(function(e) {
     });
 }
 
+// Preview question
+function questionBookPreview(){
+    // var quiz_uuid = $('#question-create').val();
+
+    //token de sessao
+    var csrftoken = getCookie('csrftoken');
+    
+    $.ajax({
+        headers : {'X-CSRFToken': csrftoken},
+        type    : 'POST',
+        url     : "/quiz/question_book_preview/",
+        data    : {"quiz_uuid":1},
+        datatype: 'json',
+
+        success: function(context){
+            // Exibe modal
+            $('#question_preview_manager').modal('show');
+            
+            // html data
+            $('#body_question_preview').html(context.string_html);
+        },
+        error: function(){
+            console.log('Houve algum problema ao abrir o modal');
+        }
+    });
+}
+
 var KTAutosize = { 
     init: function () {
         var i; 

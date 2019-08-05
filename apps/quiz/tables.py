@@ -18,6 +18,10 @@ class QuizzesTable(tables.Table):
         exclude = ('id', 'uuid', 'date_create', 'date_edit', 'description', 'user_create', 'discipline')
 
 class QuestionTable(tables.Table):
+
+    # Status personalizado
+    status = tables.Column(accessor='get_status')
+    
     actions = tables.TemplateColumn(template_name='question/question_actions.html', verbose_name="Ações")
     class Meta:
         model = Question

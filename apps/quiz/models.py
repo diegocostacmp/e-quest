@@ -62,6 +62,16 @@ class Question(models.Model):
 
     time_solution = models.CharField(max_length=16, verbose_name="Tempo de solução", help_text = ("Tempo para resolver a questão"), blank=False, null=False, default=None)
 
+    def __str__(self):
+            return str(self.pk)
+
+    def get_status(self):
+        if self.status == 'A':
+            return mark_safe('<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">Ativo</span>') 
+        elif self.status == 'B':
+            return mark_safe('<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill">Bloqueado</span>') 
+        else:
+            return mark_safe('<span class="kt-badge  kt-badge--warning kt-badge--inline kt-badge--pill">Desativo</span>') 
 
 class Answer(models.Model):
 

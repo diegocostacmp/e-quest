@@ -1,9 +1,9 @@
-<a href="#" title="Editar Disciplina" class="btn btn-outline-brand btn-icon discipline-edit" eg-id="{{record.uuid}}" eg-title="{{record.title}}"> 
+<a href="#" class="btn btn-outline-brand btn-icon discipline-edit" eg-id="{{record.uuid}}" eg-title="{{record.title}}" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" data-original-title="Editar disciplina"> 
         <i class="flaticon2-paper"></i> 
     </a>
-    <a title="Adicionar quiz" class="btn btn-outline-dark btn-icon"  href="{% url 'quiz:quiz_list' record.uuid %}">
+    <a class="btn btn-outline-dark btn-icon"  href="{% url 'quiz:quiz_list' record.uuid %}" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" data-original-title="Adicionar quiz">
         <i class="flaticon2-add-circular-button"></i> 
     </a>
-    <a href="#" title="Excluir Disciplina" class="btn btn-outline-danger btn-icon discipline-delete" eg-url="/discipline_delete/" eg-id="{{record.uuid}}"> 
+    <a href="#" class="btn btn-outline-danger btn-icon discipline-delete" eg-url="/discipline_delete/" eg-id="{{record.uuid}}" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" data-original-title="Excluir disciplina"> 
         <i class="flaticon2-trash"></i> 
     </a>

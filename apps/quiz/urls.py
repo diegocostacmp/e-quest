@@ -4,7 +4,8 @@ from .views import (
     quiz_edit, quiz_delete,
 
     question_list, question_book,
-    question_create, question_delete
+    question_create, question_delete,
+    question_book_preview
     )
 
 app_name='quiz'
@@ -18,6 +19,7 @@ urlpatterns = [
 
     path('question_list/<uuid:quiz_uuid>/', question_list, name='question_list'),
     path('question_book/', question_book, name='question_book'),
+    path('question_book_preview/', question_book_preview, name='question_book_preview'),
     path('question_create/', question_create, name='question_create'),
     path('question_delete/', question_delete, name='question_delete')
 ]

@@ -193,3 +193,11 @@ def question_delete(request):
         "status": "OK"
     }
     return JsonResponse(data)
+
+@login_required
+@require_http_methods(['POST'])
+def question_book_preview(request):
+    data = dict()
+    context = {}
+    context['string_html'] = render_to_string("question/question_preview.html")
+    return JsonResponse(context)
