@@ -45,14 +45,19 @@ $('.discipline-delete').click(function(e) {
 
                 success: function(data) {
                     if(data.status == "OK"){
-                        Swal.fire(
-                            'Deleted!',
-                            'Cadastro excluído com sucesso.',
-                            'success'
-                        )
-                        window.setTimeout(function(){ 
-                            location.reload();
-                        } ,1000);
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                        Toast.fire({
+                            type: 'success',
+                            title: 'Cadastrado excluido com sucesso!',
+                            onClose: () =>{
+                                location.reload();
+                            }
+                        })
                     }
                 },
                 error: function(){
@@ -83,7 +88,7 @@ $('#discipline-create').click(function(e) {
         cancelButtonText: '<i class="fa fa-times"></i> Cancelar',
         inputValidator: (value) => {
             if (!value) {
-                return 'Preencha o nome da Discipline!'
+                return 'Preencha o nome da Disciplina!'
             }
         },
         preConfirm: (value) => {
@@ -99,16 +104,19 @@ $('#discipline-create').click(function(e) {
 
                 success: function(data) {
                     if(data.status == "OK"){
-                        Swal.fire({
-                            position: 'center',
-                            type: 'success',
-                            title: 'Disciplina cadastrada com sucesso',
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
                             showConfirmButton: false,
-                            timer: 2500
+                            timer: 3000
+                        });
+                        Toast.fire({
+                            type: 'success',
+                            title: 'Cadastrado com sucesso!',
+                            onClose: () =>{
+                                location.reload();
+                            }
                         })
-                        window.setTimeout(function(){ 
-                            location.reload();
-                        } ,2500);
                     }
                 },
                 error: function(data){
@@ -156,16 +164,19 @@ $('.discipline-edit').click(function(e) {
 
                 success: function(data) {
                     if(data.status == "OK"){
-                        Swal.fire({
-                            position: 'center',
-                            type: 'success',
-                            title: 'Disciplina editada com sucesso',
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
                             showConfirmButton: false,
-                            timer: 2500
+                            timer: 3000
+                        });
+                        Toast.fire({
+                            type: 'success',
+                            title: 'Editado com sucesso!',
+                            onClose: () =>{
+                                location.reload();
+                            }
                         })
-                        window.setTimeout(function(){ 
-                            location.reload();
-                        } ,2500);
                     }
                 },
                 error: function(data){

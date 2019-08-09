@@ -93,9 +93,10 @@ def quiz_edit(request):
     return JsonResponse(data, safe=False)
 
 @login_required
+@require_http_methods(["POST"])
 def quiz_delete(request):
     
-    uuid_editando   = request.POST.get('uuid_editando', '')
+    uuid_editando   = request.POST.get('uuid_edit', '')
     quiz      = get_object_or_404(Quizzes, uuid=uuid_editando)
     if request.method == "POST":
         quiz.delete()

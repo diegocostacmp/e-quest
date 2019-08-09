@@ -17,8 +17,8 @@ function getCookie(name) {
 
 $('.quiz-delete').click(function(e) {
     var url_destiny, uuid_edit;
-    url_destiny = $(this).attr('cs-url');
-    uuid_edit = $(this).attr('eg-id');
+    url_destiny = $(this).attr('eg-url');
+    uuid_edit = $(this).attr('eg-uuid');
 
     Swal.fire({
         title: 'Tem certeza que deseja excluir?',
@@ -42,21 +42,34 @@ $('.quiz-delete').click(function(e) {
 
                 success: function(data) {
                     if(data.status == "OK"){
-                        Swal.fire(
-                            'Deleted!',
-                            'Cadastro excluído com sucesso.',
-                            'success'
-                        )
-                        window.setTimeout(function(){ 
-                            location.reload();
-                        } ,1000);
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'center',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                        Toast.fire({
+                            type: 'success',
+                            title: 'Quiz excluido com sucesso!',
+                            onClose: () =>{
+                                location.reload();
+                            }
+                        })
                     }
                 },
                 error: function(){
-                    Swal.fire({
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'center',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                    Toast.fire({
                         type: 'error',
-                        title: 'Desculpe...',
-                        text: 'Existem dependências associadas!'
+                        title: 'Existem dependências associadas!',
+                        onClose: () =>{
+                            location.reload();
+                        }
                     })
                 }
             });
@@ -97,26 +110,41 @@ $('#quiz-create').click(function(e) {
                 type    : 'POST',
                 url     : '/quiz/quiz_create/',
                 data    : {
-                    'nome': value,
+                    'name': value,
                     'discipline': discipline} ,
                 datatype: 'json',
 
                 success: function(data) {
                     if(data.status == "OK"){
-                        Swal.fire({
+                        const Toast = Swal.mixin({
+                            toast: true,
                             position: 'center',
-                            type: 'success',
-                            title: 'Quiz cadastrado com sucesso',
                             showConfirmButton: false,
-                            timer: 2500
+                            timer: 3000
+                        });
+                        Toast.fire({
+                            type: 'success',
+                            title: 'Quiz cadastrado com sucesso!',
+                            onClose: () =>{
+                                location.reload();
+                            }
                         })
-                        window.setTimeout(function(){ 
-                            document.location = data.url_return;
-                        } ,2500);
                     }
                 },
                 error: function(data){
-                    alert('deu erro');
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'center',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                    Toast.fire({
+                        type: 'error',
+                        title: 'Houve algum erro ao criar o quiz!',
+                        onClose: () =>{
+                            location.reload();
+                        }
+                    })
                 }
             });
         },
@@ -160,20 +188,35 @@ $('.quiz-edit').click(function(e) {
 
                 success: function(data) {
                     if(data.status == "OK"){
-                        Swal.fire({
+                        const Toast = Swal.mixin({
+                            toast: true,
                             position: 'center',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                        Toast.fire({
                             type: 'success',
-                            title: 'Quiz editado com sucesso',
-                            showConfirmButton: true,
-                            timer: 2500,
-                            onClose: () => {
+                            title: 'Quiz editado com sucesso!',
+                            onClose: () =>{
                                 location.reload();
                             }
                         })
                     }
                 },
                 error: function(data){
-                    alert('deu erro');
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'center',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                    Toast.fire({
+                        type: 'success',
+                        title: 'Tivemos algum problema ao editars!',
+                        onClose: () =>{
+                            location.reload();
+                        }
+                    })
                 }
             });
         },
@@ -342,7 +385,7 @@ var KTFormControls = function () {
                                 $('#question_manager').modal('hide');
                                 const Toast = Swal.mixin({
                                     toast: true,
-                                    position: 'top-end',
+                                    position: 'center',
                                     showConfirmButton: false,
                                     timer: 3000
                                 });
