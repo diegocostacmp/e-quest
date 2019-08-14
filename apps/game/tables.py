@@ -11,11 +11,11 @@ class GameTable(tables.Table):
     status = tables.Column(accessor='get_status')
 
     # Template actions avaiables
-    actions = tables.TemplateColumn(template_name='quizzes/quiz_actions.html', verbose_name="Ações")
+    actions = tables.TemplateColumn(template_name='game/game_actions.html', verbose_name="Ações")
     class Meta:
         model = Game
-        sequence = ('title', 'status', 'actions')
-        exclude = ('id', 'uuid', 'date_create', 'description', 'user_create', 'discipline')
+        sequence = ('title', 'students', 'discipline', 'status', 'actions')
+        exclude = ('id', 'uuid', 'date_create', 'description', 'user_create')
 
 class GameStart(tables.Table):
 
@@ -23,8 +23,8 @@ class GameStart(tables.Table):
     status = tables.Column(accessor='get_status')
 
     # Template actions avaiables
-    actions = tables.TemplateColumn(template_name='game/start_actions.html', verbose_name="Ações")
+    # actions = tables.TemplateColumn(template_name='game/start_actions.html', verbose_name="Ações")
     class Meta:
         model = Quizzes
-        sequence = ('title', 'status', 'actions')
+        sequence = ('title', 'status')
         exclude = ('id', 'uuid', 'date_create', 'description', 'user_create', 'discipline')

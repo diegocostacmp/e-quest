@@ -51,7 +51,7 @@ function bookGame(){
                 showLoaderOnConfirm: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: '<i class="fa fa-check"></i> Criar!',
+                confirmButtonText: '<i class="fa fa-check"></i> Buscar!',
                 cancelButtonText: '<i class="fa fa-times"></i> Cancelar',
                 inputValidator: (value) => {
                     if (!value) {
@@ -59,8 +59,7 @@ function bookGame(){
                     }
                 },
                 preConfirm: (value) => {
-                    createGame(value);
-                    
+                    window.location = '/game/quizzes_discipline/'+value+'/';
                 },
             })
 
@@ -72,15 +71,3 @@ function bookGame(){
     
 }
 
-function createGame(value){
-    //token de sessao
-    var csrftoken = getCookie('csrftoken');
-        
-    $.ajax({
-        headers : {'X-CSRFToken': csrftoken},
-        type    : 'POST',
-        url     : '/game/quizzes_discipline',
-        data    : {'discipline_uuid':value},
-        datatype: 'json',
-    });
-}

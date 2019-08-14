@@ -32,6 +32,8 @@ from .tables import (
 )
 
 import json
+import random
+import string
 
 @login_required
 @require_http_methods(["GET"])
@@ -63,23 +65,25 @@ def game_discipline_book(request):
     return JsonResponse(result, safe=False)
 
 @login_required
-@require_http_methods(["POST"])
-def quizzes_discipline(request):
-    print("------------------")
-    discipline_edit = request.POST.get('discipline_uuid', '')
-    print(discipline_edit)
-    discipline_instance = get_object_or_404(Discipline, uuid=discipline_edit)
-    quiz_list = Quizzes.objects.filter(discipline=discipline_instance)
+@require_http_methods(["GET"])
+def quizzes_discipline(request, discipline_uuid):
 
-    table = GameStart(quiz_list)
-    RequestConfig(request).configure(table)
+    # List quizzes and register new game
+    discipline_instance = get_object_or_404(Discipline, uuid=discipline_uuid)
 
-    context = {
-        "table" : table
-    }
-    template_name   = "game/game_start.html"
-    return render(request, template_name, context)
+    random = randomString(5)
+    register = Game(title=random, discipline=discipline_instance, students=10, user_create=request.user)
+    register.save()
 
 
+
+    return redirect('game:game_list')
+
+
+    
+def randomString(stringLength=5):
+    """Generate a random string of fixed length """
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters.upper()) for i in range(stringLength))
 
 
