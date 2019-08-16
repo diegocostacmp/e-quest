@@ -66,7 +66,7 @@ def game_discipline_book(request):
 
 @login_required
 @require_http_methods(["GET"])
-def quizzes_discipline(request, discipline_uuid):
+def game_create(request, discipline_uuid):
 
     # List quizzes and register new game
     discipline_instance = get_object_or_404(Discipline, uuid=discipline_uuid)
@@ -78,12 +78,21 @@ def quizzes_discipline(request, discipline_uuid):
 
 
     return redirect('game:game_list')
-
-
     
 def randomString(stringLength=5):
     """Generate a random string of fixed length """
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters.upper()) for i in range(stringLength))
 
+@login_required
+def quiz_book_list(request, discipline_uuid):
+    queryset = Quizzes.objects.filter(discipline__teacher=request.user, discipline__uuid=discipline_uuid)
+    table = GameStart(queryset)
+    RequestConfig(request).configure(table)
+
+    context = {
+        "table" : table
+    }
+    template_name   = "game/game_show_quiz.html"
+    return render(request, template_name, context)
 
