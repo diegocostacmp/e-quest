@@ -1,11 +1,4 @@
-# e-quest
 
-
-## Principais Características
-
-* Implementação de sistema em plataforma Web e/ou Mobile;
-* Persistência de dados no banco Firebase, com as operações de CRUD;
-* Jornada do Usuário e relaciona-la aos Casos de Uso.
 
 # eQuest Games
 
