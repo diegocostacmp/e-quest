@@ -69,7 +69,7 @@
 		<!--begin::Layout Skins(used by all pages) -->
 
 		<!--end::Layout Skins -->
-		<link rel="shortcut icon" href="./assets/media/logos/favicon.ico" />
+		<link rel="shortcut icon" href="{% static '/media/logos/favicon.ico' %}" />
 	</head>
 
 	<!-- end::Head -->
@@ -106,7 +106,7 @@
 
 							<!-- begin:: Brand -->
 							<div class="kt-header__brand   kt-grid__item" id="kt_header_brand">
-								<a class="kt-header__brand-logo" href="demo9/index.html">
+								<a class="kt-header__brand-logo" href="{% url 'core:begin' %}">
 									<img alt="Logo" src="{% static '/media/logos/gift-logo-equest-white.png' %}" />
 								</a>
 							</div>

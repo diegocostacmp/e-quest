@@ -59,7 +59,7 @@ function bookGame(){
                     }
                 },
                 preConfirm: (value) => {
-                    window.location = '/game/quizzes_discipline/'+value+'/';
+                    window.location = '/game/game_create/'+value+'/';
                 },
             })
 

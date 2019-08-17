@@ -36,8 +36,8 @@ class Quizzes(models.Model):
     def get_professor(self):
         return self.teacher.full_name
 
-    def get_Discipline(self):
-        return self.Discipline.title
+    def get_discipline(self):
+        return self.discipline.title
 
     def get_status(self):
         if self.status == 'A':

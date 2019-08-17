@@ -37,6 +37,9 @@ class Game(models.Model):
     def __str__(self):
         return str(self.pk)
 
+    def get_discipline(self):
+        return self.discipline.title    
+
     def get_status(self):
         if self.status == 'A':
             return mark_safe('<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">Ativo</span>') 
