@@ -96,3 +96,6 @@ def quiz_book_list(request, discipline_uuid):
     template_name   = "game/game_show_quiz.html"
     return render(request, template_name, context)
 
+@login_required
+def game_await(request):
+    return render(request, 'game/game_await.html', {})

@@ -133,4 +133,5 @@ LOGIN_URL = '/'
 AUTH_USER_MODEL = 'core.User'
 
 # Sobreescrevendo template django-tables2 com metronic table
+# DJANGO_TABLES2_TEMPLATE = BASE_DIR+'/apps/core/templates/metronic-table.html'
 DJANGO_TABLES2_TEMPLATE = BASE_DIR+'/apps/core/templates/metronic-table.html'
