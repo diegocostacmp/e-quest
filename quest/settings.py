@@ -32,7 +32,8 @@ INSTALLED_APPS = [
     # libs
     'django',
     'crispy_forms',
-    'django_tables2'
+    'django_tables2',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [

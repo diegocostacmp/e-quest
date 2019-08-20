@@ -85,17 +85,37 @@ def randomString(stringLength=5):
     return ''.join(random.choice(letters.upper()) for i in range(stringLength))
 
 @login_required
-def quiz_book_list(request, discipline_uuid):
+def quiz_book_list(request, discipline_uuid, game_uuid):
     queryset = Quizzes.objects.filter(discipline__teacher=request.user, discipline__uuid=discipline_uuid)
     table = GameStart(queryset)
     RequestConfig(request).configure(table)
 
     context = {
-        "table" : table
+        "table" : table,
+        "game_uuid":game_uuid
     }
     template_name   = "game/game_show_quiz.html"
     return render(request, template_name, context)
 
 @login_required
-def game_await(request):
-    return render(request, 'game/game_await.html', {})
+def game_await(request, game_uuid, quiz_uuid):
+
+    game = get_object_or_404(Game, uuid=game_uuid)
+    game.status = "O"
+    game.save()
+    quiz = get_object_or_404(Quizzes, uuid=quiz_uuid)
+
+    question = Question.objects.filter(quiz=quiz.pk, status="A")
+    answer = Answer.objects.filter(question__quiz=quiz.pk, status="A")
+
+    context = {
+        "game_title": game.title,
+        "quiz_title": quiz.title,
+        "quiz_discipline": quiz.discipline.title,
+        "question": question,
+        "answer": answer,
+        "amount_questions": question.count()
+    }
+
+
+    return render(request, 'game/game_await.html', context)

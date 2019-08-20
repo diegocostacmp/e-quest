@@ -13,7 +13,8 @@ from apps.core.models import (
 # Status choices
 STATUS_CHOICES = (
     ("A", "Ativo"),
-    ("B", "Bloqueado"),
+    ("O", "Online"),
+    ("E", "Executado"),
     ("D", "Desativado")
 )
 
