@@ -3,22 +3,24 @@
 {% load render_table from django_tables2 %}
 {% block header %}
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-        <div class="kt-subheader__main">
-            <span class="kt-subheader__separator kt-hidden"></span>
-            <div class="kt-subheader__breadcrumbs">
-                <a href="{% url 'core:begin' %}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
-                <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="{% url 'game:game_list' %}" class="kt-subheader__breadcrumbs-link">
-                    Games
-                </a>
+        <div class="kt-container ">
+            <div class="kt-subheader__main">
+                <span class="kt-subheader__separator kt-hidden"></span>
+                <div class="kt-subheader__breadcrumbs">
+                    <a href="{% url 'core:begin' %}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                    <span class="kt-subheader__breadcrumbs-separator"></span>
+                    <a href="{% url 'game:game_list' %}" class="kt-subheader__breadcrumbs-link">
+                        Games
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="kt-subheader__toolbar">
             <div class="kt-subheader__toolbar">
-                <a href="#" eg-url="{% url 'game:game_discipline_book' %}" id="game-create" class="btn btn-label-danger btn-bold" data-skin="dark" data-toggle="kt-tooltip" data-placement="left" data-original-title="Adicionar game">
-                    <i class="fa flaticon2-plus-1"> </i>
-                    Novo Game
-                </a>
+                <div class="kt-subheader__toolbar">
+                    <a href="#" eg-url="{% url 'game:game_discipline_book' %}" id="game-create" class="btn btn-label-danger btn-bold" data-skin="dark" data-toggle="kt-tooltip" data-placement="left" data-original-title="Adicionar game">
+                        <i class="fa flaticon2-plus-1"> </i>
+                        Novo Game
+                    </a>
+                </div>
             </div>
         </div>
     </div>

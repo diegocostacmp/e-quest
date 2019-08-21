@@ -26,7 +26,9 @@ from apps.quiz.models import (
     Quizzes, Question,
     Answer
 )
-from .models import Game
+from .models import (
+    Game, Played
+)
 from .tables import (
     GameTable, GameStart
 )
@@ -99,11 +101,18 @@ def quiz_book_list(request, discipline_uuid, game_uuid):
 
 @login_required
 def game_await(request, game_uuid, quiz_uuid):
+    # get quiz edit
+    quiz = get_object_or_404(Quizzes, uuid=quiz_uuid)
 
+    # Register new game_played
+    new_played = Played(quiz=quiz, user_create=request.user, status="A")
+    new_played.save()
+
+    # Updated status and quiz_played
     game = get_object_or_404(Game, uuid=game_uuid)
     game.status = "O"
+    game.played = new_played
     game.save()
-    quiz = get_object_or_404(Quizzes, uuid=quiz_uuid)
 
     question = Question.objects.filter(quiz=quiz.pk, status="A")
     answer = Answer.objects.filter(question__quiz=quiz.pk, status="A")
@@ -116,6 +125,5 @@ def game_await(request, game_uuid, quiz_uuid):
         "answer": answer,
         "amount_questions": question.count()
     }
-
 
     return render(request, 'game/game_await.html', context)
