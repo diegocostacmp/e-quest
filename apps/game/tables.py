@@ -16,7 +16,7 @@ class GameTable(tables.Table):
     class Meta:
         model = Game
         sequence = ('title', 'students', 'discipline', 'status', 'actions')
-        exclude = ('id', 'uuid', 'date_create', 'description', 'user_create')
+        exclude = ('id', 'uuid', 'date_create', 'description', 'user_create', 'played')
 
 class GameStart(tables.Table):
 
