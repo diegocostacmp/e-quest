@@ -75,6 +75,5 @@ class ClassRoom(models.Model):
     game = models.ForeignKey(Game, editable=False, related_name="+", on_delete=models.CASCADE, default=None, blank=True, null=True)
     student = models.ForeignKey(User, editable=False, related_name="+", on_delete=models.CASCADE, default=None, blank=True, null=True)
     
-
     def __str__(self):
         return str(self.pk)

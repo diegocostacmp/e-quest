@@ -27,7 +27,8 @@ from apps.quiz.models import (
     Answer
 )
 from .models import (
-    Game, Played
+    Game, Played,
+    ClassRoom, Played
 )
 from .tables import (
     GameTable, GameStart
@@ -118,6 +119,7 @@ def game_await(request, game_uuid, quiz_uuid):
     answer = Answer.objects.filter(question__quiz=quiz.pk, status="A")
 
     context = {
+        "game_uuid": game.uuid,
         "game_title": game.title,
         "quiz_title": quiz.title,
         "quiz_discipline": quiz.discipline.title,
@@ -127,3 +129,20 @@ def game_await(request, game_uuid, quiz_uuid):
     }
 
     return render(request, 'game/game_await.html', context)
+
+@login_required
+@require_http_methods(['POST'])
+def students_online(request):
+
+    # Get game active
+    game_uuid = request.POST.get('game_uuid', '')
+    game_active = get_object_or_404(Game, uuid=game_uuid)
+
+    # Get students online
+    students = ClassRoom.objects.filter(game=game_active.pk, status="O")
+    context = {
+        "students": students
+    }
+
+    message = render_to_string("student/student_online.html", context)
+    return JsonResponse(message, safe=False)

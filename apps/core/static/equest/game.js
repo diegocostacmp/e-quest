@@ -1,4 +1,10 @@
- 
+function temporizador(){
+    setInterval(function() { console.log("setInterval: Ja passou 1 segundo!"); }, 1000);    
+}
+temporizador();
+
+
+
  // using jQuery to generate csrf_token
 function getCookie(name) {
     var cookieValue = null;
@@ -70,4 +76,5 @@ function bookGame(){
     });
     
 }
+
 
