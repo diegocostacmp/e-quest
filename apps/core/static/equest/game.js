@@ -97,6 +97,8 @@ function callQuestion(){
 
         success: function(data) {
             $("#accordionExample6").append(data);
+            var uuidUpdate = $('.card').last().attr('id');
+            $("#questionPrincipal").val(uuidUpdate);
         },
         error: function(){
             Swal.fire({

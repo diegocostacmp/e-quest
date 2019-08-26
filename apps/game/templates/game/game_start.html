@@ -5,23 +5,16 @@
 <div class="kt-subheader   kt-grid__item" id="kt_subheader">
         <div class="kt-container">
             <div class="kt-subheader__main">
-                <h3 class="kt-subheader__title">
-                    Dashboard                   
-                </h3>
-    
                 <span class="kt-subheader__separator kt-hidden"></span>
                     <div class="kt-subheader__breadcrumbs">
                         <a href="#" class="kt-subheader__breadcrumbs-home">
                             <i class="flaticon2-shelter"></i>
                         </a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="" class="kt-subheader__breadcrumbs-link">
-                            Dashboard                        
+                        <a href="{% url 'game:game_list' %}" class="kt-subheader__breadcrumbs-link">
+                            Games                       
                         </a>
-                        <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="" class="kt-subheader__breadcrumbs-link">
-                            Default Dashboard                        
-                        </a>
+                        
                                             <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
                     </div>
                         </div>
@@ -62,25 +55,21 @@
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="kt-portlet ">
+                <div class="kt-portlet">
                     <div class="kt-portlet__body">
                         <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample6">
-                                <div class="card">
-                                    <div class="card-header" id="heading-{{question_uuid}}">
-                                        <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseOne6" aria-expanded="false" aria-controls="collapseOne6">
-                                                <div class="kt-infobox__title">
-                                            <i class="flaticon2-gift-1"></i> {{question_title}}
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div id="collapseOne6" class="collapse" aria-labelledby="heading-{{question_uuid}}" data-parent="#accordionExample6" style="">
-                                        <div class="card-body">
-                                            <div class="kt-infobox__title">
-                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                            </div>
-                                        </div>
+                            <div class="card" id="{{question_uuid}}">
+                                <div class="card-header" id="heading{{question_uuid}}">
+                                    <div class="card-title" data-toggle="collapse" data-target="#{{slug_random}}" aria-expanded="true" aria-controls="{{question_uuid}}">
+                                        <i class="flaticon-pie-chart-1"></i> {{question_title}}
                                     </div>
                                 </div>
+                                <div id="{{slug_random}}" class="collapse" aria-labelledby="heading{{question_uuid}}" data-parent="#accordionExample6">
+                                    <div class="card-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,4 +93,5 @@
             <button class="play" id="pause" style="display:none;"></button>
         </div>
     </div>
+    
 {% endblock content %}

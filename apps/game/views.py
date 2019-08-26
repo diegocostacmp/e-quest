@@ -120,6 +120,7 @@ def game_await(request, game_uuid, quiz_uuid):
 
     # Get first question
     next_question = Question.objects.filter(quiz=quiz.pk, status="A").first()
+    
 
     context = {
         "game_uuid": game.uuid,
@@ -131,6 +132,7 @@ def game_await(request, game_uuid, quiz_uuid):
         "amount_questions": question.count(),
 
         "next_question": next_question.uuid
+        
     }
 
     return render(request, 'game/game_await.html', context)
@@ -138,16 +140,26 @@ def game_await(request, game_uuid, quiz_uuid):
 @login_required
 @require_http_methods(["POST"])
 def next_question(request):
-    print("------veio aqui------")
     question = request.POST.get('question_principal', '')
-    print('minha questao atual:', question)
     question_edit = get_object_or_404(Question, uuid=question)
-    next_question = Question.objects.filter(~Q(pk=question_edit.pk)).first()
+    qs = Question.objects.filter(quiz=question_edit.quiz)
 
+    next_list = []
+    for i in qs:
+        if i.pk > question_edit.pk:
+            next_list.append(
+                i.pk
+            )
+    print(next_list)
+    next_question = get_object_or_404(Question, pk=next_list[0])    
+    slug_random = randomString(5)
+    print(slug_random)
     
+
     context = {
-        "question_title": next_question.title,
-        "question_uuid": next_question.uuid
+        "question_title": str(next_question.title),
+        "question_uuid": str(next_question.uuid),
+        "slug_random": str(slug_random)
     }
     data = render_to_string("teacher/question_list.html", context)
     return JsonResponse(data, safe=False)
@@ -170,14 +182,17 @@ def students_online(request):
         
     }
 
-    message = render_to_string("student/student_online.html", context)
+    message = render_to_string("student/student_online.html", context=context)
     return JsonResponse(message, safe=False)
 
 @login_required
 def game_init(request, uuid_question):
     question_edit = get_object_or_404(Question, uuid=uuid_question)
+    slug_random = randomString(5)
     context = {
         "question_title": question_edit.title,
-        "question_uuid": question_edit.uuid
+        "question_uuid": question_edit.uuid,
+        "slug_random": str(slug_random)
+        
     }
     return render(request, 'game/game_start.html', context)
