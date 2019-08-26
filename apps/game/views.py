@@ -15,8 +15,8 @@ from django.views.decorators.http import require_http_methods
 from django_tables2 import RequestConfig
 from django.utils import timezone
 from django.template.loader import render_to_string
+from django.db.models import Q
 
-from django.core import serializers
 
 from apps.core.models import (
     User, Discipline
@@ -118,6 +118,9 @@ def game_await(request, game_uuid, quiz_uuid):
     question = Question.objects.filter(quiz=quiz.pk, status="A")
     answer = Answer.objects.filter(question__quiz=quiz.pk, status="A")
 
+    # Get first question
+    next_question = Question.objects.filter(quiz=quiz.pk, status="A").first()
+
     context = {
         "game_uuid": game.uuid,
         "game_title": game.title,
@@ -125,10 +128,32 @@ def game_await(request, game_uuid, quiz_uuid):
         "quiz_discipline": quiz.discipline.title,
         "question": question,
         "answer": answer,
-        "amount_questions": question.count()
+        "amount_questions": question.count(),
+
+        "next_question": next_question.uuid
     }
 
     return render(request, 'game/game_await.html', context)
+
+@login_required
+@require_http_methods(["POST"])
+def next_question(request):
+    print("------veio aqui------")
+    question = request.POST.get('question_principal', '')
+    print('minha questao atual:', question)
+    question_edit = get_object_or_404(Question, uuid=question)
+    next_question = Question.objects.filter(~Q(pk=question_edit.pk)).first()
+
+    
+    context = {
+        "question_title": next_question.title,
+        "question_uuid": next_question.uuid
+    }
+    data = render_to_string("teacher/question_list.html", context)
+    return JsonResponse(data, safe=False)
+
+
+
 
 @login_required
 @require_http_methods(['POST'])
@@ -142,7 +167,17 @@ def students_online(request):
     students = ClassRoom.objects.filter(game=game_active.pk, status="O")
     context = {
         "students": students
+        
     }
 
     message = render_to_string("student/student_online.html", context)
     return JsonResponse(message, safe=False)
+
+@login_required
+def game_init(request, uuid_question):
+    question_edit = get_object_or_404(Question, uuid=uuid_question)
+    context = {
+        "question_title": question_edit.title,
+        "question_uuid": question_edit.uuid
+    }
+    return render(request, 'game/game_start.html', context)

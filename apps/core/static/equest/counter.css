@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300');
+button[data-setter] {
+    outline: none !important;
+    background: transparent !important;
+    border: none!important;
+    font-family: 'Roboto'!important;
+    font-weight: 300!important;
+    font-size: 18px!important;
+    width: 25px!important;
+    height: 30px!important;
+    color: #F7958E !important;
+    cursor: pointer !important;
+}
+
+button[data-setter]:hover {
+    opacity: 0.5!important;
+}
+
+.container {
+    position: relative !important;
+    top: 30px!important;
+    width: 300px!important;
+    margin: 0 auto!important;
+}
+
+.setters {
+    position: absolute!important;
+    left: 85px!important;
+    top: 75px!important;
+}
+
+.minutes-set {
+    float: left!important;
+    margin-right: 28px!important;
+}
+
+.seconds-set {
+    float: right!important;
+}
+
+.controlls {
+    position: absolute!important;
+    left: 75px!important;
+    top: 105px!important;
+    text-align: center!important;
+}
+
+.display-remain-time {
+    font-family: 'Roboto'!important;
+    font-weight: 100!important;
+    font-size: 65px!important;
+    color: #F7958E!important;
+}
+
+#pause {
+    outline: none!important;
+    background: transparent!important;
+    border: none!important;
+    margin-top: 10px!important;
+    width: 50px!important;
+    height: 50px!important;
+    position: relative!important;
+}
+
+.play::before {
+    display: block!important;
+    content: "";
+    position: absolute!important;
+    top: 8px!important;
+    left: 16px!important;
+    border-top: 15px solid transparent!important;
+    border-bottom: 15px solid transparent!important;
+    border-left: 22px solid #F7958E!important;
+}
+
+.pause::after {
+    content: "";
+    position: absolute!important;
+    top: 8px!important;
+    left: 12px!important;
+    width: 15px!important;
+    height: 30px!important;
+    background-color: transparent!important;
+    border-radius: 1px!important;
+    border: 5px solid #F7958E!important;
+    border-top: none;
+    border-bottom: none!important;
+}
+
+#pause:hover {
+    opacity: 0.8!important;
+}
+
+.e-c-base {
+    fill: none !important;
+    stroke: #B6B6B6 !important;
+    stroke-width: 4px !important
+}
+
+.e-c-progress {
+    fill: none !important;
+    stroke: #F7958E !important;
+    stroke-width: 4px !important;
+    transition: stroke-dashoffset 0.7s !important;
+}
+
+.e-c-pointer {
+    fill: #FFF!important;
+    stroke: #F7958E!important;
+    stroke-width: 2px!important;
+}
+
+#e-pointer {
+    transition: transform 0.7s !important;
+}
+
+h1 {
+    text-align: center!important;
+}

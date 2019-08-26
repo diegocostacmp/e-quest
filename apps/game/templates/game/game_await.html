@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block header %}
-<div class="kt-subheader   kt-grid__item" id="kt_subheader">
-        
+<div class="kt-subheader kt-grid__item" id="kt_subheader">    
 </div>
 {% endblock header %}
     
@@ -19,7 +19,7 @@
                                         <div class="kt-widget__head">
                                             <a href="#" class="kt-widget__title">Game: {{game_title}}</a>
                                             <div class="kt-widget__footer">
-                                                <button type="button" class="btn btn-label-success btn-lg btn-upper">
+                                                <button onclick="window.location.href='{% url 'game:game_init' next_question %}'" type="button" class="btn btn-label-success btn-lg btn-upper">
                                                     Iniciar <i class="fa fa-play"></i>
                                                 </button>
                                             </div>
@@ -44,7 +44,6 @@
                                             <span class="kt-widget__value">{{quiz_discipline}}</span>
                                         </div>
                                     </div>
-                    
                                     <div class="kt-widget__item">
                                         <div class="kt-widget__icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
@@ -114,21 +113,7 @@
                         </div>
                 </div>
                 <div class="kt-portlet ">
-                    <div class="kt-portlet__body">
-                        <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample6">
-                            <div class="card">
-                                <div class="card-header" id="headingThree6">
-                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6">
-                                        <i class="flaticon2-chart"></i> eCommerce Reports
-                                    </div>
-                                </div>
-                                <div id="collapseThree6" class="collapse" aria-labelledby="headingThree6" data-parent="#accordionExample6" style="">
-                                    <div class="card-body">
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="containerQuestions" class="kt-portlet__body">
                     </div>
                 </div>
             </div>
@@ -151,48 +136,47 @@
                                     <div id="containerPrincipal" name="containerPrincipal">
                                     </div>             
                                 </div>
-                
                             </div>
                         </div>
                     </div>
             </div>
         </div> 
     </div>
+    
+
     <script>
-        function studentOnline(){
-            setInterval(function() {
-                var csrftoken, gameUuid;
+        interval = null;
+        interval = setInterval(function() {
+            var csrftoken, gameUuid;
 
-                //token de sessao
-                csrftoken = getCookie('csrftoken');
+            //token de sessao
+            csrftoken = getCookie('csrftoken');
 
-                // Get uuid game active
-                gameUuid = $("#gameUuid").val();
+            // Get uuid game active
+            gameUuid = $("#gameUuid").val();
 
-                // Get data select
-                $.ajax({
-                    headers : {'X-CSRFToken': csrftoken},
-                    type    : 'POST',
-                    url     : "{% url 'game:students_online' %}",
-                    data    : {'game_uuid':gameUuid},
-                    datatype: 'json',
+            // Get data select
+            $.ajax({
+                headers : {'X-CSRFToken': csrftoken},
+                type    : 'POST',
+                url     : "{% url 'game:students_online' %}",
+                data    : {'game_uuid':gameUuid},
+                datatype: 'json',
 
-                success: function(data) {
-                    $("#alunosOnline").remove();
-                    $("#containerPrincipal").append('<div id="alunosOnline" class="kt-widget4"></div>');
-                    $("#alunosOnline").append(data);
-                    
-                },
-                error: function(){
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Desculpe...',
-                        text: 'Tivemos algum problema ao obter os alunos online!'
-                    })
-                }
-            });
-            }, 5000);    
-        }
-        studentOnline();
+            success: function(data) {
+                
+                
+            },
+            error: function(){
+                clearInterval(interval);
+                Swal.fire({
+                    type: 'error',
+                    title: 'Desculpe...',
+                    text: 'Tivemos algum problema ao obter os alunos online!'
+                })
+            }
+        });
+        }, 5000);    
     </script>
+    
 {% endblock content %}
