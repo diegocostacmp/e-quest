@@ -161,7 +161,9 @@ var KTLoginGeneral = function() {
             var nome    = $('#nome-cadastro').val();
             var email   = $('#email-cadastro').val();
             var senha   = $('#senha-cadastro').val();
-            var tipo    = $('input[name=tipo]:checked', '#cadastro-User').val(); 
+            var tipo    = $('input[name=tipo]:checked', '#registerUser').val(); 
+
+            alert(tipo);
 
             //token de sessao
             var csrftoken = getCookie('csrftoken');
@@ -170,7 +172,12 @@ var KTLoginGeneral = function() {
                 headers : {'X-CSRFToken': csrftoken},
                 type    : 'POST',
                 url     : '/signup/',
-                data    : {'nome':nome, 'email':email, 'senha':senha, 'tipo':tipo},
+                data    : {
+                    'name':nome,
+                    'email':email, 
+                    'password':senha, 
+                    'type_profile':tipo
+                },
                 datatype: 'json',
                 success: function(response, status, xhr, $form) {
                 	// similate 2s delay

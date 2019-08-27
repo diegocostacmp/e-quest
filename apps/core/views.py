@@ -44,10 +44,11 @@ def postsign(request):
     email = request.POST.get('email')
     password = request.POST.get('password')
 
+    print('email', email)
+    print('password', password)
+
     try:
         user = authenticate(username=email, password=password)
-        print('user: ',user)
-        print('password: ',password)
         login(request, user)
         if request.user.is_authenticated:
             data = {
@@ -77,6 +78,10 @@ def signup(request):
         email = request.POST.get('email', '')
         password = request.POST.get('password', '')
         type_profile = request.POST.get('type_profile', '')
+
+        print('---------------------------------')
+        print(name, email, password, type_profile)
+        print('---------------------------------')
 
         
 
@@ -131,8 +136,10 @@ def begin(request):
     
     if int(profile) == 1:
         # Lista as Disciplines do professor
-        table = DisciplineAlunosTable(Discipline.objects.filter(user_create=request.user))
+        table = DisciplineAlunosTable(Discipline.objects.all())
         RequestConfig(request).configure(table)
+
+        print(Discipline.objects.all())
 
         table_user = MinhasDisciplineAlunosTable(Disciplines_user.objects.filter(user=request.user))
         RequestConfig(request).configure(table_user)

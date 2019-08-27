@@ -129,16 +129,16 @@
                                 <h3 class="kt-login__title">Cadastre-se</h3>
                                 <div class="kt-login__desc">Digite as informacoes para criar a conta:</div>
                             </div>
-                            <form class="kt-form" method="post" id="cadastro-User">
+                            <form class="kt-form" method="post" id="registerUser">
                                 {% csrf_token %}
                                 <div class="input-group">
-                                    <input class="form-control" type="text" placeholder="Nome Completo" name="fullname" id="nome-cadastro" value="Diego Barbosa Barros da Costa">
+                                    <input class="form-control" type="text" placeholder="Nome Completo" name="fullname" id="nome-cadastro" value="">
                                 </div>
                                 <div class="input-group">
-                                    <input class="form-control" type="text" placeholder="Email" name="email" autocomplete="off" id="email-cadastro" value="diegocostacmp@gmail.com">
+                                    <input class="form-control" type="text" placeholder="Email" name="email" autocomplete="off" id="email-cadastro" value="">
                                 </div>
                                 <div class="input-group">
-                                    <input class="form-control" type="password" placeholder="Senha" name="password" id="senha-cadastro" value="142536">
+                                    <input class="form-control" type="password" placeholder="Senha" name="password" id="senha-cadastro" value="">
                                 </div>
                                 <!-- <div class="input-group">
                                     <input class="form-control" type="password" placeholder="Confirmar senha" name="rpassword">
