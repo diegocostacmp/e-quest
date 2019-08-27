@@ -10,7 +10,7 @@ SECRET_KEY = 'bim#)dwgy98$hq0o(2bqi8+shw(s0u7!zh_i&eqfaodwu=^ihe'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition

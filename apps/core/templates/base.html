@@ -281,6 +281,14 @@
 									
 			
 										<!-- end:: Content -->
+									{% elif request.user.type_profile == '1' %}
+										<!-- begin:: Content -->
+										{% block content_aluno %}
+
+										{% endblock content_aluno %}
+									
+			
+										<!-- end:: Content -->
 									{% else %}
 										<div class="row">
 											<div class="col-xl-1">

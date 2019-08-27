@@ -1,0 +1,120 @@
+
+{% extends 'base.html' %}
+{% load render_table from django_tables2 %}
+  
+{% block content_aluno %}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content" style="margin-top: 10px;">
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-light alert-elevate fade show" role="alert">
+                <div class="alert-icon"><i class="flaticon-interface-10"></i></div>
+                <div class="alert-text">
+                    Bem vindo ao painel do aluno
+                </div>
+                <div class="alert-text">
+                        Salas online 5
+                </div>
+            </div>
+        </div>
+		<!--end::Widget 12-->
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <!--Begin::Portlet-->
+            <div class="kt-portlet kt-portlet--height-fluid">
+                <div class="kt-portlet__head kt-portlet__head--noborder">
+                    
+                </div>
+                <div class="kt-portlet__body">
+                    <!--begin::Widget -->
+                    <div class="kt-widget kt-widget--user-profile-2">
+                        <div class="kt-widget__head">
+                            <div class="kt-widget__media">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px" height="32px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--success">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
+                                        <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" id="Mask" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                                        <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" id="Mask-Copy" fill="#000000" fill-rule="nonzero"></path>
+                                    </g>
+                                </svg>
+                            </div>
+    
+                            <div class="kt-widget__info">
+                                <a href="#" class="kt-widget__titel kt-hidden-">
+                                    {{request.user.full_name}}                                             
+                                </a>
+    
+                                <span class="kt-widget__desc">
+                                    {{request.user.email}}    
+                                </span>
+                            </div>
+                        </div>
+    
+                        <div class="kt-widget__body">
+                            <div class="kt-widget__item">
+                                <div class="kt-widget__contact">
+                                    <span class="kt-widget__label">Conquistas:</span>
+                                    <a href="#" class="kt-widget__data">5</a>
+                                </div>
+                                <div class="kt-widget__contact">
+                                    <span class="kt-widget__label">Total de pontos:</span>
+                                    <a href="#" class="kt-widget__data">2.050</a>
+                                </div>
+                                <div class="kt-widget__contact">
+                                    <span class="kt-widget__label">Total de jogos:</span>
+                                    <span class="kt-widget__data">5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>         
+                    <!--end::Widget -->
+                </div>
+            </div>
+            <!--End::Portlet--> 
+        </div>
+        <div class="col-6">
+            <!--begin:: Widgets/Last Updates-->
+            <div class="kt-portlet kt-portlet--height-fluid">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            Minhas disciplinas
+                        </h3>
+                    </div>
+                    
+                </div>
+                <div class="kt-portlet__body">
+                    <!--begin::widget 12-->
+                        {% render_table table_user %}
+                </div>
+                <!--end:: Widgets/Last Updates-->            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6"></div>
+        <div class="col-6">
+            <div class="kt-portlet kt-portlet--height-fluid">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            Adicionar disciplinas
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <!--begin::widget 12-->
+                        {% render_table table %}
+                </div>
+                <!--end:: Widgets/Last Updates-->            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+  
+
+    
+
+    
