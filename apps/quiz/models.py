@@ -89,3 +89,33 @@ class Answer(models.Model):
 
     alternative_true = models.CharField(max_length=16, verbose_name="Alternativa correta", blank=False, null=False)  
     question = models.OneToOneField(Question, editable=False, related_name="question_related", on_delete=models.CASCADE)
+
+# Recompensas
+class reward(models.Model):
+    uuid            = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
+    date_create     = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
+    description     = models.CharField(verbose_name="Descrição", max_length=1024, help_text="Digite a descrição da Discipline", null=True, blank=True, default=None)
+    points          = models.CharField(verbose_name="Pontos", max_length=5, help_text="Pontos ganhos", null=True, blank=True, default='0')
+    # fks
+    user            = models.ForeignKey(User, editable=False, related_name="+", on_delete=models.CASCADE)
+    discipline      = models.ForeignKey(Discipline, editable=False, related_name="+", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.pk)
+
+    def get_nome_disciplina(self):
+        return self.discipline.title
+
+# Recompensas alunos
+class reward_user(models.Model):
+    uuid            = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
+    date_create     = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
+    # fks
+    user            = models.ForeignKey(User, editable=False, related_name="+", on_delete=models.CASCADE)
+    reward          = models.ForeignKey(reward, editable=False, related_name="+", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.pk)
+
+    def get_nome_disciplina(self):
+        return self.reward.title

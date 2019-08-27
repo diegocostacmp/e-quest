@@ -154,8 +154,16 @@ class Discipline(models.Model):
             return mark_safe('<span class="kt-badge  kt-badge--warning kt-badge--inline kt-badge--pill">Desativo</span>') 
 
 
+# Discipline
+class Disciplines_user(models.Model):
+    uuid            = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
+    date_create     = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
+    # fks
+    user            = models.ForeignKey(User, editable=False, related_name="+", on_delete=models.CASCADE)
+    discipline      = models.ForeignKey(Discipline, editable=False, related_name="+", on_delete=models.CASCADE)
 
+    def __str__(self):
+        return str(self.pk)
 
-
-
-
+    def get_nome_disciplina(self):
+        return self.discipline.title

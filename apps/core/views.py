@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import (
     render, redirect,
     HttpResponseRedirect,
@@ -27,9 +29,9 @@ from django_tables2 import RequestConfig
 from django.utils import timezone
 
 from .models import (
-    User, Discipline
+    User, Discipline, Disciplines_user
     )
-from .tables import DisciplineTable
+from .tables import DisciplineTable, DisciplineAlunosTable, MinhasDisciplineAlunosTable
 
 # tela de login inicial no sistema
 def signIn(request):
@@ -44,6 +46,8 @@ def postsign(request):
 
     try:
         user = authenticate(username=email, password=password)
+        print('user: ',user)
+        print('password: ',password)
         login(request, user)
         if request.user.is_authenticated:
             data = {
@@ -122,18 +126,34 @@ def begin(request):
     short_first = aux[0]
     short_last  = aux[-1]
     short_name  = str(short_first) + str(short_last) 
+    
+    if int(profile) == 1:
+        # Lista as Disciplines do professor
+        table = DisciplineAlunosTable(Discipline.objects.filter(user_create=request.user))
+        RequestConfig(request).configure(table)
 
-    # Lista as Disciplines do professor
-    table = DisciplineTable(Discipline.objects.filter(user_create=request.user))
-    RequestConfig(request).configure(table)
+        table_user = MinhasDisciplineAlunosTable(Disciplines_user.objects.filter(user=request.user))
+        RequestConfig(request).configure(table_user)
 
-    context = {
-        "alias_name"    : alias_final,
-        "tipo_perfil"   : profile,
-        "short_name"    : short_name,
-        "table"         : table
-    }
-    template_name   = "begin.html"
+        context = {
+            "table": table,
+            "table_user": table_user,
+        }
+        # print('profile: ',profile)
+        template_name   = "begin_aluno.html"
+    else:
+        # Lista as Disciplines do professor
+        table = DisciplineTable(Discipline.objects.filter(user_create=request.user))
+        RequestConfig(request).configure(table)
+
+        context = {
+            "alias_name"    : alias_final,
+            "tipo_perfil"   : profile,
+            "short_name"    : short_name,
+            "table"         : table
+        }
+        # print('profile: ',profile)
+        template_name   = "begin.html"
     return render(request, template_name, context)
 
 @login_required
@@ -197,3 +217,18 @@ def discipline_edit(request):
     }
 
     return JsonResponse(data, safe=False)
+
+
+@login_required
+def discipline_add_aluno(request, uid_aluno):
+    now = datetime.now()
+    disciplina = get_object_or_404(Discipline, uuid=uid_aluno)
+    print('disciplina: ',disciplina)
+    
+    minhas_disciplinas_obj = Disciplines_user()
+    minhas_disciplinas_obj.date_create  = now
+    minhas_disciplinas_obj.user         = request.user
+    minhas_disciplinas_obj.discipline   = disciplina
+    minhas_disciplinas_obj.save()
+
+    return redirect('core:begin')
