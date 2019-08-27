@@ -6,7 +6,7 @@ from .models import (
 
 class DisciplineTable(tables.Table):
     # Acessor para obter nome do professor
-    teacher= tables.Column(accessor='get_teacher', verbose_name="Professor")
+    teacher_name= tables.Column(accessor='get_teacher', verbose_name="Professor")
 
     # Template com as acoes disponiveis
     actions = tables.TemplateColumn(template_name='discipline/discipline_actions.html', verbose_name="Ações")
@@ -15,5 +15,5 @@ class DisciplineTable(tables.Table):
     status = tables.Column(accessor='get_status')
     class Meta:
         model = Discipline
-        sequence = ['title', 'teacher', 'status', 'actions']
-        exclude = ['id', 'uuid', 'date_create', 'date_edit', 'description', 'user_create']
+        sequence = ['title', 'teacher_name', 'status', 'actions']
+        exclude = ['id', 'uuid', 'date_create', 'date_edit', 'description', 'user_create', 'teacher']

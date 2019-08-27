@@ -75,7 +75,7 @@ $('.discipline-delete').click(function(e) {
 // Chamada do metodo cadastrar_Discipline
 $('#discipline-create').click(function(e) {
     Swal.fire({
-        title: 'Digite o nome da Discipline',
+        title: 'Digite o nome da Disciplina',
         input: 'text',
         inputAttributes: {
         autocapitalize: 'off'

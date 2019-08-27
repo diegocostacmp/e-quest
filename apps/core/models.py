@@ -142,7 +142,7 @@ class Discipline(models.Model):
     def __str__(self):
         return str(self.pk)
 
-    def get_professor(self):
+    def get_teacher(self):
         return self.teacher.full_name
 
     def get_status(self):

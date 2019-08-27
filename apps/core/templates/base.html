@@ -175,9 +175,6 @@
 											<div class="kt-user-card__name">
 												{{request.user.full_name}}
 											</div>
-											<div class="kt-user-card__badge">
-												<span class="btn btn-label-primary btn-sm btn-bold btn-font-md">23 messages</span>
-											</div>
 										</div>
 
 										<!--end: Head -->
@@ -198,7 +195,8 @@
 												</div>
 											</a>
 											<div class="kt-notification__custom kt-space-between">
-												<a href="{% url 'core:logout_get' %}"  target="_blank" class="btn btn-label btn-label-brand btn-sm btn-bold">Sair!</a>
+												<a href="{% url 'core:logout_get' %}"  target="_blank" class="btn btn-label btn-label-brand btn-sm btn-bold">
+													<i class="flaticon-logout"></i> Sair!</a>
 											</div>
 										</div>
 

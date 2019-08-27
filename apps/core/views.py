@@ -74,6 +74,8 @@ def signup(request):
         password = request.POST.get('password', '')
         type_profile = request.POST.get('type_profile', '')
 
+        
+
         if len(name) > 0 and len(email) > 0 and len(password) > 0:
             # verifica se a conta ja existe
             user = authenticate(request, email=email, password=password)

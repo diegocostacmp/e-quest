@@ -179,7 +179,6 @@ def students_online(request):
     students = ClassRoom.objects.filter(game=game_active.pk, status="O")
     context = {
         "students": students
-        
     }
 
     message = render_to_string("student/student_online.html", context=context)

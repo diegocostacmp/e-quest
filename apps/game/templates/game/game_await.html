@@ -133,8 +133,9 @@
                         <div class="kt-portlet__body">
                             <div class="tab-content">
                                 <div class="tab-pane active" id="kt_widget4_tab1_content">
-                                    <div id="containerPrincipal" name="containerPrincipal">
-                                    </div>             
+                                    <div id="containerPrincipal" class="kt-widget4">    
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -142,11 +143,8 @@
             </div>
         </div> 
     </div>
-    
-
     <script>
-        interval = null;
-        interval = setInterval(function() {
+        setInterval(function() {
             var csrftoken, gameUuid;
 
             //token de sessao
@@ -164,6 +162,11 @@
                 datatype: 'json',
 
             success: function(data) {
+                $("#studentOnline").remove();
+                $("#containerPrincipal").append('<div id="studentOnline"></div>')
+                $("#studentOnline").append(data);
+
+                
                 
                 
             },
