@@ -11,12 +11,8 @@ from django.urls import (
     reverse_lazy
     )    
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import (
-    authenticate, 
-    login, 
-    logout, 
-    get_user_model
-    )
+from django.contrib.auth import views, authenticate, login, logout, get_user_model
+
 from django.contrib.auth.models import User
 
 from django.views.decorators.http import (
@@ -31,7 +27,10 @@ from django.utils import timezone
 from .models import (
     User, Discipline, Disciplines_user
     )
+from apps.game.models import Game
+
 from .tables import DisciplineTable, DisciplineAlunosTable, MinhasDisciplineAlunosTable
+from apps.game.tables import GameAlunoTable
 
 # tela de login inicial no sistema
 def signIn(request):
@@ -41,14 +40,20 @@ def signIn(request):
 @require_POST
 def postsign(request):
     
-    email = request.POST.get('email')
-    password = request.POST.get('password')
+    # email = request.POST.get('email')
+    # password = request.POST.get('password')
+    username = ''
+    username = request.POST.get('email', username)
+    password = ''
+    password = request.POST.get('password', password)
+    print('username: ',username,' - password: ',password)
 
-    print('email', email)
-    print('password', password)
+    # print('email', email)
+    # print('password', password)
 
     try:
-        user = authenticate(username=email, password=password)
+        user = authenticate(email=username, password=password)
+        print('user: ',user)
         login(request, user)
         if request.user.is_authenticated:
             data = {
@@ -144,9 +149,14 @@ def begin(request):
         table_user = MinhasDisciplineAlunosTable(Disciplines_user.objects.filter(user=request.user))
         RequestConfig(request).configure(table_user)
 
+        queryset = Game.objects.filter(status='O')
+        table_jogos = GameAlunoTable(queryset)
+        RequestConfig(request).configure(table_jogos)
+
         context = {
             "table": table,
             "table_user": table_user,
+            "table_jogos" : table_jogos,
         }
         # print('profile: ',profile)
         template_name   = "begin_aluno.html"

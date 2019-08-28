@@ -2,8 +2,8 @@ from django.urls import path
 from .views import (
     game_list, game_discipline_book,
     game_create, quiz_book_list, 
-    game_await, students_online,
-    next_question, game_init
+    game_await, students_online, game_await_aluno, 
+    next_question, game_init, painel_quiz_aluno, quiz_book_list_aluno
 )
 
 
@@ -19,5 +19,10 @@ urlpatterns = [
 
     path('students_online/', students_online, name='students_online'),
     path('next_question/', next_question, name='next_question'),
-    path('game_init/<uuid:uuid_question>/', game_init, name='game_init')
+    path('game_init/<uuid:uuid_question>/', game_init, name='game_init'),
+
+    path('game_book_list/<uuid:game_uuid>/<int:discipline_id>/aluno/', quiz_book_list_aluno, name='quiz_book_list_aluno'),
+    path('game_await/<uuid:game_uuid>/<uuid:quiz_uuid>/aluno/', game_await_aluno, name='game_await_aluno'),
+    # path('painel/<uuid:game_uuid>/aluno/', painel_quiz_aluno, name='painel_quiz_aluno'),
+    # path('game_list_aluno', game_list_aluno, name='game_list_aluno'),
 ]

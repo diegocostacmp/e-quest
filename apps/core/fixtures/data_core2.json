@@ -1,0 +1,39 @@
+[{
+	"model": "core.user",
+	"pk": 1,
+	"fields": {
+		"password": "pbkdf2_sha256$100000$FnD1KJ6bsfnw$MrCrzKKThyPo6qaW6Xh2E9KRQNWzZxBXXLyfQM4Caos=",
+		"last_login": "2019-08-20T01:38:48.779Z",
+		"is_superuser": true,
+		"full_name": "Ricardo oliveira carvalho",
+		"username": "ricardo.flayer@gmail.com",
+		"email": "ricardo.flayer@gmail.com",
+		"uid": "a26b7638-2778-44a9-bd82-db5377fc2956",
+		"cpf": "00000000091",
+		"birth_date": null,
+		"sex": "M",
+		"marital_status": "GO",
+		"phone": null,
+		"street": null,
+		"street_number": null,
+		"complement": "ricardo",
+		"state": "A",
+		"city": null,
+		"type_profile": "1",
+		"groups": [],
+		"user_permissions": []
+	}
+}, {
+	"model": "core.discipline",
+	"pk": 1,
+	"fields": {
+		"title": "Espanhol",
+		"description": null,
+		"uuid": "697d8011-6138-419c-891b-77a7321a2688",
+		"date_create": "2019-08-20T01:33:53.986Z",
+		"date_edit": "2019-08-20T01:33:53.986Z",
+		"status": "A",
+		"user_create": 1,
+		"teacher": 1
+	}
+}]

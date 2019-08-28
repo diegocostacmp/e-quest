@@ -1,0 +1,18 @@
+[{
+	"model": "core.user",
+	"pk": 1,
+	"fields": {
+		"password": "pbkdf2_sha256$100000$FnD1KJ6bsfnw$MrCrzKKThyPo6qaW6Xh2E9KRQNWzZxBXXLyfQM4Caos=",
+		"last_login": "2019-07-17T19:17:29.782",
+		"is_superuser": true,
+		"uid": "a26b7638-2778-44a9-bd82-db5377fc2956",
+		"full_name": "Ricardo oliveira carvalho",
+		"username": "ricardo.flayer@gmail.com",
+		"complement": "ricardo",
+		"cpf": "00000000091",
+		"email": "ricardo.flayer@gmail.com",
+		"groups": [],
+		"user_permissions": []
+	}
+}
+]

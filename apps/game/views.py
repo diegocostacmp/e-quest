@@ -31,7 +31,7 @@ from .models import (
     ClassRoom, Played
 )
 from .tables import (
-    GameTable, GameStart
+    GameTable, GameStart, GameAlunoStart
 )
 
 import json
@@ -101,6 +101,20 @@ def quiz_book_list(request, discipline_uuid, game_uuid):
     return render(request, template_name, context)
 
 @login_required
+def quiz_book_list_aluno(request, game_uuid, discipline_id):
+    queryset = Quizzes.objects.filter(status='A', discipline__id=discipline_id)
+    print('queryset: ',queryset)
+    table = GameAlunoStart(queryset)
+    RequestConfig(request).configure(table)
+
+    context = {
+        "table" : table,
+        "game_uuid":game_uuid
+    }
+    template_name   = "game/game_show_quiz_aluno.html"
+    return render(request, template_name, context)
+
+@login_required
 def game_await(request, game_uuid, quiz_uuid):
     # get quiz edit
     quiz = get_object_or_404(Quizzes, uuid=quiz_uuid)
@@ -136,6 +150,42 @@ def game_await(request, game_uuid, quiz_uuid):
     }
 
     return render(request, 'game/game_await.html', context)
+
+@login_required
+def game_await_aluno(request, game_uuid, quiz_uuid):
+    # get quiz edit
+    quiz = get_object_or_404(Quizzes, uuid=quiz_uuid)
+
+    # Register new game_played
+    new_played = Played(quiz=quiz, user_create=request.user, status="A")
+    new_played.save()
+
+    # Updated status and quiz_played
+    game = get_object_or_404(Game, uuid=game_uuid)
+    game.status = "O"
+    game.played = new_played
+    game.save()
+
+    question = Question.objects.filter(quiz=quiz.pk, status="A")
+    answer = Answer.objects.filter(question__quiz=quiz.pk, status="A")
+
+    # Get first question
+    next_question = Question.objects.filter(quiz=quiz.pk, status="A").first()
+
+    context = {
+        "game_uuid": game.uuid,
+        "game_title": game.title,
+        "quiz_title": quiz.title,
+        "quiz_discipline": quiz.discipline.title,
+        "question": question,
+        "answer": answer,
+        "amount_questions": question.count(),
+
+        "next_question": next_question.uuid
+        
+    }
+
+    return render(request, 'game/game_await _aluno.html', context)
 
 @login_required
 @require_http_methods(["POST"])
@@ -195,3 +245,18 @@ def game_init(request, uuid_question):
         
     }
     return render(request, 'game/game_start.html', context)
+
+
+#Aluno
+@login_required
+def painel_quiz_aluno(request, game_uuid):
+    queryset = Quizzes.objects.filter(discipline__teacher=request.user, discipline__uuid=discipline_uuid)
+    table = GameStart(queryset)
+    RequestConfig(request).configure(table)
+
+    context = {
+        "table" : table,
+        "game_uuid":game_uuid
+    }
+    template_name   = "game/game_show_quiz.html"
+    return render(request, template_name, context)
