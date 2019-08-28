@@ -7,81 +7,73 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="alert alert-elevate alert-light" role="alert">
-                <div class="alert-text">Pergunta aqui</div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="kt-portlet kt-callout">
-                <div class="kt-portlet__body">
-                    <div class="kt-callout__body">
-                        <div class="kt-callout__content">
-                            <h3 class="kt-callout__title">Get in Touch</h3>
-                            <p class="kt-callout__desc">
-                                Windows 10 automatically installs updates to make for sure
-                            </p>
-                        </div>
-                        <div class="kt-callout__action">
-                            <a href="#" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-brand">Submit a Request</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="kt-portlet kt-callout">
-                <div class="kt-portlet__body">
-                    <div class="kt-callout__body">
-                        <div class="kt-callout__content">
-                            <h3 class="kt-callout__title">Live Chat</h3>
-                            <p class="kt-callout__desc">
-                                Windows 10 automatically installs updates to make for sure
-                            </p>
-                        </div>
-                        <div class="kt-callout__action">
-                            <a href="#" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-success">Start Chat</a>
-                        </div>
-                    </div>
+                <div class="alert-text" style="font-weight: 500; font-size: 16px;">
+                    {% for obj_question in question%}
+                        {{obj_question.title}}
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
-            <div class="kt-portlet kt-callout">
-                <div class="kt-portlet__body">
-                    <div class="kt-callout__body">
-                        <div class="kt-callout__content">
-                            <h3 class="kt-callout__title">Get in Touch</h3>
-                            <p class="kt-callout__desc">
-                                Windows 10 automatically installs updates to make for sure
-                            </p>
-                        </div>
-                        <div class="kt-callout__action">
-                            <a href="#" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-brand">Submit a Request</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="kt-portlet kt-callout">
-                <div class="kt-portlet__body">
-                    <div class="kt-callout__body">
-                        <div class="kt-callout__content">
-                            <h3 class="kt-callout__title">Live Chat</h3>
-                            <p class="kt-callout__desc">
-                                Windows 10 automatically installs updates to make for sure
-                            </p>
-                        </div>
-                        <div class="kt-callout__action">
-                            <a href="#" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-success">Start Chat</a>
+        {% for obj_answer in answer%}
+            <div class="col-lg-6">
+                <div class="kt-portlet kt-callout">
+                    <div class="kt-portlet__body">
+                        <div class="kt-callout__body">
+                            <div class="kt-callout__content">
+                                <h3 class="kt-callout__title">{{obj_answer.alternative_A}}</h3>
+                            </div>
+                            <div class="kt-callout__action">
+                                <a href="#" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-brand">Submit a Request</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="col-lg-6">
+                <div class="kt-portlet kt-callout">
+                    <div class="kt-portlet__body">
+                        <div class="kt-callout__body">
+                            <div class="kt-callout__content">
+                                <h3 class="kt-callout__title">{{obj_answer.alternative_B}}</h3>
+                            </div>
+                            <div class="kt-callout__action">
+                                <a href="#" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-brand">Submit a Request</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="kt-portlet kt-callout">
+                    <div class="kt-portlet__body">
+                        <div class="kt-callout__body">
+                            <div class="kt-callout__content">
+                                <h3 class="kt-callout__title">{{obj_answer.alternative_C}}</h3>
+                            </div>
+                            <div class="kt-callout__action">
+                                <a href="#" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-brand">Submit a Request</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="kt-portlet kt-callout">
+                    <div class="kt-portlet__body">
+                        <div class="kt-callout__body">
+                            <div class="kt-callout__content">
+                                <h3 class="kt-callout__title">{{obj_answer.alternative_D}}</h3>
+                            </div>
+                            <div class="kt-callout__action">
+                                <a href="#" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-brand">Submit a Request</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 </div>
     <script>

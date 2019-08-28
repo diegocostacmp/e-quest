@@ -167,8 +167,10 @@ def game_await_aluno(request, game_uuid, quiz_uuid):
     game.save()
 
     question = Question.objects.filter(quiz=quiz.pk, status="A")
-    answer = Answer.objects.filter(question__quiz=quiz.pk, status="A")
-
+    # print('question: ',question)
+    # question_obj = get_object_or_404(Question, quiz=quiz.pk, status="A")
+    answer = Answer.objects.filter(question__id=16, status="A")
+    # print('answer: ',answer)
     # Get first question
     next_question = Question.objects.filter(quiz=quiz.pk, status="A").first()
 
@@ -182,7 +184,6 @@ def game_await_aluno(request, game_uuid, quiz_uuid):
         "amount_questions": question.count(),
 
         "next_question": next_question.uuid
-        
     }
 
     return render(request, 'game/game_await _aluno.html', context)
