@@ -48,40 +48,23 @@ python manage.py migrate
 ## Diagrama de classes
 ![Screenshot](myapp_models.png)
 
-```
-Give an example
-```
+## Construido com
 
-## Deployment
+* [Python](https://www.python.org/) - Linguagem de programacao
+* [Django](https://www.djangoproject.com/) - Framework python
 
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Autores
 
 * **Diego B B Costa** - *Trabalho inicial* - [PurpleBooth](https://github.com/diegocostacmp)
-* 
 * **Ricardo Oliveira** - *Trabalho inicial* - [PurpleBooth](https://github.com/ricardoflayer)
 
 ## Licenca
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License.
 
 ## Agradecimentos 
 
-* Agradecemos ao INF pelo apoio e conhecimento.
+* Agradecemos ao INF (Instituto de informatica) pelo apoio e conhecimento.
 
 
