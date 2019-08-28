@@ -45,21 +45,8 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
+## Diagrama de classes
+![Screenshot](myapp_models.png)
 
 ```
 Give an example
@@ -83,19 +70,18 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
-## Authors
+## Autores
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Diego B B Costa** - *Trabalho inicial* - [PurpleBooth](https://github.com/diegocostacmp)
+* 
+* **Ricardo Oliveira** - *Trabalho inicial* - [PurpleBooth](https://github.com/ricardoflayer)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
+## Licenca
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
+## Agradecimentos 
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Agradecemos ao INF pelo apoio e conhecimento.
+
 
