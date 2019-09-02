@@ -60,6 +60,8 @@ class Question(models.Model):
     quiz            = models.ForeignKey(Quizzes, verbose_name="Quiz", on_delete=models.PROTECT)
     user_create     = models.ForeignKey(User, editable=False, related_name="+", on_delete=models.CASCADE)
 
+    last_id         =  models.CharField(verbose_name="Proximo", max_length=10, blank=True, null=True, default=None)
+
     time_solution = models.CharField(max_length=16, verbose_name="Tempo de solução", help_text = ("Tempo para resolver a questão"), blank=False, null=False, default=None)
 
     def __str__(self):

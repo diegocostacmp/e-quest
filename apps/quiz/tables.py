@@ -1,9 +1,7 @@
 import django_tables2 as tables
 from .models import (
-    Quizzes,
-    Question
-    )
-
+    Quizzes, Question
+)
 
 class QuizzesTable(tables.Table):
 
@@ -18,7 +16,7 @@ class QuizzesTable(tables.Table):
         exclude = ('id', 'uuid', 'date_create', 'date_edit', 'description', 'user_create', 'discipline')
 
 class QuestionTable(tables.Table):
-
+    
     # Status personalizado
     status = tables.Column(accessor='get_status')
     
@@ -27,3 +25,4 @@ class QuestionTable(tables.Table):
         model = Question
         sequence = ('title', 'status', 'actions')
         exclude = ('id', 'uuid', 'description', 'date_create', 'date_edit', 'quiz', 'user_create', 'time_solution')
+

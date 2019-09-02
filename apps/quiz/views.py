@@ -16,7 +16,14 @@ from django_tables2 import RequestConfig
 from django.utils import timezone
 from django.template.loader import render_to_string
 
-from apps.core.models import User, Discipline
+from apps.core.models import (
+    User, Discipline,
+    Disciplines_user
+    )
+
+from apps.core.tables import(
+    UserDisciplineTable
+    )
 
 from .models import (Quizzes, Question,
     Answer
@@ -38,8 +45,14 @@ def quiz_list(request, discipline_uuid):
     table = QuizzesTable(queryset)
     RequestConfig(request).configure(table)
 
+    # Queryser student
+    queryset_student = Disciplines_user.objects.filter(discipline=discipline_edit.pk)
+
+    table_user_discipline = UserDisciplineTable(queryset_student)
+    RequestConfig(request).configure(table_user_discipline)
     context = {
         "table" : table,
+        "table_student": table_user_discipline,
         "discipline_uuid": discipline_edit.uuid
     }
 
@@ -160,10 +173,28 @@ def question_create(request):
         # Get quiz edit
         quiz_edit = get_object_or_404(Quizzes, uuid=quiz_uuid)
 
+        # Get last pk active
+        print(Question.objects.filter(quiz=quiz_edit).last())
+
         # Create question
         if request.method == "POST":
-            question_register = Question(title=message, status="A", time_solution=str(seconds), quiz=quiz_edit, user_create=request.user)
-            question_register.save()
+            question_register = Question()
+            question_register.title = message,
+            question_register.status ="A"
+            question_register.time_solution = str(seconds)
+            question_register.quiz = quiz_edit
+            question_register.user_create=request.user
+
+            aux = Question.objects.filter(quiz=quiz_edit).last()
+            if aux == None:
+                question_register.save()
+                question_register.last_id = question_register.pk
+                question_register.save()
+
+            else:
+                question_register.last_id = aux.pk
+                question_register.save()
+
 
             answer_register = Answer(question=question_register, alternative_A=msg_A, alternative_B=msg_B, alternative_C=msg_C, alternative_D=msg_D, user_create=request.user, alternative_true=optSelected)
             answer_register.save()

@@ -5,27 +5,29 @@
 
 {% block header %}
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-        <div class="kt-subheader__main">
-            <span class="kt-subheader__separator kt-hidden"></span>
-            <div class="kt-subheader__breadcrumbs">
-                <a href="{% url 'core:begin' %}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
-                <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="{% url 'core:begin' %}" class="kt-subheader__breadcrumbs-link">
-                    Disciplina
-                </a>
-                <span class="kt-subheader__breadcrumbs-separator"></span>
-                <a href="{% url 'quiz:quiz_list' discipline_uuid %}" class="kt-subheader__breadcrumbs-link">
-                    Quiz
-                </a>
+        <div class="kt-container">
+            <div class="kt-subheader__main">
+                <span class="kt-subheader__separator kt-hidden"></span>
+                <div class="kt-subheader__breadcrumbs">
+                    <a href="{% url 'core:begin' %}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                    <span class="kt-subheader__breadcrumbs-separator"></span>
+                    <a href="{% url 'core:begin' %}" class="kt-subheader__breadcrumbs-link">
+                        Disciplina
+                    </a>
+                    <span class="kt-subheader__breadcrumbs-separator"></span>
+                    <a href="{% url 'quiz:quiz_list' discipline_uuid %}" class="kt-subheader__breadcrumbs-link">
+                        Quiz
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="kt-subheader__toolbar">
             <div class="kt-subheader__toolbar">
-                <input type="hidden" id="quiz-uuid" value="{{quiz_uuid}}">
-                <a href="#" id="question-create" onclick="questionBook()" value="{{quiz_uuid}}" class="btn btn-label-danger btn-bold" data-skin="dark" data-toggle="kt-tooltip" data-placement="left" data-original-title="Adicionar questão">
-                    <i class="fa flaticon2-plus-1"> </i>
-                    Adicionar questão
-                </a>
+                <div class="kt-subheader__toolbar">
+                    <input type="hidden" id="quiz-uuid" value="{{quiz_uuid}}">
+                    <a href="#" id="question-create" onclick="questionBook()" value="{{quiz_uuid}}" class="btn btn-label-danger btn-bold" data-skin="dark" data-toggle="kt-tooltip" data-placement="left" data-original-title="Adicionar questão">
+                        <i class="fa flaticon2-plus-1"> </i>
+                        Adicionar questão
+                    </a>
+                </div>
             </div>
         </div>
     </div>

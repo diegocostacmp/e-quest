@@ -44,7 +44,7 @@ $('.quiz-delete').click(function(e) {
                     if(data.status == "OK"){
                         const Toast = Swal.mixin({
                             toast: true,
-                            position: 'center',
+                            position: 'top-end',
                             showConfirmButton: false,
                             timer: 3000
                         });
@@ -60,7 +60,7 @@ $('.quiz-delete').click(function(e) {
                 error: function(){
                     const Toast = Swal.mixin({
                         toast: true,
-                        position: 'center',
+                        position: 'top-end',
                         showConfirmButton: false,
                         timer: 3000
                     });
@@ -118,7 +118,7 @@ $('#quiz-create').click(function(e) {
                     if(data.status == "OK"){
                         const Toast = Swal.mixin({
                             toast: true,
-                            position: 'center',
+                            position: 'top-end',
                             showConfirmButton: false,
                             timer: 3000
                         });
@@ -134,7 +134,7 @@ $('#quiz-create').click(function(e) {
                 error: function(data){
                     const Toast = Swal.mixin({
                         toast: true,
-                        position: 'center',
+                        position: 'top-end',
                         showConfirmButton: false,
                         timer: 3000
                     });
@@ -190,7 +190,7 @@ $('.quiz-edit').click(function(e) {
                     if(data.status == "OK"){
                         const Toast = Swal.mixin({
                             toast: true,
-                            position: 'center',
+                            position: 'top-end',
                             showConfirmButton: false,
                             timer: 3000
                         });
@@ -279,7 +279,7 @@ function questionBookPreview(questionUuid){
             optD = $("#optD").html(context.optD);
             alternativeTrue = context.alternativeTrue;
 
-            $("#question-title-preview").html("Pergunta:");
+            $("#question-title-preview").html("Pergunta:").css('h1');
 
             if(alternativeTrue ==  "A"){
                 $("#trueA").addClass("fa fa-check");
@@ -385,7 +385,7 @@ var KTFormControls = function () {
                                 $('#question_manager').modal('hide');
                                 const Toast = Swal.mixin({
                                     toast: true,
-                                    position: 'center',
+                                    position: 'top-end',
                                     showConfirmButton: false,
                                     timer: 3000
                                 });

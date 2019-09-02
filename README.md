@@ -56,8 +56,8 @@ python manage.py migrate
 
 ## Autores
 
-* **Diego B B Costa** - *Trabalho inicial* - [PurpleBooth](https://github.com/diegocostacmp)
-* **Ricardo Oliveira** - *Trabalho inicial* - [PurpleBooth](https://github.com/ricardoflayer)
+* **Diego B B Costa** - *Trabalho inicial* - [Ver...****](https://github.com/diegocostacmp)
+* **Ricardo Oliveira** - *Trabalho inicial* - [Ver...](https://github.com/ricardoflayer)
 
 ## Licenca
 

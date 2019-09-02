@@ -27,3 +27,16 @@
     line-height: 1.5;
     border-radius: 0.3rem;
 }
+
+/* Adding font css question teacher */
+.accordion.accordion-solid .card .card-header .card-title {
+    font-size: 2.1rem;
+    padding: 1.25rem;
+    background-color: #f7f8fa;
+    border-radius: 4px;
+}
+
+.accordion .card .card-body {
+    padding: 1.25rem;
+    font-size: 1.7rem;
+}

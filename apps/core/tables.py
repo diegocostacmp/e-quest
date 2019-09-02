@@ -43,3 +43,15 @@ class MinhasDisciplineAlunosTable(tables.Table):
         sequence = [ 'name_discipline', 'actions']
         exclude = ['id','user','uuid', 'date_create', 'discipline']
 
+class UserDisciplineTable(tables.Table):
+    
+    # Status
+    get_status = tables.Column(accessor='get_status', verbose_name='Status')
+
+    #  Get name discipline
+    get_username = tables.Column(accessor='get_username', verbose_name='Nome')
+    
+    class Meta:
+        model = Disciplines_user
+        sequence = ('get_username', 'get_status')
+        exclude = ('id', 'uuid', 'date_create', 'discipline', 'user', 'status')

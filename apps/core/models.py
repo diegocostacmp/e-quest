@@ -125,6 +125,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_tipo_user(self):
         return self.type_profile
+    
+    
 
 # Cadastro de Discipline
 class Discipline(models.Model):
@@ -157,6 +159,7 @@ class Discipline(models.Model):
 
 # Discipline
 class Disciplines_user(models.Model):
+    status          = models.CharField(choices=STATUS_CHOICES, max_length=15, default="A")
     uuid            = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
     date_create     = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
     # fks
@@ -168,3 +171,15 @@ class Disciplines_user(models.Model):
 
     def get_nome_disciplina(self):
         return self.discipline.title
+
+    def get_username(self):
+        return self.user.full_name
+
+    def get_status(self):
+        if self.status == 'A':
+            return mark_safe('<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">Ativo</span>') 
+        elif self.status == 'B':
+            return mark_safe('<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill">Bloqueado</span>') 
+        else:
+            return mark_safe('<span class="kt-badge  kt-badge--warning kt-badge--inline kt-badge--pill">Desativo</span>') 
+
