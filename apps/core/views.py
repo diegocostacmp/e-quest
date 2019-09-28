@@ -180,21 +180,25 @@ def begin(request):
 def discipline_create(request):
     try:
         nome_Discipline = request.POST.get('name', '')
-
         if request.method == "POST":
             title = nome_Discipline
-            register = Discipline(title=title, status="A", teacher=request.user, user_create=request.user)
+
+            # Create instance
+            register = Discipline()
+            register.title = title
+            register.status = "A"
+            register.teacher = request.user
+            register.user_create = request.user
             register.save()
 
             # return table by ajax
-            table = DisciplineTable(Discipline.objects.filter(user_create=request.user, pk=register.pk))
+            table = DisciplineTable(Discipline.objects.filter(user_create=request.user))
             RequestConfig(request).configure(table) 
             
             data = {
                 "status" : "OK",
                 "table": table
             }
-
             return JsonResponse(data, safe=False)
     except:
         data = {

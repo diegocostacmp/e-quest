@@ -1,9 +1,9 @@
-<a href="#" class="btn btn-outline-brand btn-icon quiz-edit" cs-id="{{record.uuid}}" cs-titulo="{{record.title}}" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" data-original-title="Editar quiz"> 
-    <i class="flaticon2-paper"></i>
+<a href="{% url 'quiz:question_list' record.uuid %}" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" data-original-title="Adicionar questões">
+    <i class="la la-cog"></i> 
 </a>
-<a href="{% url 'quiz:question_list' record.uuid %}" class="btn btn-outline-success btn-icon" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" data-original-title="Adicionar questões">
-    <i class="flaticon2-search"></i> 
+<a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md quiz-edit" cs-id="{{record.uuid}}" cs-titulo="{{record.title}}" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" data-original-title="Editar quiz"> 
+    <i class="la la-edit"></i>
 </a>
-<a href="#" class="btn btn-outline-danger btn-icon quiz-delete" eg-url="/quiz/quiz_delete/" eg-uuid="{{record.uuid}}" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" data-original-title="Excluir quiz"> 
-    <i class="flaticon2-trash"></i> 
+<a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md quiz-delete" eg-url="/quiz/quiz_delete/" eg-uuid="{{record.uuid}}" data-skin="dark" data-toggle="kt-tooltip" data-placement="top" data-original-title="Excluir quiz"> 
+    <i class="la la-trash"></i> 
 </a>
