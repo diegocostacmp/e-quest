@@ -180,18 +180,21 @@ def begin(request):
 def discipline_create(request):
     try:
         nome_Discipline = request.POST.get('name', '')
-        print(nome_Discipline)
 
-        # Os dados sao gravados sem a necessidade de forms
-        # ja que esta usando sweetalert
         if request.method == "POST":
-            title      = nome_Discipline
-            register    = Discipline(title=title, status="A", teacher=request.user, user_create=request.user)
+            title = nome_Discipline
+            register = Discipline(title=title, status="A", teacher=request.user, user_create=request.user)
             register.save()
 
+            # return table by ajax
+            table = DisciplineTable(Discipline.objects.filter(user_create=request.user, pk=register.pk))
+            RequestConfig(request).configure(table) 
+            
             data = {
-                "status"        : "OK"
+                "status" : "OK",
+                "table": table
             }
+
             return JsonResponse(data, safe=False)
     except:
         data = {

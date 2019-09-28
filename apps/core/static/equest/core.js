@@ -104,6 +104,7 @@ $('#discipline-create').click(function(e) {
 
                 success: function(data) {
                     if(data.status == "OK"){
+                        console.log("saida:", data.table)
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
@@ -114,7 +115,8 @@ $('#discipline-create').click(function(e) {
                             type: 'success',
                             title: 'Cadastrado com sucesso!',
                             onClose: () =>{
-                                location.reload();
+                                // reload only table
+                                $("#disciplineList").append(data.table);
                             }
                         })
                     }

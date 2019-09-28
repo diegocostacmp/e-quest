@@ -2,7 +2,6 @@
 {% load django_tables2 %}
 {% load i18n %}
 
-
 {% block table-wrapper %}
 
 <!--begin::Global Theme Styles(used by all pages) -->
@@ -24,10 +23,10 @@
                     <!-- begin::header -->
                     {% block table.thead %}
                     {% if table.show_header %}
-                        <thead {{ table.attrs.thead.as_html }} class="kt-datatable__head">
+                        <thead {{ table.attrs.thead.as_html }}>
                             <tr class="kt-datatable__row">
                             {% for column in table.columns %}
-                                <th {{ column.attrs.th.as_html }} class="kt-datatable__cell kt-datatable__cell--sort">
+                                <th {{ column.attrs.th.as_html }} class="kt-datatable__cell kt-datatable__cell--sort" style="color:black!important;">
                                     {% if column.orderable %}
                                         <a href="{% querystring table.prefixed_order_by_field=column.order_by_alias.next %}">{{ column.header }}</a>
                                     {% else %}

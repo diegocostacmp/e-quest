@@ -150,11 +150,11 @@ class Discipline(models.Model):
 
     def get_status(self):
         if self.status == 'A':
-            return mark_safe('<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">Ativo</span>') 
+            return mark_safe('<span style="width: 100%;"><span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">Ativo</span></span>') 
         elif self.status == 'B':
-            return mark_safe('<span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill">Bloqueado</span>') 
+            return mark_safe('<span style="width: 123px;"><span class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-danger">Bloqueado</span></span>') 
         else:
-            return mark_safe('<span class="kt-badge  kt-badge--warning kt-badge--inline kt-badge--pill">Desativo</span>') 
+            return mark_safe('<span style="width: 123px;"><span class="kt-badge kt-badge--warning kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-warnings">Desativado</span></span>') 
 
 
 # Discipline
