@@ -131,16 +131,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 # Cadastro de Discipline
 class Discipline(models.Model):
     
-    title         = models.CharField(verbose_name="Título", max_length=128, help_text="Digite o nome da Discipline", null=False, blank=False, default=None)
-    description       = models.CharField(verbose_name="Descrição", max_length=512, help_text="Digite a descrição da Discipline", null=True, blank=True, default=None)
-    uuid            = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
-    date_create   = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
-    date_edit  = models.DateTimeField(verbose_name="Data alteração", auto_now_add=True, blank=True, null=True)
-    status          = models.CharField(choices=STATUS_CHOICES, max_length=15, default="A")
+    title = models.CharField(verbose_name="Título", max_length=128, help_text="Digite o nome da Disciplina", null=False, blank=False, default=None)
+    description = models.CharField(verbose_name="Descrição", max_length=512, help_text="Digite a descrição da Disciplina", null=True, blank=True, default=None)
+    uuid = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
+    date_create = models.DateTimeField(verbose_name="Data criação", auto_now_add=True, blank=True, null=True)
+    date_edit = models.DateTimeField(verbose_name="Data alteração", auto_now_add=True, blank=True, null=True)
+    status = models.CharField(choices=STATUS_CHOICES, max_length=15, default="A")
     user_create = models.ForeignKey(User, editable=False, related_name="+", on_delete=models.CASCADE)
 
     # fks
-    teacher       = models.ForeignKey(User, editable=True, on_delete=models.PROTECT, verbose_name="Professor")
+    teacher = models.ForeignKey(User, editable=False, on_delete=models.PROTECT, verbose_name="Professor", blank=False, null=False)
 
     def __str__(self):
         return str(self.pk)
@@ -155,7 +155,10 @@ class Discipline(models.Model):
             return mark_safe('<span style="width: 123px;"><span class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-danger">Bloqueado</span></span>') 
         else:
             return mark_safe('<span style="width: 123px;"><span class="kt-badge kt-badge--warning kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-warnings">Desativado</span></span>') 
-
+    
+    def get_absolute_url(self):
+        return reverse("model_detail", kwargs={"pk": self.pk})
+    
 
 # Discipline
 class Disciplines_user(models.Model):

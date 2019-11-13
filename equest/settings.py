@@ -3,7 +3,7 @@
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+print(BASE_DIR)
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'bim#)dwgy98$hq0o(2bqi8+shw(s0u7!zh_i&eqfaodwu=^ihe'
 
@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'django',
     'crispy_forms',
     'django_tables2',
-    'django_extensions'
+    'django_extensions',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -46,7 +47,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'equest.urls'
 
 TEMPLATES = [
     {
@@ -64,7 +65,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'equest.wsgi.application'
 
 
 # Database
@@ -136,3 +137,6 @@ AUTH_USER_MODEL = 'core.User'
 # Sobreescrevendo template django-tables2 com metronic table
 # DJANGO_TABLES2_TEMPLATE = BASE_DIR+'/apps/core/templates/metronic-table.html'
 DJANGO_TABLES2_TEMPLATE = BASE_DIR+'/apps/core/templates/metronic-table.html'
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

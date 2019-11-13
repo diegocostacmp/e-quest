@@ -25,7 +25,7 @@ from apps.core.tables import(
     UserDisciplineTable
     )
 
-from .models import (Quizzes, Question,
+from .models import (Quiz, Question,
     Answer
     )
 from .tables import (QuizzesTable,

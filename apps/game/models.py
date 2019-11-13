@@ -10,7 +10,7 @@ from apps.core.models import (
     User, Discipline
 )
 from apps.quiz.models import (
-    Quizzes
+    Quiz
 )
 
 # Status choices
@@ -31,7 +31,7 @@ class Played(models.Model):
     user_create = models.ForeignKey(User, editable=False, related_name="+", on_delete=models.CASCADE)
     uuid = models.UUIDField(verbose_name='Identificador Único', default=uuid.uuid4, editable=False)
 
-    quiz = models.ForeignKey(Quizzes, editable=False, related_name="+", on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, editable=False, related_name="+", on_delete=models.CASCADE)
 
 class Game(models.Model):
     title = models.CharField(verbose_name="Título", max_length=512, help_text="Digite o nome do game", null=False, blank=False, default=None)

@@ -1,26 +1,31 @@
-from django.urls import path
-from .views import (
-    signIn, signup,
-    postsign, logout_get,
-    begin, discipline_create,
-    discipline_edit, discipline_delete, discipline_add_aluno
+
+from django.urls import path, include
+from apps.core import views
+from .crud_views import (
+    discipline_create, discipline_list,
+    discipline_update, discipline_delete
     )
+from .views import(
+    sign_in, login,
+    sign_up, logout
+)
 
 
 app_name='core'
 
 urlpatterns = [
-    # Login and logout
-    path('', signIn, name='signIn'),
-    path('postsign/', postsign, name='postsign'),
-    path('signup/', signup, name='signup'),
-    path('logout_get/', logout_get, name='logout_get'),
 
-    # lista de Disciplines
-    path('begin/', begin, name='begin'),
-    path('discipline_create/', discipline_create, name='discipline_create'),
-    path('discipline_edit/', discipline_edit, name='discipline_edit'),
-    path('discipline_delete/', discipline_delete, name='discipline_delete'),
+    # signin and signup
+    path('', views.sign_in, name='sign-in'),
+    path('login/', views.login, name='login'),
+    path('sign_up/', views.sign_up, name='sign-up'),
+    path('logout/', views.logout, name='logout'),
 
-    path('discipline/aluno/<uuid:uid_aluno>/add/', discipline_add_aluno, name='discipline_add_aluno'),
+    # DisciplineDetail
+    path('create/', discipline_create, name='discipline-create'),
+    path('list/', discipline_list, name='discipline-list'),
+    path('update/', discipline_update, name='discipline-update'),
+    path('delete/', discipline_delete, name='discipline-delete'),
+
+    path('discipline/aluno/<uuid:uid_aluno>/add/', views.discipline_add_aluno, name='discipline_add_aluno'),
 ]

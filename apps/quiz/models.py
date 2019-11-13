@@ -17,7 +17,7 @@ STATUS_CHOICES = (
     ("B", "Bloqueado"),
     ("D", "Desativado")
     )
-class Quizzes(models.Model):
+class Quiz(models.Model):
 
     title          = models.CharField(verbose_name="Título", max_length=128, help_text="Digite o nome da Discipline", null=False, blank=False, default=None)
     description       = models.CharField(verbose_name="Descrição", max_length=512, help_text="Digite a descrição da Discipline", null=True, blank=True, default=None)
@@ -56,7 +56,7 @@ class Question(models.Model):
     status          = models.CharField(choices=STATUS_CHOICES, max_length=15, default="A")
 
     # fks
-    quiz            = models.ForeignKey(Quizzes, verbose_name="Quiz", on_delete=models.PROTECT)
+    quiz            = models.ForeignKey(Quiz, verbose_name="Quiz", on_delete=models.PROTECT)
     user_create     = models.ForeignKey(User, editable=False, related_name="+", on_delete=models.CASCADE)
 
     last_id         =  models.CharField(verbose_name="Proximo", max_length=10, blank=True, null=True, default=None)

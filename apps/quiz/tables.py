@@ -1,6 +1,6 @@
 import django_tables2 as tables
 from .models import (
-    Quizzes, Question
+    Quiz, Question
 )
 
 class QuizzesTable(tables.Table):
@@ -11,7 +11,7 @@ class QuizzesTable(tables.Table):
     # Template com as acoes disponiveis
     actions = tables.TemplateColumn(template_name='quizzes/quiz_actions.html', verbose_name="Ações")
     class Meta:
-        model = Quizzes
+        model = Quiz
         sequence = ('title', 'status', 'actions')
         exclude = ('id', 'uuid', 'date_create', 'date_edit', 'description', 'user_create', 'discipline')
 

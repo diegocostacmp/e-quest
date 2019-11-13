@@ -2,7 +2,7 @@ import django_tables2 as tables
 from .models import (
     Game
 )
-from apps.quiz.models import Quizzes
+from apps.quiz.models import Quiz
 
 
 class GameTable(tables.Table):
@@ -39,7 +39,7 @@ class GameStart(tables.Table):
     # Template actions avaiables
     actions = tables.TemplateColumn(template_name='game/start_actions.html', verbose_name="Ações")
     class Meta:
-        model = Quizzes
+        model = Quiz
         sequence = ('title', 'status', 'discipline')
         exclude = ('id', 'uuid', 'date_create', 'description', 'user_create', 'discipline')
 
@@ -51,6 +51,6 @@ class GameAlunoStart(tables.Table):
     # Template actions avaiables
     actions = tables.TemplateColumn(template_name='game/start_actions2.html', verbose_name="Ações")
     class Meta:
-        model = Quizzes
+        model = Quiz
         sequence = ('title', 'status', 'discipline')
         exclude = ('id', 'uuid', 'date_create', 'description', 'user_create', 'discipline')

@@ -15,6 +15,33 @@
     return cookieValue;
 }
 
+// function newLogin(){
+
+//     // Token de sessao
+//     var csrftoken = getCookie('csrftoken');
+    
+//     // Email e senha
+//     var email   = $('#email').val();
+//     var password  = $('#password').val();
+    
+//     $.ajax({
+//         headers : {'X-CSRFToken': csrftoken},
+//         type    : 'POST',
+//         url     : '/postsign/',
+//         data    : {'email':email, 'password':password},
+//         datatype: 'json',
+    
+//         success: function(data) {
+//             alert("sucesso");
+//             document.location = data.url_return;
+//         },
+//         error: function(){
+//             alert("erro");
+//         }   
+//     });
+// }
+
+
 // As classes e acoes comuns a todos os Apps
 // devem ser inseridos neste arquivo.
 $('.discipline-delete').click(function(e) {
@@ -70,63 +97,50 @@ $('.discipline-delete').click(function(e) {
             });
         },
     })
-})
+});
 
-// Chamada do metodo cadastrar_Discipline
+// Create discipline
 $('#discipline-create').click(function(e) {
-    Swal.fire({
-        title: 'Digite o nome da Disciplina',
-        input: 'text',
-        inputAttributes: {
-        autocapitalize: 'off'
-        },
-        showCancelButton: true,
-        showLoaderOnConfirm: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '<i class="fa fa-check"></i> Salvar!',
-        cancelButtonText: '<i class="fa fa-times"></i> Cancelar',
-        inputValidator: (value) => {
-            if (!value) {
-                return 'Preencha o nome da Disciplina!'
+    var csrftoken = getCookie('csrftoken');
+
+    var title, description;    
+
+    //get name and description from form
+    title = $("#title-discipline").val();
+    description = $("#description-discipline").val();
+    $.ajax({
+        headers : {'X-CSRFToken': csrftoken},
+        type    : 'POST',
+        url     : '/discipline_create/',
+        data    :   {
+                    'name': title,
+                    'description': description
+                    },
+        datatype: 'json',
+
+        success: function(data) {
+            if(data.status == "OK"){
+                console.log("saida:", data.table)
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                Toast.fire({
+                    type: 'success',
+                    title: 'Cadastrado com sucesso!',
+                    onClose: () =>{
+                        // reload only table
+                        $("#disciplineList").append(data.table);
+                    }
+                })
             }
         },
-        preConfirm: (value) => {
-            //token de sessao
-            var csrftoken = getCookie('csrftoken');
-
-            $.ajax({
-                headers : {'X-CSRFToken': csrftoken},
-                type    : 'POST',
-                url     : '/discipline_create/',
-                data    : {'name':value},
-                datatype: 'json',
-
-                success: function(data) {
-                    if(data.status == "OK"){
-                        console.log("saida:", data.table)
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
-                        Toast.fire({
-                            type: 'success',
-                            title: 'Cadastrado com sucesso!',
-                            onClose: () =>{
-                                // reload only table
-                                $("#disciplineList").append(data.table);
-                            }
-                        })
-                    }
-                },
-                error: function(data){
-                    alert('deu erro');
-                }
-            });
-        },
-    })
+        error: function(data){
+            alert('deu erro');
+        }
+    });
 });
 
 // Metodo de cadastro de Discipline

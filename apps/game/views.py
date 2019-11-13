@@ -23,7 +23,7 @@ from apps.core.models import (
 )
 
 from apps.quiz.models import (
-    Quizzes, Question,
+    Quiz, Question,
     Answer
 )
 from .models import (
