@@ -96,24 +96,24 @@ class User(AbstractBaseUser, PermissionsMixin):
         ("Viúvo", "Viúvo")
     )
 
-    # Informacoes do User
-    full_name              = models.CharField(max_length=50, null=False, verbose_name="Nome Completo")
-    username                    = models.CharField(max_length=512, blank=True, null=True, default=None)
-    email                       = models.EmailField(null=False, verbose_name="E-mail", unique=True)
-    uid                         = models.UUIDField(verbose_name='Identificador Unico', default=uuid.uuid4, editable=False)
+    # Info signUp
+    full_name = models.CharField(max_length=50, null=False, verbose_name="Nome Completo")
+    email = models.EmailField(null=False, verbose_name="E-mail", unique=True)
+    type_profile = models.CharField(null=True, max_length=10, verbose_name="Tipo")   
     
     
-    cpf                         = models.CharField(max_length=14, null=False, verbose_name="CPF")
-    birth_date             = models.DateField(null=True, verbose_name="Data de Nascimento")
-    sex                        = models.CharField(null=True, verbose_name="Sexo", choices=SEXO_CHOICES, max_length=10)
-    marital_status               = models.CharField(null=True, verbose_name="Estado Civil", choices=ESTADO_CIVIL_CHOICES, max_length=10)
-    phone                   = models.CharField(null=True, verbose_name="Telefone", max_length=19)
-    street                  = models.CharField(null=True, max_length=150, verbose_name="Logradouro")
-    street_number            = models.PositiveIntegerField(null=True, verbose_name="Número")
-    complement      = models.CharField(max_length=200, verbose_name="Complemento", null=False)
-    state                     = models.CharField(null=True, choices=ESTADO_CHOICES, max_length=15)
-    city                    = models.CharField(null=True, max_length=40, verbose_name="Cidade")
-    type_profile                      = models.CharField(null=True, max_length=10, verbose_name="Tipo")   
+    username = models.CharField(max_length=512, blank=True, null=True, default=None)
+    uuid = models.UUIDField(verbose_name='Identificador Unico', default=uuid.uuid4, editable=False)
+    cpf = models.CharField(max_length=14, null=False, verbose_name="CPF")
+    birth_date = models.DateField(null=True, verbose_name="Data de Nascimento")
+    sex = models.CharField(null=True, verbose_name="Sexo", choices=SEXO_CHOICES, max_length=10)
+    marital_status = models.CharField(null=True, verbose_name="Estado Civil", choices=ESTADO_CIVIL_CHOICES, max_length=10)
+    phone = models.CharField(null=True, verbose_name="Telefone", max_length=19)
+    street = models.CharField(null=True, max_length=150, verbose_name="Logradouro")
+    street_number = models.PositiveIntegerField(null=True, verbose_name="Número")
+    complement = models.CharField(max_length=200, verbose_name="Complemento", null=False)
+    state = models.CharField(null=True, choices=ESTADO_CHOICES, max_length=15)
+    city = models.CharField(null=True, max_length=40, verbose_name="Cidade")
     
     objects = UserManager()
     EMAIL_FIELD = 'email'

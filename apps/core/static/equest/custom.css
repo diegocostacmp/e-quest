@@ -30,3 +30,13 @@
     font-size: 1.7rem;
 }
 
+.landing-page {
+    font-size: 1rem;
+    line-height: 0.3rem !important;
+    color: #8f8f8f;
+}
+
+.landing-page .home-row {
+    padding-top: 0px !important;
+    margin-bottom: 70px;
+}

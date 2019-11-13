@@ -26,7 +26,7 @@
             </a>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="LandingPage.Auth.Register.html">CADASTRAR</a>
+                    <a href="{% url 'core:sign-up' %}">CADASTRAR</a>
                 </li>
             </ul>
         </div>
@@ -62,7 +62,7 @@
                                         Digite seus dados de acesso.<br>
                                         Se você ainda não é membro, por favor <a href="#" class="white-underline-link">cadastre-se</a>.
                                     </p>
-                                    <form class="dark-background" method="POST" action="{% url 'core:postsign' %}">
+                                    <form class="dark-background" method="POST" action="{% url 'core:login' %}">
                                         {% csrf_token %}
                                         <label class="form-group has-top-label">
                                             <input class="form-control" name="email" id="email" autocomplete=""/>

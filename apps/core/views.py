@@ -38,15 +38,18 @@ from .models import (
 from .tables import DisciplineTable, DisciplineAlunosTable, MinhasDisciplineAlunosTable
 from apps.game.tables import GameAlunoTable
 
+# Forms
+from .forms import SignUpForm
+
 from django.utils.decorators import classonlymethod
 from apps.core.crud_views import (discipline_list)
 
 # tela de login inicial no sistema
 def sign_in(request):
-    return render(request, 'registration/signIn.html')
+    return render(request, 'registration/sign_in.html')
 
 # autenticacao com User e senha
-@require_POST
+@require_http_methods(['POST', 'GET'])
 @csrf_exempt
 def login(request):
     username = request.POST.get('email', '')
@@ -59,12 +62,12 @@ def login(request):
             return redirect('core:discipline-list')
             # FIXME: mensagens de excessao
     except:
-        template_name = 'registration/signIn.html'
+        template_name = 'registration/sign_in.html'
         return render(request, template_name, {})
 
 def logout(request):
     logout(request)
-    template_name = 'registration/signIn.html'
+    template_name = 'registration/sign_in.html'
     return render(request, template_name)
     
 # @require_POST
@@ -112,7 +115,7 @@ def logout(request):
     
 #     return render(request, 'registration/signIn.html')
 
-@require_POST
+@require_http_methods(['POST', 'GET'])
 def sign_up(request):
     print('sign_up')
     form = SignUpForm(request.POST)
@@ -121,17 +124,12 @@ def sign_up(request):
             # verifica se a conta ja existe
             user = authenticate(request, email=form.mail, password=form.password)
             if user is not None:
-                
-
-            instance = form.save(commit=False)
-            instance.user_create = request.user
-            instance.teacher= request.user
-            instance.save()     
+                form.save()     
         return HttpResponseRedirect(reverse('core:discipline-list'))
     
     # Qualquer outro método: GET, OPTION, DELETE, etc...
     else:
-        template_name = 'discipline/form.html' 
+        template_name = 'registration/sign_up.html' 
         return render(request, template_name, {'form': form})
     
 @login_required
