@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,14 +65,7 @@
                                     </p>
                                     <form class="dark-background" method="POST" action="{% url 'core:login' %}">
                                         {% csrf_token %}
-                                        <label class="form-group has-top-label">
-                                            <input class="form-control" name="email" id="email" autocomplete=""/>
-                                            <span>E-MAIL</span>
-                                        </label>
-                                        <label class="form-group has-top-label">
-                                            <input class="form-control" name="password" id="password" type="password" autocomplete="" placeholder="" />
-                                            <span>PASSWORD</span>
-                                        </label>
+                                        {% crispy form %}
                                         <button class="btn btn-outline-semi-light btn-xl mt-4">LOGIN</button>
                                     </form>    
                                 </div>

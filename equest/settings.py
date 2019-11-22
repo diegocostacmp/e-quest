@@ -140,3 +140,5 @@ DJANGO_TABLES2_TEMPLATE = BASE_DIR+'/apps/core/templates/metronic-table.html'
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)

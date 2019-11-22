@@ -67,6 +67,9 @@
                                     <form class="dark-background" method="POST" action="{% url 'core:sign-up' %}">
                                         {% csrf_token %}
                                         {% crispy form %}
+                                        {% if error == "True" %}
+                                            Usuario ja cadastrado no sistema
+                                        {% endif %}
                                         <button class="btn btn-outline-semi-light btn-xl mt-4">Salvar</button>
                                     </form>    
                                 </div>

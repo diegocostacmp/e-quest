@@ -24,6 +24,7 @@ STATUS_CHOICES = (
     ("D", "Desativado")
     )
 
+import hashlib
 # backend de autenticacao personalizado com email
 class UserManager(BaseUserManager):
     """
@@ -96,11 +97,17 @@ class User(AbstractBaseUser, PermissionsMixin):
         ("Viúvo", "Viúvo")
     )
 
+    TIPO_PERFIL = (
+        ("1", "Professor"),
+        ("2", "Aluno")
+    )
+
     # Info signUp
-    full_name = models.CharField(max_length=50, null=False, verbose_name="Nome Completo")
-    email = models.EmailField(null=False, verbose_name="E-mail", unique=True)
-    type_profile = models.CharField(null=True, max_length=10, verbose_name="Tipo")   
-    
+    full_name = models.CharField(max_length=50, null=False, verbose_name="Nome Completo", default=None)
+    email = models.EmailField(null=False, verbose_name="E-mail")
+    type_profile = models.CharField(verbose_name="Tipo do perfil", max_length=1, choices=TIPO_PERFIL, default=1)   
+    password = models.CharField(_('password'), max_length=128)
+    is_active = models.BooleanField(_("Ativo"), null=False, blank=False, default=True)
     
     username = models.CharField(max_length=512, blank=True, null=True, default=None)
     uuid = models.UUIDField(verbose_name='Identificador Unico', default=uuid.uuid4, editable=False)
@@ -125,7 +132,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_tipo_user(self):
         return self.type_profile
-    
+
+    # def save(self, *args, **kwargs):        
+    #     self.password = hashlib.md5(self.password).hexdigest()
+    #     super().save(*args, **kwargs)
+        
     
 
 # Cadastro de Discipline

@@ -6,8 +6,8 @@ from .crud_views import (
     discipline_update, discipline_delete
     )
 from .views import(
-    sign_in, login,
-    sign_up, logout
+    login, sign_up,
+    logout
 )
 
 
@@ -16,8 +16,7 @@ app_name='core'
 urlpatterns = [
 
     # signin and signup
-    path('', views.sign_in, name='sign-in'),
-    path('login/', views.login, name='login'),
+    path('', views.login, name='login'),
     path('sign_up/', views.sign_up, name='sign-up'),
     path('logout/', views.logout, name='logout'),
 

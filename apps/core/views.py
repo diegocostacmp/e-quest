@@ -3,7 +3,7 @@ from datetime import datetime
 from django.shortcuts import (
     render, redirect,
     HttpResponseRedirect,
-    get_object_or_404, HttpResponse
+    get_object_or_404, HttpResponse, Http404
     )
 from django.http import JsonResponse    
 from django.urls import (
@@ -11,7 +11,7 @@ from django.urls import (
     reverse_lazy
     )    
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import views, authenticate, login, logout, get_user_model
+from django.contrib import auth
 
 from django.contrib.auth.models import User
 
@@ -24,9 +24,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django_tables2 import RequestConfig
 from django.utils import timezone
 
-# django CBV
-from django.views.generic import CreateView
-from django.views import View
+from django.contrib import messages
 
 # models
 from apps.game.models import Game
@@ -39,7 +37,7 @@ from .tables import DisciplineTable, DisciplineAlunosTable, MinhasDisciplineAlun
 from apps.game.tables import GameAlunoTable
 
 # Forms
-from .forms import SignUpForm
+from .forms import SignUpForm, SignInForm
 
 from django.utils.decorators import classonlymethod
 from apps.core.crud_views import (discipline_list)
@@ -48,84 +46,85 @@ from apps.core.crud_views import (discipline_list)
 def sign_in(request):
     return render(request, 'registration/sign_in.html')
 
-# autenticacao com User e senha
 @require_http_methods(['POST', 'GET'])
-@csrf_exempt
 def login(request):
-    username = request.POST.get('email', '')
-    password = request.POST.get('password', '')
+    if request.method == 'POST':
+        form = SignInForm(request.POST)
+        if form.is_valid():
+            # get data fields
+            data = form.cleaned_data
+            email = data['email']
+            password = data['password']
 
-    try:
-        user = authenticate(email=username, password=password)
-        login(request, user)
-        if request.user.is_authenticated:
-            return redirect('core:discipline-list')
-            # FIXME: mensagens de excessao
-    except:
-        template_name = 'registration/sign_in.html'
-        return render(request, template_name, {})
+            # verifica se a conta ja existe
+            user = auth.authenticate(request, email=email, password=password)
+            if user is not None:
+                auth.login(request, user)
+                return redirect('core:discipline-list')
+                # FIXME: mensagens de excessao
+            else:
+                print("Nao achou o usuario")
+
+            return HttpResponse("OK")
+                    # return HttpResponseRedirect(reverse_lazy('core:discipline-list'))
+                # else:
+                #     context = {
+                #         "form": form,
+                #     }
+                #     template_name = 'registration/sign_in.html' 
+                #     return render(request, template_name, context)
+    
+        else:
+            return HttpResponse(str(form.errors))    
+    else:
+        form = SignInForm(request.POST)
+        context = {
+            "form": form
+        }
+
+        template_name = 'registration/sign_in.html' 
+        return render(request, template_name, context)
 
 def logout(request):
-    logout(request)
-    template_name = 'registration/sign_in.html'
-    return render(request, template_name)
+    auth.logout(request)
+    return redirect('core:login')
     
-# @require_POST
-# def sign_up(request):
-#     print('sign_up')
-#     if request.method == 'POST':
-#         name = request.POST.get('name', '')
-#         email = request.POST.get('email', '')
-#         password = request.POST.get('password', '')
-#         type_profile = request.POST.get('type_profile', '')
-
-#         print('---------------------------------')
-#         print(name, email, password, type_profile)
-#         print('---------------------------------')
-
-#         if len(name) > 0 and len(email) > 0 and len(password) > 0:
-#             # verifica se a conta ja existe
-#             user = authenticate(request, email=email, password=password)
-#             if user is None:
-#                 # cria conta de User
-#                 # user = get_user_model().objects.create_user(username=nome, email=email, password=senha)
-#                 user = User.objects._create_user(email=email, password=password)
-
-#                 # Atualiza objeto user e salva no banco
-#                 if user is not None:
-#                     user.is_staff = True
-
-#                     # Professor ou aluno
-#                     user.type_profile = type_profile
-#                     user.full_name= name
-#                     user.save()
-#                     return HttpResponseRedirect('/')
-#             else:
-#                 error_json  =  {
-#                     'errors': '1'                    
-#                 }
-#                 template_name = 'registration/signIn.html'    
-#                 return render(request, template_name, error_json)  
-#         else:
-#             error_json = {
-#                 'errors': '0'
-#             }
-#             template_name = 'registration/signIn.html'    
-#             return render(request, template_name, error_json)  
-    
-#     return render(request, 'registration/signIn.html')
 
 @require_http_methods(['POST', 'GET'])
 def sign_up(request):
-    print('sign_up')
     form = SignUpForm(request.POST)
     if request.method == 'POST':
         if form.is_valid():
+
+            # get data fields
+            data = form.cleaned_data
+            email = data['email']
+            password = data['password']
+            type_profile = data["type_profile"]
+            full_name = data["full_name"]
+
             # verifica se a conta ja existe
-            user = authenticate(request, email=form.mail, password=form.password)
-            if user is not None:
-                form.save()     
-        return HttpResponseRedirect(reverse('core:discipline-list'))
+            user = auth.authenticate(request, email=email, password=password)
+            if user is None:
+                user = User.objects._create_user(email=email, password=password)
+
+                # Atualiza objeto user e salva no banco
+                if user is not None:
+                    user.is_staff = True
+
+                    # Professor ou aluno
+                    user.type_profile = type_profile
+                    user.full_name= full_name
+                    user.save()
+                    return HttpResponseRedirect('/')
+            else:
+                context = {
+                    "form": form,
+                    "error": "True"
+                }
+                template_name = 'registration/sign_up.html' 
+                return render(request, template_name, context)
+
     
     # Qualquer outro método: GET, OPTION, DELETE, etc...
     else:
