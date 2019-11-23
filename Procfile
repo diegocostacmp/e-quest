@@ -1,0 +1,1 @@
+web: gunicorn equest.wsgi --log-file -
