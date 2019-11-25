@@ -42,6 +42,8 @@ from .forms import SignUpForm, SignInForm
 from django.utils.decorators import classonlymethod
 from apps.core.crud_views import (discipline_list)
 
+import sweetify
+
 # tela de login inicial no sistema
 def sign_in(request):
     return render(request, 'registration/sign_in.html')
@@ -144,3 +146,7 @@ def discipline_add_aluno(request, uid_aluno):
     minhas_disciplinas_obj.save()
 
     return redirect('core:begin')
+
+def test_view(request):
+    sweetify.success(request, 'You did it', text='Good job! You successfully showed a SweetAlert message', persistent='Hell yeah')
+    return redirect('/')

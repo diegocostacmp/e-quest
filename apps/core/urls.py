@@ -19,12 +19,13 @@ urlpatterns = [
     path('', views.login, name='login'),
     path('sign_up/', views.sign_up, name='sign-up'),
     path('logout/', views.logout, name='logout'),
+    path('test_view/', views.test_view, name='test_view'),
 
     # DisciplineDetail
     path('create/', discipline_create, name='discipline-create'),
     path('list/', discipline_list, name='discipline-list'),
     path('update/', discipline_update, name='discipline-update'),
-    path('delete/', discipline_delete, name='discipline-delete'),
+    path('delete/<uuid:uuid_discipline>', discipline_delete, name='discipline-delete'),
 
     path('discipline/aluno/<uuid:uid_aluno>/add/', views.discipline_add_aluno, name='discipline_add_aluno'),
 ]

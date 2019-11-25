@@ -33,59 +33,6 @@ from .tables import (QuizzesTable,
     )
 
 @login_required
-@require_http_methods(['POST', 'GET'])
-def quiz_list(request, discipline_uuid):
-    # Verifica se a instancia da Discipline existe
-    discipline_edit = get_object_or_404(Discipline, uuid=discipline_uuid)
-    # Lista os quizzes cadastrados por Discipline
-
-    # Query
-    queryset = Quizzes.objects.filter(discipline__uuid=discipline_edit.uuid)
-
-    table = QuizzesTable(queryset)
-    RequestConfig(request).configure(table)
-
-    # Queryser student
-    queryset_student = Disciplines_user.objects.filter(discipline=discipline_edit.pk)
-
-    table_user_discipline = UserDisciplineTable(queryset_student)
-    RequestConfig(request).configure(table_user_discipline)
-    context = {
-        "table" : table,
-        "table_student": table_user_discipline,
-        "discipline_uuid": discipline_edit.uuid
-    }
-
-    template_name   = "quizzes/quiz_list.html"
-    return render(request, template_name, context)
-
-@login_required
-@require_http_methods(['POST'])
-def quiz_create(request):
-    try:
-        title = request.POST.get('name', '')
-        discipline= request.POST.get('discipline', '')
-
-        # Get instance
-        discipline_edit = get_object_or_404(Discipline, uuid=discipline)
-
-        # Os dados sao gravados sem a necessidade de forms
-        if request.method == "POST":
-            register = Quizzes(title=title, status="A", discipline=discipline_edit, user_create=request.user)
-            register.save()
-        
-            data = {
-                "status" : "OK",
-                "url_return" : "/quiz/quiz_list/"+str(discipline_edit.uuid)+"/" 
-            }
-            return JsonResponse(data)
-    except: 
-        data = {
-            "status": ""
-        }
-        return JsonResponse(data, safe=False)
-
-@login_required
 @require_http_methods(['POST'])
 def quiz_edit(request):
 

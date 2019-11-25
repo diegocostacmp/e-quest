@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container-fluid disable-text-selection">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-2">
+                <h1>Manutenção de quiz</h1>
+                <div class="float-sm-right text-zero">
+                    <a class="btn btn-sm btn-outline-primary mr-2 d-none d-md-inline-block mb-2" href="{% url 'quiz:quiz-create' uuid %}">&nbsp;Novo quiz&nbsp;</a>
+                </div>
+            </div>
+            <div class="separator mb-5"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 list" data-check-all="checkAll">
+            {% for i in table %}
+            <div class="card d-flex flex-row mb-3" style="cursor:pointer;">
+                <div class="d-flex flex-grow-1 min-width-zero">
+                    <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+                        <a class="list-item-heading mb-1 truncate w-40 w-xs-100" href="Layouts.Details.html">
+                            {{i.title}}
+                       </a>
+                        <p class="mb-1 text-muted text-small w-15 w-xs-100">{{i.date_create}}</p>
+                        <div class="w-15 w-xs-100">
+                            <span class="badge badge-pill badge-primary">{{i.get_status}}</span>
+                        </div>
+                    </div>
+                    <div class="custom-control custom-checkbox pl-1 align-self-center pr-4">
+                        <div class="user d-inline-block">
+                            <button class="header-icon btn btn-empty" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="name">{{request.user.full_name}}</span>
+                                <i class="simple-icon-note"></i>
+                           </button>
+                            <div class="dropdown-menu dropdown-menu-right mt-3">
+                                <a class="dropdown-item" href="#">Editar</a>
+                                <a class="dropdown-item" href="{% url 'quiz:quiz-create' i.uuid %}">Gerenciar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <nav class="mt-4 mb-3">
+                <ul class="pagination justify-content-center mb-0">
+                    <li class="page-item ">
+                        <a class="page-link first" href="#">
+                            <i class="simple-icon-control-start"></i>
+                        </a>
+                    </li>
+                    <li class="page-item ">
+                        <a class="page-link prev" href="#">
+                            <i class="simple-icon-arrow-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item ">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item ">
+                        <a class="page-link next" href="#" aria-label="Next">
+                            <i class="simple-icon-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item ">
+                        <a class="page-link last" href="#">
+                            <i class="simple-icon-control-end"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endblock content %}

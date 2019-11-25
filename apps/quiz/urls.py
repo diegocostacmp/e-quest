@@ -12,14 +12,14 @@ from .views import(
 app_name='quiz'
 
 urlpatterns = [
-    path('list/<uuid:discipline_uuid>/', quiz_list, name='quiz-list'),
-    path('create/', quiz_create, name='quiz-create'),
+    path('list/<uuid:uuid_discipline>/', quiz_list, name='quiz-list'),
+    path('create/<uuid:uuid_discipline>', quiz_create, name='quiz-create'),
     path('update/', quiz_update, name='quiz-update'),
     path('delete/', quiz_delete, name='quiz-delete'),
 
+    path('question_create/', question_create, name='question-create'),
     path('question_list/<uuid:quiz_uuid>/', question_list, name='question_list'),
     path('question_book/', question_book, name='question_book'),
     path('question_book_preview/', question_book_preview, name='question_book_preview'),
-    path('question_create/', question_create, name='question_create'),
     path('question_delete/', question_delete, name='question_delete')
 ]

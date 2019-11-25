@@ -43,6 +43,8 @@ from apps.core.forms import DisciplineCreateForm
 
 from django.utils.decorators import classonlymethod
 
+import sweetify
+
 
 @login_required
 def discipline_list(request):
@@ -86,21 +88,23 @@ def discipline_list(request):
 @require_http_methods(['POST', 'GET'])
 @login_required
 def discipline_create(request):
-    # Verificamos se o método POST
     form = DisciplineCreateForm(request.POST)
     if request.method == 'POST':
         if form.is_valid():
             instance = form.save(commit=False)
             instance.user_create = request.user
             instance.teacher= request.user
-            instance.save()     
-        return HttpResponseRedirect(reverse('quiz:quiz-create'))
-    
-    # Qualquer outro método: GET, OPTION, DELETE, etc...
+            instance.save()  
+            sweetify.success(request, 'Parabens',
+                            text='A disciplina foi cadastrada com sucesso',
+                            persistent='OK', timer=2500)
+            return HttpResponseRedirect(reverse('core:discipline-list'))
     else:
         template_name = 'discipline/form.html' 
         return render(request, template_name, {'form': form})
-    
+
+
+
 @login_required
 @require_POST
 def discipline_update(request):
@@ -121,19 +125,18 @@ def discipline_update(request):
     return JsonResponse(data, safe=False)
 
 @login_required
-@require_http_methods(['POST'])
-def discipline_delete(request):
+@require_http_methods(['GET'])
+def discipline_delete(request, uuid_discipline):
     try:
-        template_name = 'begin.html'
-        uuid_edit   = request.POST.get('uuid_edit', '')
-        discipline      = get_object_or_404(Discipline, uuid=uuid_edit)
-        if request.method == "POST":
-            discipline.delete()
+        discipline = get_object_or_404(Discipline, uuid=uuid_discipline)
+        discipline.delete()
+        sweetify.success(request, 'Parabens',
+                            text='A disciplina foi removida com sucesso',
+                            persistent='OK', timer=2500)
 
-            data = {
-                "status": "OK"
-            }
-
-            return JsonResponse(data, safe=False)
+        return redirect('core:discipline-list')
     except:
-        return render(request, template_name, {})
+        sweetify.success(request, 'Ops...',
+                            text='Existem dependências associadas a este cadastro',
+                            persistent='OK', timer=2500)
+        return redirect('core:discipline-list')

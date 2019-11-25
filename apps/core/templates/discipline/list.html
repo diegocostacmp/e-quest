@@ -5,22 +5,9 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-2">
-                <h1>Disciplina</h1>
+                <h1>Manutenção de disciplina</h1>
                 <div class="float-sm-right text-zero">
-                    <!-- <a href="{% url 'core:discipline-create' %}">
-                        <button type="button" class="btn btn-primary btn-lg top-right-button mr-1">Nova Disciplina</button>
-                        <button type="button" class="btn btn-primary mb-1">Nova disciplina</button>
-                    </a> -->
                     <a class="btn btn-sm btn-outline-primary mr-2 d-none d-md-inline-block mb-2" href="{% url 'core:discipline-create' %}">&nbsp;Nova disciplina&nbsp;</a>
-                    <!-- <div class="btn-group ">
-                        <div class="btn btn-primary btn-lg pl-4 pr-0 check-button">
-                            <label class="custom-control custom-checkbox mb-0 d-inline-block">
-                                <input type="checkbox" class="custom-control-input" id="checkAll">
-                                <span class="custom-control-label"></span>
-                            </label>
-                        </div>
-                        
-                    </div> -->
                 </div>
             </div>
             <div class="separator mb-5"></div>
@@ -29,10 +16,10 @@
     <div class="row">
         <div class="col-12 list" data-check-all="checkAll">
         {% for i in table %}
-            <div class="card d-flex flex-row mb-3">
+            <div  class="card d-flex flex-row mb-3" style="cursor:pointer;">
                 <div class="d-flex flex-grow-1 min-width-zero">
-                    <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-                        <a class="list-item-heading mb-1 truncate w-40 w-xs-100" href="Layouts.Details.html">
+                    <div onclick="foundURL('{% url 'quiz:quiz-list' i.uuid %}')" class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+                        <a class="list-item-heading mb-1 truncate w-40 w-xs-100">
                             {{i.title}}
                         </a>
                         <p class="mb-1 text-muted text-small w-15 w-xs-100">{{i.date_create}}</p>
@@ -49,7 +36,8 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right mt-3">
                                 <a class="dropdown-item" href="#">Editar</a>
-                                <a class="dropdown-item" href="{% url 'core:logout' %}">Adicionar quiz</a>
+                                <a class="dropdown-item" href="{% url 'quiz:quiz-list' i.uuid %}">Gerenciar</a>
+                                <a class="dropdown-item" href="{% url 'core:discipline-delete' i.uuid %}">Excluir</a>
                             </div>
                         </div>
                     </div>

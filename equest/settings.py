@@ -17,7 +17,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 
 
-ALLOWED_HOSTS = ['equests.herokuapp.com']
+ALLOWED_HOSTS = ['equests.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_tables2',
     'django_extensions',
     'rest_framework',
+    'sweetify',
 ]
 
 MIDDLEWARE = [
@@ -156,3 +157,5 @@ DJANGO_TABLES2_TEMPLATE = BASE_DIR+'/apps/core/templates/metronic-table.html'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
+
+SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'

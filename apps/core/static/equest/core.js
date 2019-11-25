@@ -203,6 +203,10 @@ $('.discipline-edit').click(function(e) {
     })
 });
 
+function foundURL(url){
+    location.href = url;
+}
+
 
 
 
