@@ -24,7 +24,7 @@ urlpatterns = [
     # DisciplineDetail
     path('create/', discipline_create, name='discipline-create'),
     path('list/', discipline_list, name='discipline-list'),
-    path('update/', discipline_update, name='discipline-update'),
+    path('update/<uuid:uuid_discipline>', discipline_update, name='discipline-update'),
     path('delete/<uuid:uuid_discipline>', discipline_delete, name='discipline-delete'),
 
     path('discipline/aluno/<uuid:uid_aluno>/add/', views.discipline_add_aluno, name='discipline_add_aluno'),

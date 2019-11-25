@@ -35,7 +35,7 @@
                                 <i class="simple-icon-note"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right mt-3">
-                                <a class="dropdown-item" href="#">Editar</a>
+                                <a class="dropdown-item" href="{% url 'core:discipline-update' i.uuid %}">Editar</a>
                                 <a class="dropdown-item" href="{% url 'quiz:quiz-list' i.uuid %}">Gerenciar</a>
                                 <a class="dropdown-item" href="{% url 'core:discipline-delete' i.uuid %}">Excluir</a>
                             </div>

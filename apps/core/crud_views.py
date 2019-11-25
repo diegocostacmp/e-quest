@@ -106,23 +106,24 @@ def discipline_create(request):
 
 
 @login_required
-@require_POST
-def discipline_update(request):
-    # Obtenho as strings via POST
-    discipline          = request.POST.get('title', '')
-    discipline_uuid     = request.POST.get('discipline_uuid', '')
-
-    # Retorna objeto com a Discipline
-    discipline_edit = get_object_or_404(Discipline, uuid=discipline_uuid)
-    discipline_edit.title = str(discipline)
-    discipline_edit.save()
-
-    data = {
-        'status': 'OK',
-        'url_return': '/begin/'
-    }
-
-    return JsonResponse(data, safe=False)
+@require_http_methods(['GET', 'POST'])
+def discipline_update(request, uuid_discipline):
+    discipline = get_object_or_404(Discipline, uuid=uuid_discipline)
+    form = DisciplineCreateForm(request.POST or None, instance=discipline)
+    if request.method == 'POST':
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user_create = request.user
+            instance.teacher= request.user
+            instance.save()  
+            sweetify.success(request, 'Parabens',
+                            text='A disciplina foi editada com sucesso',
+                            persistent='OK', timer=2500)
+            
+            return HttpResponseRedirect(reverse('core:discipline-list'))
+    else:
+        template_name = 'discipline/form.html' 
+        return render(request, template_name, {'form': form})
 
 @login_required
 @require_http_methods(['GET'])
