@@ -15,7 +15,7 @@ django-crispy-forms==1.7.2
 django-extensions==2.2.1
 django-filter==2.2.0
 django-tables2==2.0.6
-djangorestframework==3.10.3
+djangorestframework==3.11.2
 firebase-admin==2.17.0
 gcloud==0.17.0
 google-api-core==1.11.1
